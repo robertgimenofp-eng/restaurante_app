@@ -1,0 +1,10 @@
+/.vscode/
+/.idea/
+node_modules/
+vendor/
+logs/
+*.log
+.env
+.DS_Store
+Thumbs.db
+/public/uploads/
