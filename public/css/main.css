@@ -1,0 +1,66 @@
+/* -------------------------------------- */
+/* VARIABLES Y ESTILOS GLOBALES DE VIVAEATS */
+/* -------------------------------------- */
+
+:root {
+    /* Color principal de la marca (similar al rojo/granate del prototipo) */
+    --viva-red: #fd5000;
+    /* Color del texto del menú */
+    --viva-text-color: #333333;
+    /* Fuente, si quieres ser más específico */
+    /* font-family: 'Poppins', sans-serif; */ 
+}
+
+/* -------------------------------------- */
+/* AJUSTES GENERALES DEL NAVBAR */
+/* -------------------------------------- */
+
+/* Eliminar la sombra por defecto de Bootstrap y usar una más suave si es necesario */
+.navbar {
+    box-shadow: none !important; /* El prototipo tiene una línea muy sutil o ninguna */
+    border-bottom: 1px solid #f0f0f0; /* Añadir una línea inferior muy sutil */
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+
+/* -------------------------------------- */
+/* ESTILO DE LOS ENLACES DEL MENÚ */
+/* -------------------------------------- */
+
+/* Aplicar color y peso a los enlaces de navegación */
+.navbar-nav .nav-item .nav-link {
+    color: var(--viva-text-color) !important;
+    font-size: 1rem; /* Tamaño de fuente estándar */
+    font-weight: 400 !important; /* Peso de fuente normal (el prototipo no usa 'fw-semibold') */
+    padding: 0.5rem 1rem; /* Espaciado estándar */
+    transition: color 0.3s ease;
+}
+
+/* Efecto hover/activo */
+.navbar-nav .nav-item .nav-link:hover,
+.navbar-nav .nav-item .nav-link.active {
+    color: var(--viva-red) !important; /* El color principal de la marca */
+}
+
+
+/* -------------------------------------- */
+/* ESTILO DEL BOTÓN "PIDE AHORA" */
+/* -------------------------------------- */
+
+/* Modificar la apariencia del botón principal para que coincida con el prototipo */
+.navbar-nav .nav-item .btn-primary {
+    /* Sobrescribir el estilo inline que tienes y el de Bootstrap */
+    color: #ffffff !important;
+    padding: 6px 20px !important; /* Ajuste del padding para hacerlo más pequeño */
+    border-radius: 20px; /* Bordes redondeados como en el prototipo */
+    font-size: 1rem;
+    font-weight: 700 !important; /* Hacer el texto más audaz */
+    transition: background-color 0.3s ease;
+}
+
+/* Efecto hover del botón */
+.navbar-nav .nav-item .btn-primary:hover {
+    background-color: #8c2421 !important; /* Un tono más oscuro de rojo */
+    border-color: #8c2421 !important;
+}
