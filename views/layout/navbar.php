@@ -24,7 +24,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link fw-semibold" href="/restaurante_app/public/productos">Productos</a>
+                    <a class="nav-link fw-semibold" href="index.php?controller=Producto&action=index">Productos</a>
                 </li>
 
                 <li class="nav-item">

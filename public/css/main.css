@@ -64,3 +64,45 @@
     background-color: #8c2421 !important; /* Un tono más oscuro de rojo */
     border-color: #8c2421 !important;
 }
+/* public/css/main.css */
+
+/* Estilo para las Tarjetas */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 15px !important; /* Bordes redondeados */
+}
+
+.product-card:hover {
+    transform: translateY(-5px); /* Efecto de levantar al pasar el ratón */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* El botón naranja personalizado */
+.btn-naranja {
+    background-color: #ff6600; /* Color naranja vivo */
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn-naranja:hover {
+    background-color: #e65c00; /* Naranja un poco más oscuro */
+    color: white;
+    transform: scale(1.05); /* Crece un poquito */
+}
+
+.badge {
+    font-size: 0.9rem;
+}
+/* public/css/main.css */
+.btn-naranja {
+    background-color: #ff6600;
+    color: white;
+    border: none;
+}
+.btn-naranja:hover {
+    background-color: #e65c00;
+    color: white;
+}
+.text-naranja {
+    color: #ff6600 !important;
+}
