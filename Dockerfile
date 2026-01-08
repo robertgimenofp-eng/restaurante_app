@@ -16,6 +16,7 @@ COPY . /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
 # Añade esto para apagar el motor incorrecto y encender el bueno
 # Forzamos la desactivación de módulos conflictivos y activamos prefork
+# Desactivamos módulos conflictivos de forma segura y activamos prefork
 RUN a2dismod mpm_event || true && \
     a2dismod mpm_worker || true && \
     a2enmod mpm_prefork
