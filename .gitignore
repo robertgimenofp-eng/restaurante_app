@@ -8,3 +8,4 @@ logs/
 .DS_Store
 Thumbs.db
 /public/uploads/
+*.exe
