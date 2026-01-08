@@ -6,7 +6,12 @@
     <?php if(isset($error)): ?>
         <p style="color: red;"><?php echo $error; ?></p>
     <?php endif; ?>
-
+    <?php if(isset($_SESSION['carrito']) && count($_SESSION['carrito']) >= 1): ?>
+        <div class="alert alert-info text-center" style="border: 1px solid #000; border-radius: 8px;">
+            🛒 Tienes productos en la cesta.<br>
+            <strong>Inicia sesión para finalizar tu pedido.</strong>
+        </div>
+    <?php endif; ?>
     <form action="index.php?controller=Auth&action=login" method="POST">
         <div class="form-group">
             <label for="email">Email:</label>

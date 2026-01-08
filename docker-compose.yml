@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # SERVICIO 1: TU WEB (PHP)
+  www:
+    build: .
+    container_name: restaurante_web
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+
+  # SERVICIO 2: BASE DE DATOS (MySQL)
+  db:
+    image: mysql:8.0
+    container_name: restaurante_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root      # Coincide con tu $password = "root"
+      MYSQL_DATABASE: restaurante_app # Coincide con tu $db = "restaurante_app"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  # SERVICIO 3: PHPMYADMIN (Para ver la BBDD)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: restaurante_pma
+    links:
+      - db:db
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: db                   # Coincide con tu $host = "db"
+      MYSQL_ROOT_PASSWORD: root
+
+volumes:
+  db_data:

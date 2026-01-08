@@ -1,108 +1,527 @@
-/* -------------------------------------- */
-/* VARIABLES Y ESTILOS GLOBALES DE VIVAEATS */
-/* -------------------------------------- */
-
+/* ==============================================
+   1. VARIABLES Y CONFIGURACIÓN GLOBAL
+   ============================================== */
 :root {
-    /* Color principal de la marca (similar al rojo/granate del prototipo) */
-    --viva-red: #fd5000;
-    /* Color del texto del menú */
+    /* Colores Principales */
+    --viva-red: #fd5000;         /* Naranja Rojizo Principal */
+    --viva-orange: #ff6600;      /* Naranja Vivo */
     --viva-text-color: #333333;
-    /* Fuente, si quieres ser más específico */
-    /* font-family: 'Poppins', sans-serif; */ 
+    
+    /* Paleta VivaGym Soft */
+    --vg-blue-soft: #B8DEEF;
+    --vg-green-soft: #82E0AA;
+    --vg-green-dark: #58D68D;
 }
 
-/* -------------------------------------- */
-/* AJUSTES GENERALES DEL NAVBAR */
-/* -------------------------------------- */
+/* ==============================================
+   2. PALETA DE PACKS (ESTILO VIVAGYM)
+   ============================================== */
 
-/* Eliminar la sombra por defecto de Bootstrap y usar una más suave si es necesario */
-.navbar {
-    box-shadow: none !important; /* El prototipo tiene una línea muy sutil o ninguna */
-    border-bottom: 1px solid #f0f0f0; /* Añadir una línea inferior muy sutil */
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-}
-
-
-/* -------------------------------------- */
-/* ESTILO DE LOS ENLACES DEL MENÚ */
-/* -------------------------------------- */
-
-/* Aplicar color y peso a los enlaces de navegación */
-.navbar-nav .nav-item .nav-link {
-    color: var(--viva-text-color) !important;
-    font-size: 1rem; /* Tamaño de fuente estándar */
-    font-weight: 400 !important; /* Peso de fuente normal (el prototipo no usa 'fw-semibold') */
-    padding: 0.5rem 1rem; /* Espaciado estándar */
-    transition: color 0.3s ease;
-}
-
-/* Efecto hover/activo */
-.navbar-nav .nav-item .nav-link:hover,
-.navbar-nav .nav-item .nav-link.active {
-    color: var(--viva-red) !important; /* El color principal de la marca */
-}
-
-
-/* -------------------------------------- */
-/* ESTILO DEL BOTÓN "PIDE AHORA" */
-/* -------------------------------------- */
-
-/* Modificar la apariencia del botón principal para que coincida con el prototipo */
-.navbar-nav .nav-item .btn-primary {
-    /* Sobrescribir el estilo inline que tienes y el de Bootstrap */
-    color: #ffffff !important;
-    padding: 6px 20px !important; /* Ajuste del padding para hacerlo más pequeño */
-    border-radius: 20px; /* Bordes redondeados como en el prototipo */
-    font-size: 1rem;
-    font-weight: 700 !important; /* Hacer el texto más audaz */
-    transition: background-color 0.3s ease;
-}
-
-/* Efecto hover del botón */
-.navbar-nav .nav-item .btn-primary:hover {
-    background-color: #8c2421 !important; /* Un tono más oscuro de rojo */
-    border-color: #8c2421 !important;
-}
-/* public/css/main.css */
-
-/* Estilo para las Tarjetas */
-.product-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 15px !important; /* Bordes redondeados */
-}
-
-.product-card:hover {
-    transform: translateY(-5px); /* Efecto de levantar al pasar el ratón */
-    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
-}
-
-/* El botón naranja personalizado */
-.btn-naranja {
-    background-color: #ff6600; /* Color naranja vivo */
+/* Pack Amigos (Naranja) */
+.btn-vg-orange {
+    background-color: var(--viva-orange);
+    border: 2px solid var(--viva-orange);
     color: white;
+    font-weight: bold;
     transition: all 0.3s ease;
 }
-
-.btn-naranja:hover {
-    background-color: #e65c00; /* Naranja un poco más oscuro */
+.btn-vg-orange:hover {
+    background-color: #e65c00; /* Oscurecido para efecto click */
+    border-color: #e65c00;
     color: white;
-    transform: scale(1.05); /* Crece un poquito */
+    transform: translateY(-2px);
+}
+.bg-vg-orange { background-color: var(--viva-orange) !important; color: #fff !important; }
+
+/* Pack Familiar (Azul Suave) */
+.btn-vg-blue {
+    background-color: var(--vg-blue-soft);
+    border: 2px solid var(--vg-blue-soft);
+    color: white;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+.btn-vg-blue:hover {
+    background-color: #8dbdd6; /* Un poco más oscuro */
+    border-color: #8dbdd6;
+    color: white;
+    transform: translateY(-2px);
+}
+.bg-vg-blue { background-color: var(--vg-blue-soft) !important; color: #fff !important; }
+
+/* Pack Vegano (Verde Suave) */
+.btn-vg-green {
+    background-color: var(--vg-green-soft);
+    border: 2px solid var(--vg-green-soft);
+    color: white;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+.btn-vg-green:hover {
+    background-color: var(--vg-green-dark);
+    border-color: var(--vg-green-dark);
+    color: white;
+    transform: translateY(-2px);
+}
+.bg-vg-green { background-color: var(--vg-green-soft) !important; color: #fff !important; }
+
+/* Estados Deshabilitados (Común) */
+.btn-vg-orange:disabled, .btn-vg-blue:disabled, .btn-vg-green:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
-.badge {
-    font-size: 0.9rem;
-}
-/* public/css/main.css */
+/* ==============================================
+   3. OTROS BOTONES Y UTILIDADES DE COLOR
+   ============================================== */
+
+/* Botón Naranja Genérico */
 .btn-naranja {
-    background-color: #ff6600;
+    background-color: var(--viva-orange);
     color: white;
     border: none;
+    transition: all 0.3s ease;
 }
 .btn-naranja:hover {
     background-color: #e65c00;
     color: white;
+    transform: scale(1.05);
 }
-.text-naranja {
-    color: #ff6600 !important;
+
+/* Botón Finalizar Compra */
+.btn-viva-finalizar {
+    background-color: #ff4e00 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 6px !important;
+    transition: background 0.3s ease;
+    text-transform: capitalize;
+}
+.btn-viva-finalizar:hover {
+    background-color: #e04500 !important;
+    color: white !important;
+}
+
+/* Botón Submit Orange (Formularios) */
+.btn-submit-orange {
+    background-color: #fd5000;
+    color: white;
+    font-weight: 600;
+    padding: 12px 60px;
+    border-radius: 6px;
+    border: none;
+    font-size: 1.1rem;
+    transition: background 0.2s;
+}
+.btn-submit-orange:hover {
+    background-color: #CA4000;
+    color: white;
+}
+
+/* Utilidades de Texto y Fondo */
+.text-naranja { color: var(--viva-orange) !important; }
+.bg-naranja { background-color: var(--viva-orange) !important; }
+.text-viva { color: #ff4e00 !important; }
+.bg-viva { background-color: #ff4e00 !important; color: white; }
+
+/* ==============================================
+   4. NAVBAR Y MENÚ
+   ============================================== */
+.nav-logo {
+    height: 45px;
+    width: auto;
+    transform: scale(2.3);
+}
+
+.navbar-nav .nav-link {
+    color: var(--viva-text-color) !important;
+    font-size: 0.95rem;
+    font-weight: 400 !important;
+    padding: 0.5rem 1rem;
+    transition: color 0.3s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: var(--viva-red) !important;
+}
+
+/* Botón "Pide Ahora" del Navbar */
+.navbar-nav .nav-item .btn-primary, .btn-pide-ahora {
+    color: #ffffff !important;
+    padding: 6px 20px !important;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 700 !important;
+    transition: all 0.3s ease;
+    /* Corrección: si usas .btn-primary de bootstrap, asegúrate que no choque */
+}
+.navbar-nav .nav-item .btn-primary:hover, .btn-pide-ahora:hover {
+    background-color: #8c2421 !important;
+    border-color: #8c2421 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.dropdown-menu {
+    border-radius: 12px;
+    padding: 10px;
+    min-width: 180px;
+}
+.dropdown-item {
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-weight: 500;
+}
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+@media (min-width: 992px) {
+    .dropdown-menu-end {
+        right: -10px;
+        top: 120%;
+    }
+}
+
+/* ==============================================
+   5. TARJETAS (PRODUCTOS, BLOG, ETC.)
+   ============================================== */
+.card {
+    border: none;
+    border-radius: 12px;
+}
+
+/* Tarjeta Producto General */
+.product-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 15px !important;
+}
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+/* Tarjeta Viva Lifestyle */
+.card-viva {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-viva .card-img-top {
+    border-bottom: 1px solid #000;
+}
+.card-viva:hover {
+    transform: translateY(-5px);
+    box-shadow: 5px 5px 0px rgba(0,0,0,1) !important; /* Sombra Pop */
+}
+
+/* Headers de tarjetas */
+.card-header {
+    border-bottom: 1px solid #000 !important;
+    border-radius: 0 !important;
+}
+
+/* Contenedor Imagen Producto (Centrado) */
+.img-contenedor-producto {
+    height: 220px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 0px;
+    overflow: hidden;
+}
+.img-contenedor-producto img {
+    max-width: 100%;
+    max-height: 150%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Efecto Hover General */
+.hover-effect { transition: transform 0.2s ease-in-out; }
+.hover-effect:hover { 
+    transform: translateY(-5px); 
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+
+/* ==============================================
+   6. CARRUSEL Y PROMOCIONES
+   ============================================== */
+.hero-carousel-item {
+    height: 550px;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+.carousel-custom-btn {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 5;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.arrow-svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.4); /* Zoom para quitar bordes */
+    transform-origin: center;
+    transition: transform 0.2s;
+}
+.mirror-x { transform: scale(1.4) rotate(180deg); }
+
+/* Cupones */
+.border-dashed {
+    border: 2px dashed #dee2e6;
+    border-radius: 10px;
+    height: 100%;
+}
+.coupon-card { transition: transform 0.2s ease; }
+.coupon-card:hover { transform: translateY(-5px); }
+
+/* ==============================================
+   7. SECCIÓN APP Y NEWSLETTER
+   ============================================== */
+.app-section {
+    padding: 80px 0;
+    background-color: #FDFDFD;
+    overflow: hidden;
+}
+.app-title {
+    font-weight: 800;
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: -1px;
+}
+.app-subtitle {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #222;
+    margin-bottom: 2rem;
+    font-weight: 400;
+}
+
+/* Lista de características App */
+.app-features-list {
+    list-style: none;
+    padding-left: 0;
+}
+.app-features-list li {
+    position: relative;
+    padding-left: 35px; /* Ajustado */
+    margin-bottom: 12px;
+    color: #555;
+    line-height: 1.4;
+    font-size: 1rem;
+}
+.list-icon {
+    position: absolute;
+    left: 0;
+    top: 3px;
+    width: 22px;
+    height: 22px;
+    color: var(--viva-orange); /* Usando variable */
+    font-size: 0.9rem;
+}
+
+.phone-mockup { max-width: 100%; height: auto; }
+
+.store-buttons {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+.store-btn img {
+    height: 45px;
+    transition: transform 0.2s ease;
+}
+.store-btn:hover img { transform: translateY(-2px); }
+
+/* Newsletter */
+.newsletter-section {
+    background-color: var(--vg-blue-soft);
+    padding: 60px 0;
+}
+.newsletter-title {
+    font-weight: 800;
+    color: #333;
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+.newsletter-subtitle {
+    font-size: 1.1rem;
+    color: #444;
+    font-style: italic;
+    margin-bottom: 20px;
+}
+
+/* ==============================================
+   8. CHECKOUT Y FORMULARIOS
+   ============================================== */
+.titulo-viva {
+    font-weight: 800;
+    color: #000;
+    font-size: 2.5rem;
+}
+.card-productos {
+    border: 1px solid #dee2e6 !important;
+    border-radius: 4px !important;
+    box-shadow: none !important;
+    background: #fff;
+}
+.item-producto, .custom-input, .custom-prefix {
+    background-color: #FDFDFD;
+}
+
+/* Inputs */
+.form-control, .custom-input {
+    border-radius: 4px !important;
+    border: 1px solid #ced4da; /* Unificado */
+    padding: 0.6rem 1rem;
+}
+.custom-input { border-color: #FDFDFD; padding: 12px 15px; } /* Override específico */
+
+.asterisk {
+    color: #ec407a;
+    font-weight: bold;
+    margin-left: 2px;
+}
+.custom-check {
+    border-color: #333;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+}
+.help-icon {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 0.9rem;
+    pointer-events: none;
+}
+
+/* ==============================================
+   9. FOOTER Y EXTRAS
+   ============================================== */
+.social-icon {
+    width: 35px;
+    height: 35px;
+    border: 1.5px solid rgba(255,255,255,0.8);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s;
+    font-size: 0.9rem;
+}
+.social-icon:hover {
+    background: white;
+    color: #323232;
+}
+.footer-link:hover { color: white !important; }
+.text-white-50 { color: #ffffff !important; }
+
+/* Cookie Banner */
+.cookie-banner {
+    position: fixed !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 999999 !important;
+    background: #000;
+    color: white;
+    transition: none !important;
+    bottom: 0 !important;
+    display: block !important;
+}
+.cookie-banner:not(.show) { display: none !important; }
+
+/* Iconos Features */
+.feature-img-wrapper {
+    position: relative;
+    margin-bottom: 40px;
+    border-radius: 15px;
+    overflow: visible;
+}
+.feature-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+.feature-icon-box {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.bg-viva-orange { background-color: #fb5102; }
+.bg-viva-blue { background-color: #80a5b3; }
+.search-overlay {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 900px;
+    z-index: 10;
+}
+
+/* Acordeón FAQ */
+.accordion-button:not(.collapsed) {
+    background-color: #fff3eb !important;
+    color: #ff4e00 !important;
+    box-shadow: none !important;
+}
+.accordion-button:focus {
+    box-shadow: none !important;
+    border-color: #000 !important;
+}
+.accordion-item {
+    border: 1px solid #000 !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+}
+/* ==============================================
+TAMAÑO ICONOS SVG
+   ============================================== */
+.viva-icon-svg {
+    width: 50px;
+    height: 50px;
+    border-radius: 25%;
+    object-fit: contain; /* Evita que se deforme */
+    display: inline-block;
+}
+.btn-viva-primary{
+    background-color: #ff4000;
+    border-color: #ff4000;
 }

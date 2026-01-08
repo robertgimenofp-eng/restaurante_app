@@ -1,9 +1,9 @@
 <?php
 class Database {
-    private static $host = "localhost";
+    private static $host = "db";
     private static $db = "restaurante_app";
     private static $user = "root";
-    private static $password = "";
+    private static $password = "root";
     private static $charset = "utf8mb4";
 
     public static function connect() {

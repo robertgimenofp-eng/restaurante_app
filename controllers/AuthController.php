@@ -15,9 +15,8 @@ class AuthController {
 
     // ACCIÓN 2: Solo sirve para PROCESAR los datos (POST)
     // El Router llamará aquí cuando el formulario se envíe
+    // ACCIÓN 2: Solo sirve para PROCESAR los datos (POST)
     public function login() {
-        // Ya sabemos que es POST porque el formulario apunta aquí
-
         // 1. Recoger datos
         $email = $_POST['email'];
         $password = $_POST['contraseña'];
@@ -30,12 +29,26 @@ class AuthController {
 
         $usuario = $userModel->getByEmail($email);
 
-        // 3. Verificar
+        // 3. Verificar contraseña
         if ($usuario && password_verify($password, $usuario->contraseña)) {
-            session_start();
-            $_SESSION['user_id'] = $usuario->id_usuario;
-            $_SESSION['user_name'] = $usuario->nombre;
-            header("Location: index.php?controller=Home&action=index");
+            
+            // LOGUEO EXITOSO
+            $_SESSION['identity'] = $usuario;
+            
+            // --- AQUÍ EMPIEZA LA MAGIA ---
+            // Comprobamos si hay productos en el carrito esperando
+            if(isset($_SESSION['carrito']) && count($_SESSION['carrito']) >= 1) {
+                
+                // Si hay carrito, lo mandamos directo a finalizar la compra.
+                // IMPORTANTE: Asegúrate que esta URL es la que carga tu vista checkout.php
+                header("Location: index.php?controller=Carrito&action=checkout"); 
+                
+            } else {
+                // Si NO hay carrito, lo mandamos al home como siempre
+                header("Location: index.php?controller=Home&action=index");
+            }
+            // --- FIN DE LA MAGIA ---
+
         } else {
             // Si falla, guardamos el error y volvemos a mostrar la vista
             $error = "Credenciales incorrectas";
