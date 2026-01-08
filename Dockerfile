@@ -14,3 +14,8 @@ COPY . /var/www/html/
 
 # 5. Damos permisos al usuario de Apache
 RUN chown -R www-data:www-data /var/www/html
+# Añade esto para apagar el motor incorrecto y encender el bueno
+# Forzamos la desactivación de módulos conflictivos y activamos prefork
+RUN a2dismod mpm_event || true && \
+    a2dismod mpm_worker || true && \
+    a2enmod mpm_prefork
