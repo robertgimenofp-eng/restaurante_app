@@ -4,7 +4,7 @@
 
             <div class="col-md-4 mb-4 text-center">
                 <div class="mb-3">
-                    <img src="/restaurante_app/public/img/logo-white.svg" height="30" class="mb-1" alt="icon">
+                    <img src=" /public/img/logo-white.svg" height="30" class="mb-1" alt="icon">
                     <h5 class="fw-bold mb-0 text-uppercase" style="letter-spacing: 2px;">VIVAEATS</h5>
                 </div>
                 
@@ -19,15 +19,15 @@
                 <h5 class="fw-bold mb-4" style="font-size: 1.1rem;">Información legal</h5>
                 <ul class="list-unstyled">
                     <li class="d-flex align-items-center mb-3">
-                        <img src="/restaurante_app/public/img/logo-white.svg" width="18" class="me-3 opacity-75">
+                        <img src=" /public/img/logo-white.svg" width="18" class="me-3 opacity-75">
                         <a href="index.php?controller=legal&action=index" class="text-decoration-none text-white-50 footer-link">Política de cookies</a>
                     </li>
                     <li class="d-flex align-items-center mb-3">
-                        <img src="/restaurante_app/public/img/logo-white.svg" width="18" class="me-3 opacity-75">
+                        <img src=" /public/img/logo-white.svg" width="18" class="me-3 opacity-75">
                         <a href="index.php?controller=legal&action=index" class="text-decoration-none text-white-50 footer-link">Política de privacidad</a>
                     </li>
                     <li class="d-flex align-items-center mb-3">
-                        <img src="/restaurante_app/public/img/logo-white.svg" width="18" class="me-3 opacity-75">
+                        <img src=" /public/img/logo-white.svg" width="18" class="me-3 opacity-75">
                         <a href="index.php?controller=legal&action=index" class="text-decoration-none text-white-50 footer-link">Términos y condiciones</a>
                     </li>
                 </ul>
@@ -37,15 +37,15 @@
                 <h5 class="fw-bold mb-4" style="font-size: 1.1rem;">Otros enlaces de interés</h5>
                 <ul class="list-unstyled mb-4">
                     <li class="d-flex align-items-center mb-3">
-                        <img src="/restaurante_app/public/img/logo-white.svg" width="18" class="me-3 opacity-75">
+                        <img src=" /public/img/logo-white.svg" width="18" class="me-3 opacity-75">
                         <a href="index.php?controller=Contacto&action=faq" class="text-decoration-none text-white-50 footer-link">Preguntas Frecuentes</a>
                     </li>
                     <li class="d-flex align-items-center mb-3">
-                        <img src="/restaurante_app/public/img/logo-white.svg" width="18" class="me-3 opacity-75">
+                        <img src=" /public/img/logo-white.svg" width="18" class="me-3 opacity-75">
                         <a href="index.php?controller=Contacto&action=index" class="text-decoration-none text-white-50 footer-link">Contacta con nosotros</a>
                     </li>
                     <li class="d-flex align-items-center mb-3">
-                        <img src="/restaurante_app/public/img/logo-white.svg" width="18" class="me-3 opacity-75">
+                        <img src=" /public/img/logo-white.svg" width="18" class="me-3 opacity-75">
                         <a href="#" class="text-decoration-none text-white-50 footer-link">Descarga la app</a>
                     </li>
                 </ul>

@@ -4,7 +4,6 @@ require_once 'models/User.php';
 class AuthController {
 
     // ACCIÓN 1: Solo sirve para MOSTRAR el formulario (GET)
-    // MUESTRA EL LOGIN
     public function showLogin() {
         // 1. Definimos la vista INTERNA
         $view = 'views/auth/login.php';
@@ -15,7 +14,7 @@ class AuthController {
 
     // ACCIÓN 2: Solo sirve para PROCESAR los datos (POST)
     // El Router llamará aquí cuando el formulario se envíe
-    // ACCIÓN 2: Solo sirve para PROCESAR los datos (POST)
+
     public function login() {
         // 1. Recoger datos
         $email = $_POST['email'];
@@ -34,20 +33,17 @@ class AuthController {
             
             // LOGUEO EXITOSO
             $_SESSION['identity'] = $usuario;
-            
-            // --- AQUÍ EMPIEZA LA MAGIA ---
+        
             // Comprobamos si hay productos en el carrito esperando
             if(isset($_SESSION['carrito']) && count($_SESSION['carrito']) >= 1) {
                 
                 // Si hay carrito, lo mandamos directo a finalizar la compra.
-                // IMPORTANTE: Asegúrate que esta URL es la que carga tu vista checkout.php
                 header("Location: index.php?controller=Carrito&action=checkout"); 
                 
             } else {
                 // Si NO hay carrito, lo mandamos al home como siempre
                 header("Location: index.php?controller=Home&action=index");
             }
-            // --- FIN DE LA MAGIA ---
 
         } else {
             // Si falla, guardamos el error y volvemos a mostrar la vista
@@ -56,9 +52,7 @@ class AuthController {
             require_once 'views/main.php';
         }
     }
-    // Añadir en controllers/AuthController.php
 
-    // 1. Muestra la vista (GET)
     // REGISTRO
     public function showRegister() {
         // 1. Definimos el contenido
@@ -84,15 +78,15 @@ class AuthController {
             $telefono = $_POST['telefono'];
             $direccion = $_POST['direccion'];
 
-            // 2.2 Comprobar si el email ya existe (Opcional pero recomendado)
+            // 2.2 Comprobar si el email ya existe
             if ($userModel->getByEmail($email)) {
                 $error = "Ese email ya está registrado";
                 $view = 'views/auth/register.php';
                 require_once 'views/main.php';
-                return; // Paramos aquí
+                return;
             }
 
-            // 2.3 ENCRIPTAR LA CONTRASEÑA (Vital)
+            // 2.3 ENCRIPTAR LA CONTRASEÑA
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
             // 2.4 Preparar datos para el modelo
@@ -106,7 +100,7 @@ class AuthController {
 
             // 2.5 Guardar
             if ($userModel->create($datosUsuario)) {
-                // ÉXITO: Redirigimos al Login para que entre
+                // Redirigimos al Login para que entre
                 header("Location: index.php?controller=Auth&action=showLogin");
             } else {
                 // ERROR: Algo falló en SQL
@@ -118,7 +112,9 @@ class AuthController {
     }
 
     public function logout() {
-        session_start();
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
         session_destroy();
         header("Location: index.php?controller=Auth&action=showLogin");
     }

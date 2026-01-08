@@ -3,13 +3,13 @@
     <div class="carousel-inner">
         
         <div class="carousel-item active">
-            <div class="hero-carousel-item" style="background-image: url('/restaurante_app/public/img/fondo1.webp');">
+            <div class="hero-carousel-item" style="background-image: url('/public/img/fondo1.webp');">
                 <div style="background: rgba(0,0,0,0.2); width:100%; height:100%;"></div>
             </div>
         </div>
 
         <div class="carousel-item">
-            <div class="hero-carousel-item" style="background-image: url('/restaurante_app/public/img/fondo2.webp');">
+            <div class="hero-carousel-item" style="background-image: url('/public/img/fondo2.webp');">
             </div>
         </div>
         

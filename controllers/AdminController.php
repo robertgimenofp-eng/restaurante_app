@@ -11,8 +11,8 @@ class AdminController {
             exit();
         }
 
-        // 2. ¿Es admin? (Asumiendo que guardamos el rol en la sesión al loguear)
-        // Nota: Tendremos que revisar tu AuthController para asegurarnos de que guarda el rol.
+        // 2. Es admin? (Asumiendo que guardamos el rol en la sesión al loguear)
+        // Nota: Tendremos que revisar AuthController para asegurarnos de que guarda el rol.
         if ($_SESSION['identity']->rol != 'admin') {
             header("Location: index.php"); // Lo mandamos al inicio
             exit();

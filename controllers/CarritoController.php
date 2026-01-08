@@ -19,13 +19,13 @@ class CarritoController {
                 $_SESSION['carrito'] = [];
             }
 
-            // Para hacerlo bien, deberíamos sacar los nombres de la BBDD,
-            // pero para que funcione YA, vamos a guardar los IDs y el precio fijo.
+            
+            // pero para que funcione vamos a guardar los IDs y el precio fijo.
             // Luego en la vista del carrito ya recuperaremos los nombres.
             
             $item = [
                 "tipo" => "menu_personalizado",
-                "nombre" => "Menú Personalizado", // Nombre genérico
+                "nombre" => "Menú Personalizado", 
                 "precio" => 13.50,
                 "unidades" => 1,
                 "ingredientes" => [
@@ -37,15 +37,15 @@ class CarritoController {
 
             $_SESSION['carrito'][] = $item;
 
-            // Respondemos al JS con ÉXITO
+            // Respuesta al JS con ÉXITO
             echo json_encode(['status' => 'success']);
         } else {
-            // Respondemos al JS con ERROR
+            // Respuesta al JS con ERROR
             echo json_encode(['status' => 'error', 'msg' => 'Faltan ingredientes']);
         }
     }
-// 2. LÓGICA PARA LOS PACKS DE BEBIDAS (Amigos y Familiar)
-    // Recibe: id_pack y bebidas (bebida1, bebida2...)
+// 1. LÓGICA PARA LOS PACKS DE BEBIDAS (Amigos y Familiar)
+    // Recibe: id_pack y bebidas
     public function addPackComplejo() {
         if (session_status() == PHP_SESSION_NONE) session_start();
 
@@ -55,14 +55,14 @@ class CarritoController {
             // Recogemos las bebidas dinámicamente
             $bebidas_elegidas = [];
             foreach($_POST as $key => $value) {
-                // Buscamos campos que contengan la palabra "bebida" (bebida1, bebida2...)
+                // Buscamos campos que contengan la palabra "bebida" 
                 if(strpos($key, 'bebida') !== false && !empty($value)) {
                     $bebidas_elegidas[] = $value; // Guardamos el ID de la bebida
                 }
             }
 
-            // Asignamos datos (HARDCODEADO POR AHORA para simplificar lógica de packs complejos)
-            // Si quieres hacerlo por BBDD luego me dices, pero estos packs son especiales.
+            // Asignamos datos
+
             if ($id_pack == 34) {
                 $nombre = "Pack Amigos";
                 $precio = 30.00;
@@ -94,24 +94,23 @@ class CarritoController {
         }
     }
 
-    // 3. LÓGICA PARA PRODUCTOS SIMPLES (Pack Vegano, etc)
+    // 3. LÓGICA PARA PRODUCTOS SIMPLES (Pack Vegano)
     // Recibe: id (por URL GET)
     public function add() {
         if (session_status() == PHP_SESSION_NONE) session_start();
 
-        // OJO: El JS manda POST, pero el ID va en la URL (GET)
+        // El JS manda POST, pero el ID va en la URL (GET)
         if(isset($_GET['id'])) {
             $id = $_GET['id'];
 
-            // CONEXIÓN BBDD: Necesaria para sacar el precio real del Pack Vegano
+            // CONEXIÓN BBDD
             require_once 'config/db.php';
             $database = new Database();
             $db = $database->connect();
             
-            // Usamos tu modelo Producto para buscar info
-            $productoModel = new Producto($db);
-            // NOTA: Asumo que tienes un método getById o similar. 
-            // Si no lo tienes, usamos getAll y filtramos (menos eficiente pero funciona con lo que tienes).
+            // Usamos modelo Producto
+            $productoModel = new Producto($db); 
+
             $todos = $productoModel->getAll();
             $producto_encontrado = null;
 
@@ -128,7 +127,7 @@ class CarritoController {
                 $_SESSION['carrito'][] = [
                     "id_producto" => $producto_encontrado->id_producto,
                     "nombre" => $producto_encontrado->nombre,
-                    "precio" => $producto_encontrado->precio, // ¡Precio real de la BBDD!
+                    "precio" => $producto_encontrado->precio,
                     "unidades" => 1,
                     "tipo" => "simple"
                 ];
@@ -140,7 +139,7 @@ class CarritoController {
             echo json_encode(['status' => 'error', 'msg' => 'Falta ID']);
         }
     }
-    // NUEVA FUNCIÓN: Devuelve el HTML del carrito actualizado para JS
+    // Devuelve el HTML del carrito actualizado para JS
     public function getCarritoHtml() {
         if (session_status() == PHP_SESSION_NONE) session_start();
         $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : [];
@@ -191,7 +190,7 @@ class CarritoController {
         ]);
     }
 
-    // EXTRA: Función para eliminar (ya que ponemos el botón X)
+    // Función para eliminar
     public function remove() {
         if (session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_POST['index'])) {
@@ -203,7 +202,7 @@ class CarritoController {
         }
         $this->getCarritoHtml(); // Devolvemos el carrito actualizado directamente
     }
-    // MUESTRA LA PÁGINA DE CHECKOUT (VISUAL)
+    // MUESTRA LA PÁGINA DE CHECKOUT
     public function checkout() {
     // 1. COMPROBAR CARRITO
     if (!isset($_SESSION['carrito'])) {
@@ -211,7 +210,7 @@ class CarritoController {
     }
     $carrito = $_SESSION['carrito'];
 
-    // 2. RESCATAR IMÁGENES DE LA BBDD (El "Bloque de Rescate")
+    // 2. RESCATAR IMÁGENES DE LA BBDD
     require_once 'config/db.php';
     $database = new Database();
     $db = $database->connect();
@@ -224,7 +223,6 @@ class CarritoController {
     $imagenes_map = []; // Array donde guardaremos las fotos
     if(!empty($ids_productos)) {
         $ids_str = implode(',', array_unique($ids_productos));
-        // OJO: Asegúrate que la tabla se llama 'producto' o 'productos'
         $sql = "SELECT id_producto, imagen_url as imagen FROM producto WHERE id_producto IN ($ids_str)";
         $stmt = $db->prepare($sql);
         $stmt->execute();
@@ -233,7 +231,7 @@ class CarritoController {
         }
     }
 
-    // 3. CÁLCULOS MATEMÁTICOS
+    // 3. CÁLCULOS
     $subtotal = 0;
     foreach($carrito as $item) {
         $subtotal += $item['precio'] * $item['unidades'];
@@ -259,12 +257,12 @@ class CarritoController {
     $total_final = ($subtotal + $gastos_envio) - $descuento;
     if($total_final < 0) $total_final = 0;
 
-    // 4. RENDERIZAR VISTA (Las variables de arriba estarán disponibles en la vista)
+    // 4. RENDERIZAR VISTA
     $view = 'views/carrito/checkout.php';
     require_once 'views/main.php';
 }
 
-    // PROCESA EL PEDIDO (BASE DE DATOS)
+    // PROCESA EL PEDIDO
     public function confirmar() {
         if (session_status() == PHP_SESSION_NONE) session_start();
         require_once 'config/db.php';
@@ -280,10 +278,9 @@ class CarritoController {
             foreach($carrito as $c) $total += $c['precio'];
 
             // 2. Insertar Cabecera del Pedido
-            // Asumimos usuario ID 1 si no hay login, o sacalo de $_SESSION['user_id']
             $usuario_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1; 
             $fecha = date('Y-m-d H:i:s');
-            $estado = 'Pendiente'; // O 'Pagado' si simulamos éxito directo
+            $estado = 'Pendiente'; // O 'Pagado'
 
             $sql = "INSERT INTO pedidos (usuario_id, fecha, coste, estado) VALUES (:uid, :fecha, :coste, :estado)";
             $stmt = $db->prepare($sql);

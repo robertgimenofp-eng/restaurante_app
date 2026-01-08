@@ -30,7 +30,7 @@
                         </span>
 
                         <div class="img-contenedor-producto rounded-top">
-                            <img src="/restaurante_app/public/img/productos/<?php echo $prod->imagen_url; ?>"
+                            <img src=" /public/img/productos/<?php echo $prod->imagen_url; ?>"
                                 alt="<?php echo $prod->nombre; ?>"
                                 onerror="this.src='https://via.placeholder.com/200?text=Sin+Imagen'">
                         </div>

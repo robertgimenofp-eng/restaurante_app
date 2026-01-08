@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-12-2025 a las 19:00:07
+-- Tiempo de generación: 08-01-2026 a las 18:25:14
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -32,6 +32,16 @@ CREATE TABLE `estado_pedido` (
   `nombre_estado` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `estado_pedido`
+--
+
+INSERT INTO `estado_pedido` (`id_estado`, `nombre_estado`) VALUES
+(1, 'Confirmado'),
+(2, 'En Cocina'),
+(3, 'En Reparto'),
+(4, 'Entregado');
+
 -- --------------------------------------------------------
 
 --
@@ -59,6 +69,23 @@ CREATE TABLE `linea_pedido` (
   `id_producto` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `linea_pedido`
+--
+
+INSERT INTO `linea_pedido` (`id_linea`, `cantidad`, `precio_unitario`, `id_pedido`, `id_producto`) VALUES
+(1, 2, 10.00, 1, 1),
+(2, 1, 5.50, 1, 1),
+(3, 1, 11.50, 2, 2),
+(4, 1, 11.50, 2, 3),
+(5, 1, 11.50, 3, 2),
+(6, 1, 11.50, 3, 3),
+(7, 1, 11.50, 4, 2),
+(8, 1, 30.00, 4, 34),
+(9, 1, 30.00, 5, 34),
+(10, 1, 11.50, 5, 2),
+(11, 1, 11.50, 5, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -70,11 +97,24 @@ CREATE TABLE `log` (
   `id_usuario` int(11) DEFAULT NULL,
   `id_entidad` int(11) DEFAULT NULL,
   `entidad_afectada` varchar(50) DEFAULT NULL,
-  `accion` enum('INSERT','UPDATE','DELETE','LOGIN','LOGOUT') DEFAULT NULL,
+  `accion` enum('INSERT','UPDATE','DELETE','CREATE') DEFAULT NULL,
   `descripcion` text DEFAULT NULL,
   `fecha_hora` datetime DEFAULT current_timestamp(),
   `ip` varchar(45) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `log`
+--
+
+INSERT INTO `log` (`id_log`, `id_usuario`, `id_entidad`, `entidad_afectada`, `accion`, `descripcion`, `fecha_hora`, `ip`) VALUES
+(1, 1, 1, 'producto', 'DELETE', 'Se eliminó el producto con ID: 1', '2026-01-08 15:09:32', '::1'),
+(2, 1, 1, 'producto', 'UPDATE', 'Se actualizó el producto: Spicy Grill Burger (ID: 1)', '2026-01-08 15:11:59', '::1'),
+(3, 1, 39, 'producto', '', 'Se creó el producto: dabid', '2026-01-08 15:12:09', '::1'),
+(4, 1, 39, 'producto', 'DELETE', 'Se eliminó el producto con ID: 39', '2026-01-08 15:12:13', '::1'),
+(5, 1, 40, 'producto', 'CREATE', 'Se creó el producto: asddas', '2026-01-08 15:15:01', '::1'),
+(6, 1, 40, 'producto', 'DELETE', 'Se eliminó el producto con ID: 40', '2026-01-08 15:15:05', '::1'),
+(7, 1, 1, 'producto', 'UPDATE', 'Se actualizó el producto: Spicy Grill Burger (ID: 1)', '2026-01-08 15:48:44', '::1');
 
 -- --------------------------------------------------------
 
@@ -91,6 +131,15 @@ CREATE TABLE `oferta` (
   `fecha_fin` date DEFAULT NULL,
   `codigo_opcional` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `oferta`
+--
+
+INSERT INTO `oferta` (`id_oferta`, `tipo`, `valor`, `condiciones_min_cantid`, `fecha_inicio`, `fecha_fin`, `codigo_opcional`) VALUES
+(1, 'porcentaje', 20.00, 0, '2024-01-01', '2030-12-31', 'HOLA20'),
+(2, 'porcentaje', 50.00, 0, '2024-01-01', '2030-12-31', 'JUEVESFIT'),
+(3, 'envio', 100.00, 15, '2024-01-01', '2030-12-31', 'ENVIOFREE');
 
 -- --------------------------------------------------------
 
@@ -120,6 +169,17 @@ CREATE TABLE `pedido` (
   `id_usuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `pedido`
+--
+
+INSERT INTO `pedido` (`id_pedido`, `fecha`, `total`, `id_estado`, `id_usuario`) VALUES
+(1, '2026-01-02 05:12:04', 25.50, 1, 1),
+(2, '2026-01-08 00:00:00', 0.00, 1, 1),
+(3, '2026-01-08 00:00:00', 18.40, 1, 2),
+(4, '2026-01-08 00:00:00', 41.50, 1, 1),
+(5, '2026-01-08 00:00:00', 53.00, 2, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -142,22 +202,26 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`id_producto`, `nombre`, `descripcion`, `precio`, `categoria`, `imagen_url`, `id_oferta`, `stock`) VALUES
-(1, 'Spicy Grill Burger', 'Pan integral, hamburguesa de pollo o soja, queso light, tomate, lechuga, cebolla morada y mostaza.', 11.50, 'Fit Burgers', 'spicy_grill_burger.webp', NULL, 50),
-(2, 'Fit Burger Pollo', 'Pan integral, hamburguesa de pollo o soja, queso light, tomate, lechuga y pepinillo.', 12.50, 'Fit Burgers', 'fit_burger_pollo.webp', NULL, 50),
-(3, 'BBQ Fit Burger', 'Pan de centeno, hamburguesa de pavo, queso fundido bajo en grasa, cebolla morada y salsa barbacoa zero.', 13.50, 'Fit Burgers', 'bbq_fit_burger.webp', NULL, 50),
-(4, 'Vegan Crunch Burger', 'Pan de avena, hamburguesa de lentejas y quinoa, tomate seco, rúcula, pepino y hummus.', 13.00, 'Fit Burgers', 'vegan_crunch_burger.webp', NULL, 50),
-(5, 'Vegan Energy Wrap', 'Tortilla de espinaca, hummus de cúrcuma, garbanzos crujientes, rúcula, zanahoria y remolacha.', 10.50, 'Wraps & Bowls', 'vegan_energy_wrap.webp', NULL, 50),
-(6, 'Chicken Protein Wrap', 'Tortilla integral, pollo marinado, espinacas, pimientos asados, queso fresco y aguacate.', 10.00, 'Wraps & Bowls', 'chicken_protein_wrap.webp', NULL, 50),
-(7, 'Power Green Bowl', 'Quinoa tricolor, pollo o tofu, aguacate, espinacas, brócoli, pepino y semillas de calabaza.', 9.50, 'Wraps & Bowls', 'power_green_bowl.webp', NULL, 50),
-(8, 'Mediterranean Glow Bowl', 'Cuscús integral, garbanzos especiados, calabacín, pimientos, tomate cherry, aceitunas y feta.', 10.20, 'Wraps & Bowls', 'mediterranean_glow_bowl.webp', NULL, 50),
-(9, 'Bolas Dátil', 'Bolitas energéticas de dátil, avena y cacao puro (Pack de 3).', 4.50, 'Snacks Saludables', 'bolas_datil.webp', NULL, 100),
-(10, 'Yogur Granola', 'Yogur griego con granola casera y frutos rojos frescos.', 3.30, 'Snacks Saludables', 'yogur_granola.webp', NULL, 100),
-(11, 'Kale Chips', 'Chips de kale al horno crujientes con un toque de sal marina.', 2.50, 'Snacks Saludables', 'kale_chips.webp', NULL, 100),
-(12, 'Barrita Proteica', 'Barrita proteica de frutos secos y miel, ideal para post-entreno.', 0.50, 'Snacks Saludables', 'barrita_proteica.webp', NULL, 200),
-(13, 'Smoothie Verde', 'Manzana, espinaca, apio, pepino, limón y jengibre.', 2.50, 'Bebidas', 'smoothie_verde.webp', NULL, 50),
-(14, 'Agua 1L', 'Botella de agua mineral natural (Envase reciclable).', 1.00, 'Bebidas', 'agua_1l.webp', NULL, 200),
-(15, 'Kombucha', 'Bebida fermentada probiótica sabor frutos del bosque.', 3.00, 'Bebidas', 'kombucha.webp', NULL, 50),
-(16, 'Zumo Naranja', 'Zumo de naranja 100% natural exprimido al momento.', 2.00, 'Bebidas', 'zumo_naranja.webp', NULL, 50);
+(1, 'Spicy Grill Burger', 'Pan integral, hamburguesa de pollo o soja, queso light, tomate, lechuga, cebolla morada y mostaza.', 12.50, 'Fit Burgers', 'spicygrill.webp', NULL, 55),
+(2, 'Fit Burger Pollo', 'Pan integral, hamburguesa de pollo o soja, queso light, tomate, lechuga y pepinillo.', 11.50, 'Fit Burgers', 'pollofit.webp', NULL, 50),
+(3, 'BBQ Fit Burger', 'Pan de centeno, hamburguesa de pavo, queso fundido bajo en grasa, cebolla morada y salsa barbacoa zero.', 11.50, 'Fit Burgers', 'bbqfit.webp', NULL, 50),
+(4, 'Vegan Crunch Burger', 'Pan de avena, hamburguesa de lentejas y quinoa, tomate seco, rúcula, pepino y hummus.', 11.50, 'Fit Burgers', 'vegancrunch.webp', NULL, 50),
+(5, 'Vegan Energy Wrap', 'Tortilla de espinaca, hummus de cúrcuma, garbanzos crujientes, rúcula, zanahoria y remolacha.', 10.50, 'Wraps & Bowls', 'veganwrap.webp', NULL, 50),
+(6, 'Chicken Protein Wrap', 'Tortilla integral, pollo marinado, espinacas, pimientos asados, queso fresco y aguacate.', 10.50, 'Wraps & Bowls', 'chickenwrap.webp', NULL, 50),
+(7, 'Power Green Bowl', 'Quinoa tricolor, pollo o tofu, aguacate, espinacas, brócoli, pepino y semillas de calabaza.', 10.50, 'Wraps & Bowls', 'veganbowl.webp', NULL, 50),
+(8, 'Mediterranean Glow Bowl', 'Cuscús integral, garbanzos especiados, calabacín, pimientos, tomate cherry, aceitunas y feta.', 10.50, 'Wraps & Bowls', 'mediterraneanbowl.webp', NULL, 50),
+(9, 'Bolas Dátil', 'Bolitas energéticas de dátil, avena y cacao puro (Pack de 3).', 3.50, 'Snacks Saludables', 'bolasdatil.webp', NULL, 100),
+(10, 'Yogur Granola', 'Yogur griego con granola casera y frutos rojos frescos.', 3.30, 'Snacks Saludables', 'yogurgranola.webp', NULL, 100),
+(11, 'Kale Chips', 'Chips de kale al horno crujientes con un toque de sal marina.', 2.50, 'Snacks Saludables', 'kale.webp', NULL, 100),
+(12, 'Barritas Proteicas', 'Barrita proteica de frutos secos y miel, ideal para post-entreno. (Incluyen 4)', 1.50, 'Snacks Saludables', 'barritasproteina.webp', NULL, 200),
+(13, 'Smoothie Verde', 'Manzana, espinaca, apio, pepino, limón y jengibre.', 2.50, 'Bebidas', 'smothie.webp', NULL, 50),
+(14, 'Agua 1L', 'Botella de agua mineral natural (Envase reciclable).', 1.50, 'Bebidas', 'agua1l.webp', NULL, 200),
+(15, 'Kombucha', 'Bebida fermentada probiótica sabor frutos del bosque.', 2.00, 'Bebidas', 'kombucha.webp', NULL, 50),
+(16, 'Zumo Naranja', 'Zumo de naranja 100% natural exprimido al momento.', 2.00, 'Bebidas', 'zumo.webp', NULL, 50),
+(33, 'Menú Personalizado', 'Menú Personalizado', 13.50, 'Menús', 'menupersonalizado.webp', NULL, 100),
+(34, 'Pack Amigos', '2 Burgers, 1 Wrap, 1 Bowl...', 30.00, 'Menús', 'packamigos.webp', NULL, 100),
+(35, 'Pack Familiar', '3 Burgers, 2 Wraps...', 50.00, 'Menús', 'packfamiliar.webp', NULL, 100),
+(36, 'Pack Vegano', 'Pack vegano', 18.00, 'Menús', 'packvegano.webp', NULL, 100);
 
 -- --------------------------------------------------------
 
@@ -181,7 +245,7 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `nombre`, `email`, `contraseña`, `telefono`, `direccion`, `rol`, `fecha_registro`) VALUES
-(1, 'Admin', 'admin@restaurante.com', '$2y$10$TEygrWugQEB68ox7WkmFnuCgYDJoOslGGbR7Om98xgCfk1SPY4Biu', '638001292', 'Carrer d\Anselm Clavé 64', 'admin', '2025-12-05 18:06:53'),
+(1, 'Admin', 'admin@restaurante.com', '$2y$10$TEygrWugQEB68ox7WkmFnuCgYDJoOslGGbR7Om98xgCfk1SPY4Biu', '638001292', 'Carrer dAnselm Clavé 64', 'admin', '2025-12-05 18:06:53'),
 (2, 'dabid', 'davidrojasfp24@gmail.com', '$2y$10$pZUmbWqIcWQJ1LtuYNEPWe5E4ewiL2aBCM9Xhw47OlAAHL5PoPhPS', '617544515', 'Anselmo Clavel 65', 'cliente', '2025-12-11 18:13:52');
 
 --
@@ -259,7 +323,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `estado_pedido`
 --
 ALTER TABLE `estado_pedido`
-  MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_estado` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `ingrediente`
@@ -271,19 +335,19 @@ ALTER TABLE `ingrediente`
 -- AUTO_INCREMENT de la tabla `linea_pedido`
 --
 ALTER TABLE `linea_pedido`
-  MODIFY `id_linea` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_linea` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `log`
 --
 ALTER TABLE `log`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `oferta`
 --
 ALTER TABLE `oferta`
-  MODIFY `id_oferta` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_oferta` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `pago`
@@ -295,13 +359,13 @@ ALTER TABLE `pago`
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pedido` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_producto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT de la tabla `usuario`

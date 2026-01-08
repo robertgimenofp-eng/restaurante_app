@@ -37,8 +37,8 @@ XAMPP).
 - Developer workflows (how to run/debug):
   - The app is intended to run under XAMPP/localhost. Place the repo
     root under your `htdocs` (example path: `c:\xampp\htdocs\restaurante_app`).
-  - Start Apache + MySQL in XAMPP, then open `http://localhost/restaurante_app/`.
-  - Use `test_db.php` to test DB access: `http://localhost/restaurante_app/test_db.php`.
+  - Start Apache + MySQL in XAMPP, then open `http://localhost /`.
+  - Use `test_db.php` to test DB access: `http://localhost /test_db.php`.
 
 - Repo and PR guidance for AI agents:
   - Do not change `config/db.php` credentials silently — add an

@@ -1,14 +1,16 @@
-# Usamos PHP 8.2 con Apache integrado
+# 1. Usamos la imagen oficial de PHP con Apache
 FROM php:8.2-apache
 
-# Instalamos las extensiones para conectar con MySQL (PDO y Mysqli)
+# 2. Instalamos las extensiones para conectar con la base de datos
+# (Vital para que funcione tu clase Database.php)
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-# Activamos mod_rewrite para que funcionen las rutas amigables del MVC
+# 3. Activamos el módulo "rewrite" de Apache
+# (Obligatorio para que funcione tu MVC y las rutas amigables)
 RUN a2enmod rewrite
 
-# Copiamos tu código al servidor web del contenedor
+# 4. Copiamos todos tus archivos al contenedor
 COPY . /var/www/html/
 
-# Damos permisos al usuario de Apache para evitar errores de escritura
+# 5. Damos permisos al usuario de Apache
 RUN chown -R www-data:www-data /var/www/html

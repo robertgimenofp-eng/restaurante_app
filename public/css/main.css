@@ -1,3 +1,18 @@
+/* 1. IMPORTAR LAS FUENTES (Pon esto en la primera línea de tu CSS) */
+@import url('https://fonts.googleapis.com/css2?family=Anybody:wght@700&family=Open+Sans:wght@400;600&display=swap');
+
+/* 2. APLICARLAS */
+
+/* Para todo el texto normal -> Open Sans */
+body {
+    font-family: 'Open Sans', sans-serif;
+}
+
+/* Para todos los títulos -> Anybody (Bold) */
+h1, h2, h3, h4, h5, h6, .titulo, .card-title {
+    font-family: 'Anybody', cursive; /* Anybody es muy estilizada */
+    font-weight: 700;
+}
 /* ==============================================
    1. VARIABLES Y CONFIGURACIÓN GLOBAL
    ============================================== */

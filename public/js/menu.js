@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            let datos = new Data();
+            let datos = new FormData();
             datos.append('principal', principal);
             datos.append('snack', snack);
             datos.append('bebida', bebida);
