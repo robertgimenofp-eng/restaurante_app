@@ -1,27 +1,28 @@
 <?php
 class Database {
-    private static $host = "db";
-    private static $db = "restaurante_app";
-    private static $user = "root";
-    private static $password = "root";
-    private static $charset = "utf8mb4";
+    // Si existe la variable de entorno (Nube), úsala. Si no, usa "db" (Docker local)
+    private static $host;
+    private static $db;
+    private static $user;
+    private static $password;
 
     public static function connect() {
+        // Asignamos valores dinámicamente
+        self::$host = getenv('MYSQLHOST') ?: 'db'; 
+        self::$db   = getenv('MYSQLDATABASE') ?: 'restaurante_app';
+        self::$user = getenv('MYSQLUSER') ?: 'root';
+        self::$password = getenv('MYSQLPASSWORD') ?: 'root';
+        
+        // En Railway a veces el puerto es distinto, pero por defecto suele ir bien.
+        // Si falla, avísame.
+
         try {
-            $pdo = new PDO(
-                "mysql:host=" . self::$host . ";dbname=" . self::$db . ";charset=" . self::$charset,
-                self::$user,
-                self::$password
-            );
-
-            // Opciones recomendadas
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-
-            return $pdo;
-
+            $conexion = new PDO("mysql:host=".self::$host.";dbname=".self::$db.";charset=utf8mb4", self::$user, self::$password);
+            // ... resto de tu código igual ...
+            $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $conexion;
         } catch (PDOException $e) {
-            die("Error en la conexión a la base de datos: " . $e->getMessage());
+            die("Error: " . $e->getMessage());
         }
     }
 }
