@@ -25,7 +25,6 @@ class PromocionesController {
                 'valor' => $oferta->valor,            // Tu columna de la BBDD
                 'tipo'  => $oferta->tipo              // Tu columna (por si es % o € fijos)
             ];
-
             // Formateamos el mensaje según el valor
             // Nota: asumo que 'valor' es un porcentaje, ej: 20
             echo json_encode([

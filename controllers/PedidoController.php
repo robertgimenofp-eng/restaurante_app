@@ -3,7 +3,7 @@
 
 class PedidoController {
     public function hacer() {
-        // 1. SEGURIDAD
+            // 1. SEGURIDAD
         if (!isset($_SESSION['identity'])) {
             header("Location: index.php?controller=Auth&action=showlogin");
             exit(); 
@@ -14,12 +14,12 @@ class PedidoController {
             exit();
         }
 
-        // --- CONEXIÓN BD ---
+            // --- CONEXIÓN BD ---
         require_once 'config/db.php';
         $database = new Database();
         $db = $database->connect();
-
-        // 2. CÁLCULO DE COSTES
+   
+            // 2. CÁLCULO DE COSTES
         $usuario_id = $_SESSION['identity']->id_usuario; 
         
         // A) Subtotal de los productos (Hamburguesas, bebidas...)
