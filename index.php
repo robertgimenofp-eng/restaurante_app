@@ -1,5 +1,4 @@
 <?php
-echo "Hola, el servidor está vivo"; die();
 // index.php
 session_start();
 // Cargar controladores
