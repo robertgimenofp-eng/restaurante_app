@@ -1,7 +1,7 @@
 <?php
 // models/Producto.php
 
-class Producto {
+class ProductoDAO {
     private $db;
 
     public function __construct($db) {

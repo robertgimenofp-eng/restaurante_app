@@ -1,5 +1,5 @@
 <?php
-class Log {
+class LogDAO {
     private $db;
 
     public function __construct($db) {

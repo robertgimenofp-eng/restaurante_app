@@ -2,7 +2,7 @@
 // models/Oferta.php
 require_once __DIR__ . '/../config/db.php'; 
 
-class Oferta {
+class OfertaDAO {
     
     public static function buscarPorCodigo($codigo) {
         

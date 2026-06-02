@@ -1,5 +1,5 @@
 <?php
-class User {
+class UsuarioDAO {
     private $db;
 
     public function __construct($db) {
