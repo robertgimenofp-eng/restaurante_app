@@ -12,12 +12,12 @@
                     
                     <div class="flex-shrink-0 me-4">
                         <?php 
-                            // Aquí la vista solo CONSULTA el mapa que preparó el controlador
+                            // Aquí la vista CONSULTA el mapa que preparó el controlador
                             $id = $item['id_producto'];
                             $nombre_fichero = isset($imagenes_map[$id]) ? $imagenes_map[$id] : 'default.jpg';
                             $imgSrc = "public/img/productos/" . $nombre_fichero;
                         ?>
-                        <img src="<?= $imgSrc ?>" 
+                            <img src="<?= $imgSrc ?>" 
                              class="img-fluid rounded-3" 
                              style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px; border: 1px solid #f0f0f0;"
                              alt="<?= $item['nombre'] ?>"

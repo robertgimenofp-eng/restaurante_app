@@ -7,7 +7,7 @@ class Producto {
     public function __construct($db) {
         $this->db = $db;
     }
-
+ 
     public function getAll() {
         // Pedimos todos los productos
         $query = "SELECT * FROM producto";

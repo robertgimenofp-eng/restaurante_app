@@ -141,7 +141,7 @@ export default class OrderManager {
         });
     }
 
-    // --- 4. LÓGICA DE ACTUALIZACIÓN (RESTAURADA) ---
+    // --- 4. LÓGICA DE ACTUALIZACIÓN  ---
     async updateStatus(id, idEstado) {
         try {
             const res = await fetch('index.php?controller=Pedido&action=apiCambiarEstado', {
@@ -164,7 +164,7 @@ export default class OrderManager {
         }
     }
 
-    // --- 5. LÓGICA DE DETALLES (RESTAURADA) ---
+    // --- 5. LÓGICA DE DETALLES ---
     async showDetails(id) {
         try {
             const res = await fetch(`index.php?controller=Pedido&action=apiDetalles&id=${id}`);

@@ -14,7 +14,7 @@ export default class ProductManager {
     async renderTable() {
         try {
             const response = await fetch('index.php?controller=Producto&action=apiListar');
-            const productos = await response.json();
+            const productos = await response.json(); //Espera respuesta JSON
 
             let html = `
                 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -185,7 +185,7 @@ export default class ProductManager {
     }
 
     // --- 5. GUARDAR (Crear o Editar) ---
-    async saveProduct(formData) {
+    async saveProduct(formData) { // formData para subir las imagenes
         try {
             const res = await fetch('index.php?controller=Producto&action=save', {
                 method: 'POST',

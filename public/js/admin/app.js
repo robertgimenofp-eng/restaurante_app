@@ -19,12 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 3. Evento para Botón PEDIDOS (¡Esto es lo que te faltaba!)
-    // ... dentro del addEventListener ...
+    // 3. Evento para Botón PEDIDOS
     if (btnPedidos) {
         btnPedidos.addEventListener('click', (e) => {
             e.preventDefault();
-            console.log("¡CLICK DETECTADO EN PEDIDOS!"); // <--- AÑADE ESTO
+            console.log("¡CLICK DETECTADO EN PEDIDOS!"); 
             loadModule('pedidos');
         });
     }
@@ -63,7 +62,7 @@ function loadModule(section) {
         manager.init();
     }
 }
-// Añade esto a tu app.js o crea un AuditManager.js
+
 document.getElementById('btn-logs')?.addEventListener('click', () => {
     fetch('index.php?controller=Admin&action=apiListarLogs')
         .then(res => res.json())
@@ -98,7 +97,7 @@ document.getElementById('btn-logs')?.addEventListener('click', () => {
             document.getElementById('admin-content').innerHTML = html;
         });
 });
-// Dentro del DOMContentLoaded de app.js
+
 const btnInicio = document.getElementById('btn-inicio');
 
 if (btnInicio) {

@@ -280,7 +280,7 @@ class CarritoController {
             // 2. Insertar Cabecera del Pedido
             $usuario_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 1; 
             $fecha = date('Y-m-d H:i:s');
-            $estado = 'Pendiente'; // O 'Pagado'
+            $estado = 'Pendiente'; 
 
             $sql = "INSERT INTO pedidos (usuario_id, fecha, coste, estado) VALUES (:uid, :fecha, :coste, :estado)";
             $stmt = $db->prepare($sql);

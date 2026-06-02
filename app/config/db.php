@@ -1,13 +1,15 @@
 <?php
 
-class Database {
-    private static $host = "db";
+class Database
+{
+    private static $host = "localhost";
     private static $db = "restaurante_app";
     private static $user = "root";
-    private static $password = "root";
+    private static $password = "";
     private static $charset = "utf8mb4";
 
-    public static function connect() {
+    public static function connect()
+    {
         try {
             $pdo = new PDO(
                 "mysql:host=" . self::$host . ";dbname=" . self::$db . ";charset=" . self::$charset,
