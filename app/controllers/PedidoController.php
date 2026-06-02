@@ -15,9 +15,8 @@ class PedidoController {
         }
 
             // --- CONEXIÓN BD ---
-        require_once 'config/db.php';
-        $database = new Database();
-        $db = $database->connect();
+        require_once 'app/models/PedidoDAO.php';
+        $pedidoDAO = new PedidoDAO();
    
             // 2. CÁLCULO DE COSTES
         $usuario_id = $_SESSION['identity']->id_usuario; 
@@ -66,29 +65,8 @@ class PedidoController {
 
 
         try {
-            // 3. GUARDAR EL PEDIDO (Tabla 'pedido')
-            $sql = "INSERT INTO pedido (id_usuario, fecha, total, id_estado) VALUES (:usuario, CURDATE(), :total, 1)";
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam(':usuario', $usuario_id);
-            $stmt->bindParam(':total', $total_pedido);
-            $stmt->execute();
-            
-            $pedido_id = $db->lastInsertId();
-
-            // 4. GUARDAR LOS PRODUCTOS (Tabla 'linea_pedido')
-            // AQUÍ ESTÁ LA CLAVE DE LA IMAGEN: Guardamos el 'id_producto' correcto.
-            // Luego, al leer el pedido, el sistema busca la foto asociada a este ID.
-            $sql_linea = "INSERT INTO linea_pedido (id_pedido, id_producto, cantidad, precio_unitario) VALUES (:pedido, :producto, :cantidad, :precio)";
-            $stmt_linea = $db->prepare($sql_linea);
-
-            foreach($_SESSION['carrito'] as $elemento){
-                // Aseguramos que guardamos el ID del producto que toca
-                $stmt_linea->bindValue(':pedido', $pedido_id);
-                $stmt_linea->bindValue(':producto', $elemento['id_producto']); 
-                $stmt_linea->bindValue(':cantidad', $elemento['unidades']);
-                $stmt_linea->bindValue(':precio', $elemento['precio']);
-                $stmt_linea->execute();
-            }
+            // 3. y 4. GUARDAR EL PEDIDO Y SUS LÍNEAS a través del DAO
+            $pedidoDAO->crearPedidoCompleto($usuario_id, $total_pedido, $_SESSION['carrito']);
 
             // 5. LIMPIEZA
             unset($_SESSION['carrito']);
@@ -113,28 +91,11 @@ class PedidoController {
             exit();
         }
 
-        require_once 'config/db.php';
-        $database = new Database();
-        $db = $database->connect();
-
-        // SQL CORREGIDO: Solo pedimos lo que existe de verdad
-        $sql = "SELECT 
-                    p.id_pedido,
-                    p.fecha,
-                    p.total,
-                    u.nombre as nombre_usuario,
-                    u.direccion,       /* Solo direccion */
-                    ep.nombre_estado,
-                    ep.id_estado
-                FROM pedido p
-                INNER JOIN usuario u ON p.id_usuario = u.id_usuario
-                INNER JOIN estado_pedido ep ON p.id_estado = ep.id_estado
-                ORDER BY p.id_pedido DESC";
+        require_once 'app/models/PedidoDAO.php';
+        $pedidoDAO = new PedidoDAO();
 
         try {
-            $stmt = $db->prepare($sql);
-            $stmt->execute();
-            $pedidos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $pedidos = $pedidoDAO->apiListarAdmin();
             echo json_encode($pedidos);
         } catch (PDOException $e) {
             // Si falla, enviamos el error al JS para verlo en consola
@@ -148,22 +109,11 @@ class PedidoController {
         if (!isset($_GET['id'])) exit();
         $id_pedido = $_GET['id'];
 
-        require_once 'config/db.php'; $database = new Database(); $db = $database->connect();
+        require_once 'app/models/PedidoDAO.php';
+        $pedidoDAO = new PedidoDAO();
 
-        $sql = "SELECT 
-                    lp.cantidad,
-                    lp.precio_unitario,
-                    prod.nombre as nombre_producto,
-                    prod.imagen_url
-                FROM linea_pedido lp
-                INNER JOIN producto prod ON lp.id_producto = prod.id_producto
-                WHERE lp.id_pedido = :id";
-
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam(':id', $id_pedido);
-        $stmt->execute();
-        
-        echo json_encode($stmt->fetchAll(PDO::FETCH_ASSOC));
+        $detalles = $pedidoDAO->apiDetalles($id_pedido);
+        echo json_encode($detalles);
         exit();
     }
 
@@ -173,14 +123,10 @@ class PedidoController {
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (isset($data['id_pedido']) && isset($data['id_estado'])) {
-            require_once 'config/db.php'; $database = new Database(); $db = $database->connect();
-
-            $sql = "UPDATE pedido SET id_estado = :estado WHERE id_pedido = :id";
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam(':estado', $data['id_estado']);
-            $stmt->bindParam(':id', $data['id_pedido']);
+            require_once 'app/models/PedidoDAO.php';
+            $pedidoDAO = new PedidoDAO();
             
-            if($stmt->execute()){
+            if($pedidoDAO->cambiarEstado($data['id_pedido'], $data['id_estado'])){
                 echo json_encode(['status' => 'success']);
             } else {
                 echo json_encode(['status' => 'error']);
