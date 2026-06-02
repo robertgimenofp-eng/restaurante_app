@@ -1,14 +1,11 @@
 <?php
-require_once 'models/Producto.php';
+
 
 class MenuController {
 
     public function index() {
-        require_once 'config/db.php';
-        $database = new Database();
-        $db = $database->connect();
-
-        $productoModel = new Producto($db);
+        require_once 'app/models/ProductoDAO.php';
+        $productoModel = new ProductoDAO();
         $todos = $productoModel->getAll();
 
         // 1. Preparamos las cestas vacías

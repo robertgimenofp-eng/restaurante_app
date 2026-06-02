@@ -40,6 +40,37 @@ class PedidoDAO {
         }
     }
 
+    public function crearPedidoAntiguo($usuario_id, $fecha, $coste, $estado, $carrito) {
+        try {
+            $this->db->beginTransaction();
+            $sql = "INSERT INTO pedidos (usuario_id, fecha, coste, estado) VALUES (:uid, :fecha, :coste, :estado)";
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute([
+                ':uid' => $usuario_id, 
+                ':fecha' => $fecha, 
+                ':coste' => $coste, 
+                ':estado' => $estado
+            ]);
+            
+            $pedido_id = $this->db->lastInsertId();
+
+            $sqlLinea = "INSERT INTO lineas_pedidos (pedido_id, producto_id, unidades) VALUES (:pid, :prodid, 1)";
+            $stmtLinea = $this->db->prepare($sqlLinea);
+
+            foreach($carrito as $item) {
+                $prodId = isset($item['id_producto']) ? $item['id_producto'] : null; 
+                if($prodId) {
+                    $stmtLinea->execute([':pid' => $pedido_id, ':prodid' => $prodId]);
+                }
+            }
+            $this->db->commit();
+            return true;
+        } catch (PDOException $e) {
+            $this->db->rollBack();
+            throw $e;
+        }
+    }
+
     public function apiListarAdmin() {
         $sql = "SELECT 
                     p.id_pedido,

@@ -1,16 +1,12 @@
 <?php
     // controllers/ProductoController.php
-    require_once 'models/Producto.php';
-    require_once 'models/Log.php';
+    require_once 'app/models/ProductoDAO.php';
+    require_once 'app/models/LogDAO.php';
 
     class ProductoController {
 
         public function index() {
-            require_once 'config/db.php';
-            $database = new Database();
-            $db = $database->connect();
-
-            $productoModel = new Producto($db);
+            $productoModel = new ProductoDAO();
             $todosLosProductos = $productoModel->getAll();
 
             // ORGANIZAR POR CATEGORÍAS
@@ -34,10 +30,8 @@
                 }
 
                 // 2. Conectar y pedir datos
-                require_once 'config/db.php';
-                $database = new Database();
-                $db = $database->connect();
-                $producto = new Producto($db);
+                require_once 'app/models/ProductoDAO.php';
+                $producto = new ProductoDAO();
                 
                 // 3. Obtener el array de productos
                 $lista = $producto->getAll(); 
@@ -55,9 +49,9 @@
         exit();
     }
 
-    require_once 'config/db.php';
-    $database = new Database();
-    $db = $database->connect();
+    require_once 'app/models/ProductoDAO.php';
+    require_once 'app/models/LogDAO.php';
+    $productoDAO = new ProductoDAO();
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $nombre = $_POST['nombre'] ?? null;
@@ -83,46 +77,24 @@
         // --- 3. GUARDAR EN BASE DE DATOS ---
         if ($nombre && $precio) {
             try {
+                $exito = false;
                 if ($id) {
                     // === MODO EDITAR (UPDATE) ===
-                    $sql = "UPDATE producto SET nombre=:nombre, descripcion=:descripcion, precio=:precio, stock=:stock, categoria=:categoria";
-                    if ($nombre_fichero) {
-                        $sql .= ", imagen_url=:imagen";
-                    }
-                    $sql .= " WHERE id_producto=:id";
-                    
-                    $stmt = $db->prepare($sql);
-                    $stmt->bindParam(':id', $id);
-                    if ($nombre_fichero) {
-                        $stmt->bindParam(':imagen', $nombre_fichero);
+                    $exito = $productoDAO->update($id, $nombre, $descripcion, $precio, $stock, $categoria, $nombre_fichero);
+                    if ($exito) {
+                        LogDAO::save($id, 'producto', 'UPDATE', "Se actualizó el producto: $nombre (ID: $id)");
                     }
                 } else {
                     // === MODO CREAR (INSERT) ===
                     $img_final = $nombre_fichero ?? 'no-image.webp';
-                    $sql = "INSERT INTO producto (nombre, descripcion, precio, stock, categoria, imagen_url) 
-                            VALUES (:nombre, :descripcion, :precio, :stock, :categoria, :imagen)";
-                    
-                    $stmt = $db->prepare($sql);
-                    $stmt->bindParam(':imagen', $img_final);
+                    $nuevo_id = $productoDAO->create($nombre, $descripcion, $precio, $stock, $categoria, $img_final);
+                    if ($nuevo_id) {
+                        $exito = true;
+                        LogDAO::save($nuevo_id, 'producto', 'CREATE', "Se creó el producto: $nombre");
+                    }
                 }
 
-                $stmt->bindParam(':nombre', $nombre);
-                $stmt->bindParam(':descripcion', $descripcion);
-                $stmt->bindParam(':precio', $precio);
-                $stmt->bindParam(':stock', $stock);
-                $stmt->bindParam(':categoria', $categoria);
-
-                if ($stmt->execute()) {
-                    // --- 🛡️ REGISTRO DINÁMICO DE LOGS ---
-                    if ($id) {
-                        // Es una edición
-                        Log::save($id, 'producto', 'UPDATE', "Se actualizó el producto: $nombre (ID: $id)");
-                    } else {
-                        // Es una creación, recuperamos el ID que acaba de generar la BD
-                        $nuevo_id = $db->lastInsertId();
-                        Log::save($nuevo_id, 'producto', 'CREATE', "Se creó el producto: $nombre");
-                    }
-                    
+                if ($exito) {
                     echo json_encode(['status' => 'success']);
                 } else {
                     echo json_encode(['status' => 'error', 'message' => 'Fallo en execute SQL']);
@@ -149,19 +121,13 @@
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];
                 
-                require_once 'config/db.php';
-                $database = new Database();
-                $db = $database->connect();
+                require_once 'app/models/ProductoDAO.php';
+                require_once 'app/models/LogDAO.php';
+                $productoDAO = new ProductoDAO();
                 
-                // Borrado directo (SQL simple para asegurar que funciona)
-                // Asegúrate de que tu tabla se llama 'producto' y la clave 'id_producto'
-                $sql = "DELETE FROM producto WHERE id_producto = :id";
-                $stmt = $db->prepare($sql);
-                $stmt->bindParam(':id', $id);
-                
-                if ($stmt->execute()) {
+                if ($productoDAO->delete($id)) {
                     // REGISTRO DE LOG
-                    Log::save($id, 'producto', 'DELETE', "Se eliminó el producto con ID: $id");
+                    LogDAO::save($id, 'producto', 'DELETE', "Se eliminó el producto con ID: $id");
                     
                     echo json_encode(['status' => 'success']);
                 } else {
@@ -176,16 +142,10 @@
         public function apiObtener() {
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];
-                require_once 'config/db.php';
-                $database = new Database();
-                $db = $database->connect();
+                require_once 'app/models/ProductoDAO.php';
+                $productoDAO = new ProductoDAO();
 
-                $sql = "SELECT * FROM producto WHERE id_producto = :id";
-                $stmt = $db->prepare($sql);
-                $stmt->bindParam(':id', $id);
-                $stmt->execute();
-                
-                $producto = $stmt->fetch(PDO::FETCH_ASSOC);
+                $producto = $productoDAO->getByIdAssoc($id);
                 
                 header('Content-Type: application/json');
                 echo json_encode($producto);

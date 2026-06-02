@@ -1,5 +1,5 @@
 <?php
-require_once 'models/User.php';
+
 
 class AuthController {
 
@@ -21,10 +21,8 @@ class AuthController {
         $password = $_POST['contraseña'];
 
         // 2. Llamar al modelo
-        require_once 'config/db.php';
-        $database = new Database();
-        $db = $database->connect();
-        $userModel = new User($db);
+        require_once 'app/models/UsuarioDAO.php';
+        $userModel = new UsuarioDAO();
 
         $usuario = $userModel->getByEmail($email);
 
@@ -66,10 +64,8 @@ class AuthController {
         // Verificar si vienen datos por POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            require_once 'config/db.php';
-            $database = new Database();
-            $db = $database->connect();
-            $userModel = new User($db);
+            require_once 'app/models/UsuarioDAO.php';
+            $userModel = new UsuarioDAO();
 
             // 2.1 Recoger datos del formulario
             $nombre = $_POST['nombre'];

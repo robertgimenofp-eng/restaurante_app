@@ -1,5 +1,5 @@
 <?php
-require_once 'models/Producto.php';
+
 
 class CarritoController {
 
@@ -103,13 +103,8 @@ class CarritoController {
         if(isset($_GET['id'])) {
             $id = $_GET['id'];
 
-            // CONEXIÓN BBDD
-            require_once 'config/db.php';
-            $database = new Database();
-            $db = $database->connect();
-            
-            // Usamos modelo Producto
-            $productoModel = new Producto($db); 
+            require_once 'app/models/ProductoDAO.php';
+            $productoModel = new ProductoDAO(); 
 
             $todos = $productoModel->getAll();
             $producto_encontrado = null;
@@ -211,25 +206,15 @@ class CarritoController {
     $carrito = $_SESSION['carrito'];
 
     // 2. RESCATAR IMÁGENES DE LA BBDD
-    require_once 'config/db.php';
-    $database = new Database();
-    $db = $database->connect();
+    require_once 'app/models/ProductoDAO.php';
+    $productoDAO = new ProductoDAO();
 
     $ids_productos = [];
     foreach($carrito as $c) {
         if(isset($c['id_producto'])) $ids_productos[] = $c['id_producto'];
     }
 
-    $imagenes_map = []; // Array donde guardaremos las fotos
-    if(!empty($ids_productos)) {
-        $ids_str = implode(',', array_unique($ids_productos));
-        $sql = "SELECT id_producto, imagen_url as imagen FROM producto WHERE id_producto IN ($ids_str)";
-        $stmt = $db->prepare($sql);
-        $stmt->execute();
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            $imagenes_map[$row['id_producto']] = $row['imagen'];
-        }
-    }
+    $imagenes_map = $productoDAO->getImagenesByIds($ids_productos);
 
     // 3. CÁLCULOS
     $subtotal = 0;
@@ -265,13 +250,12 @@ class CarritoController {
     // PROCESA EL PEDIDO
     public function confirmar() {
         if (session_status() == PHP_SESSION_NONE) session_start();
-        require_once 'config/db.php';
         
         $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : [];
         
         if(!empty($carrito)) {
-            $database = new Database();
-            $db = $database->connect();
+            require_once 'app/models/PedidoDAO.php';
+            $pedidoDAO = new PedidoDAO();
 
             // 1. Calcular total
             $total = 0;
@@ -282,32 +266,7 @@ class CarritoController {
             $fecha = date('Y-m-d H:i:s');
             $estado = 'Pendiente'; 
 
-            $sql = "INSERT INTO pedidos (usuario_id, fecha, coste, estado) VALUES (:uid, :fecha, :coste, :estado)";
-            $stmt = $db->prepare($sql);
-            $stmt->execute([
-                ':uid' => $usuario_id, 
-                ':fecha' => $fecha, 
-                ':coste' => $total, 
-                ':estado' => $estado
-            ]);
-            
-            $pedido_id = $db->lastInsertId(); // Cogemos el ID del pedido creado
-
-            // 3. Insertar Líneas de Pedido
-            // NOTA: Para productos compuestos, quizá quieras guardar el detalle en JSON en una columna extra
-            // Aquí hago un guardado simple estándar.
-            $sqlLinea = "INSERT INTO lineas_pedidos (pedido_id, producto_id, unidades) VALUES (:pid, :prodid, 1)";
-            $stmtLinea = $db->prepare($sqlLinea);
-
-            foreach($carrito as $item) {
-                // Si es un menú personalizado o pack, el ID puede ser especial. 
-                // Asegúrate de que 'id_producto' existe en tu sesión. Si es null, pon uno por defecto o manéjalo.
-                $prodId = isset($item['id_producto']) ? $item['id_producto'] : null; 
-                
-                if($prodId) {
-                    $stmtLinea->execute([':pid' => $pedido_id, ':prodid' => $prodId]);
-                }
-            }
+            $pedidoDAO->crearPedidoAntiguo($usuario_id, $fecha, $total, $estado, $carrito);
 
             // 4. Vaciar carrito y éxito
             unset($_SESSION['carrito']);
