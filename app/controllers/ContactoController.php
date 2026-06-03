@@ -2,13 +2,13 @@
 class ContactoController {
     
     public function index() {
-        $view = "views/contacto/index.php";
-        require_once 'views/main.php';
+        $view = "app/views/contacto/index.php";
+        require_once 'app/views/main.php';
     }
 
     public function faq() {
-        $view = "views/contacto/faq.php";
-        require_once 'views/main.php';
+        $view = "app/views/contacto/faq.php";
+        require_once 'app/views/main.php';
     }
 
     // Acción para procesar el formulario (simulada)

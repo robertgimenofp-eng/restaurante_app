@@ -6,10 +6,10 @@ class AuthController {
     // ACCIÓN 1: Solo sirve para MOSTRAR el formulario (GET)
     public function showLogin() {
         // 1. Definimos la vista INTERNA
-        $view = 'views/auth/login.php';
+        $view = 'app/views/auth/login.php';
         // 2. Cargamos el LAYOUT (que contiene html, head, navbar y footer)
         // Al hacer require aquí, main.php tendrá acceso a la variable $view de arriba
-        require_once 'views/main.php';
+        require_once 'app/views/main.php';
     }
 
     // ACCIÓN 2: Solo sirve para PROCESAR los datos (POST)
@@ -46,17 +46,17 @@ class AuthController {
         } else {
             // Si falla, guardamos el error y volvemos a mostrar la vista
             $error = "Credenciales incorrectas";
-            $view = 'views/auth/login.php';
-            require_once 'views/main.php';
+            $view = 'app/views/auth/login.php';
+            require_once 'app/views/main.php';
         }
     }
 
     // REGISTRO
     public function showRegister() {
         // 1. Definimos el contenido
-        $view = 'views/auth/register.php';
+        $view = 'app/views/auth/register.php';
         // 2. Cargamos el Layout
-        require_once 'views/main.php';
+        require_once 'app/views/main.php';
     }
 
     // 2. Procesa los datos (POST)
@@ -77,8 +77,8 @@ class AuthController {
             // 2.2 Comprobar si el email ya existe
             if ($userModel->getByEmail($email)) {
                 $error = "Ese email ya está registrado";
-                $view = 'views/auth/register.php';
-                require_once 'views/main.php';
+                $view = 'app/views/auth/register.php';
+                require_once 'app/views/main.php';
                 return;
             }
 
@@ -101,8 +101,8 @@ class AuthController {
             } else {
                 // ERROR: Algo falló en SQL
                 $error = "Error al guardar el usuario.";
-                $view = 'views/auth/register.php';
-                require_once 'views/main.php';
+                $view = 'app/views/auth/register.php';
+                require_once 'app/views/main.php';
             }
         }
     }

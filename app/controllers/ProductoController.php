@@ -18,8 +18,8 @@
             }
 
             // Cargamos la vista
-            $view = 'views/producto/index.php';
-            require_once 'views/main.php';
+            $view = 'app/views/producto/index.php';
+            require_once 'app/views/main.php';
         }
 
         public function apiListar() {

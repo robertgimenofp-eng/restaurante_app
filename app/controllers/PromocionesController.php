@@ -5,8 +5,8 @@ require_once 'models/Oferta.php';
 class PromocionesController {
     
     public function index() {
-        $view = 'views/promociones/index.php';
-        require_once 'views/main.php';
+        $view = 'app/views/promociones/index.php';
+        require_once 'app/views/main.php';
     }
 
     public function validar() {

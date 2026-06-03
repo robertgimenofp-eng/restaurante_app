@@ -243,8 +243,8 @@ class CarritoController {
     if($total_final < 0) $total_final = 0;
 
     // 4. RENDERIZAR VISTA
-    $view = 'views/carrito/checkout.php';
-    require_once 'views/main.php';
+    $view = 'app/views/carrito/checkout.php';
+    require_once 'app/views/main.php';
 }
 
     // PROCESA EL PEDIDO

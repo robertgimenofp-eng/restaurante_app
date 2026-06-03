@@ -6,7 +6,7 @@ $controllerName = isset($_GET['controller']) ? $_GET['controller'] . 'Controller
 $actionName = isset($_GET['action']) ? $_GET['action'] : 'index';
 
 // Rutas a los archivos
-$controllerPath = 'controllers/' . $controllerName . '.php';
+$controllerPath = 'app/controllers/' . $controllerName . '.php';
 
 if (file_exists($controllerPath)) {
     require_once $controllerPath;

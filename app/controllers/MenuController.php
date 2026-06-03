@@ -61,7 +61,7 @@ class MenuController {
         // Creamos una variable combinada para el Menú de 13,5€ (que usa todo junto)
         $principales = array_merge($burgers, $wraps, $bowls);
 
-        $view = 'views/menus/index.php';
-        require_once 'views/main.php';
+        $view = 'app/views/menus/index.php';
+        require_once 'app/views/main.php';
     }
 }

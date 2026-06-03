@@ -24,7 +24,7 @@ class AdminController {
         $this->verificarAdmin();
 
         // Si pasa, mostramos la vista del panel
-        require_once 'views/admin/dashboard.php';
+        require_once 'app/views/admin/dashboard.php';
     }
     public function apiListarLogs() {
     // Seguridad

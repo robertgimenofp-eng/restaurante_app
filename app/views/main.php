@@ -28,7 +28,7 @@
         </div>
     </div>
     <?php if (!isset($_GET['action']) || strpos($_GET['action'], 'gestion') === false) {
-    require_once 'views/layout/navbar.php';
+    require_once 'app/views/layout/navbar.php';
 }; ?>
 
     <div class="contenido">
@@ -36,7 +36,7 @@
     </div>
 
     <?php if (!isset($_GET['action']) || strpos($_GET['action'], 'gestion') === false) {
-    require_once 'views/layout/footer.php';
+    require_once 'app/views/layout/footer.php';
 }?>
     <button class="btn btn-dark position-fixed bottom-0 end-0 m-4 p-3 shadow rounded-circle" 
             style="z-index: 1050; width: 60px; height: 60px;"

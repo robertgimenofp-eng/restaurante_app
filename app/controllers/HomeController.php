@@ -7,7 +7,7 @@ class HomeController {
         $oferta_activa = $ofertaDAO->getOfertaActivaAssoc();
 
         // 3. VISTA
-        $view = "views/home/home.php";
+        $view = "app/views/home/home.php";
         require_once __DIR__ . "/../views/main.php";
     }
 }
