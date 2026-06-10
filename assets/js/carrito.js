@@ -29,13 +29,13 @@ function eliminarItem(index) {
     });
 }
 
-function eliminarItemCheckout(index) {
+function cambiarCantidadCheckout(index, change) {
     let formData = new FormData();
     formData.append('index', index);
+    formData.append('change', change);
     
-    api.post('carrito.php?action=remove', formData)
+    api.post('carrito.php?action=changeQuantity', formData)
     .then(data => {
-        // Recargar página para recalcular carrito en checkout
         location.reload();
     });
 }

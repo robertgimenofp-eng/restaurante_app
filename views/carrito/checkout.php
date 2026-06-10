@@ -45,11 +45,11 @@
                     
                     <div class="flex-shrink-0 ms-4 text-end d-flex flex-column align-items-end">
                         <span class="fw-bold fs-5 text-dark"><?= number_format($item['precio'] * $item['unidades'], 2) ?>€</span>
-                        <button class="btn btn-sm text-danger mt-2 p-0 border-0 bg-transparent" onclick="eliminarItemCheckout(<?= $index ?>)" title="Eliminar producto">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.814 1-.841 10.518a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.186 3.5h9.628Zm-7.468 3.197a.5.5 0 0 0-.706.706L6.293 9l-1.653 1.653a.5.5 0 0 0 .706.706L7 9.707l1.653 1.653a.5.5 0 0 0 .706-.706L7.707 9l1.653-1.653a.5.5 0 0 0-.706-.706L7 8.293 5.347 6.64Z"/>
-                            </svg> Quitar
-                        </button>
+                        <div class="d-flex align-items-center mt-2 bg-light rounded" style="border: 1px solid #dee2e6;">
+                            <button class="btn btn-sm px-2 text-dark border-0 bg-transparent" onclick="cambiarCantidadCheckout(<?= $index ?>, -1)" title="Restar">-</button>
+                            <span class="px-2 fw-bold text-dark" style="min-width: 20px; text-align: center;"><?= $item['unidades'] ?></span>
+                            <button class="btn btn-sm px-2 text-dark border-0 bg-transparent" onclick="cambiarCantidadCheckout(<?= $index ?>, 1)" title="Sumar">+</button>
+                        </div>
                     </div>
                 </div>
                 <?php endforeach; ?>

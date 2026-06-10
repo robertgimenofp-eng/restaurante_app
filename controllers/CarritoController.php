@@ -197,6 +197,27 @@ class CarritoController {
         }
         $this->getCarritoHtml(); // Devolvemos el carrito actualizado directamente
     }
+
+    // Función para cambiar cantidad
+    public function changeQuantity() {
+        if (session_status() == PHP_SESSION_NONE) session_start();
+        if(isset($_POST['index']) && isset($_POST['change'])) {
+            $index = $_POST['index'];
+            $change = (int)$_POST['change'];
+            
+            if(isset($_SESSION['carrito'][$index])) {
+                $_SESSION['carrito'][$index]['unidades'] += $change;
+                
+                // Si la cantidad llega a 0, eliminamos el item
+                if($_SESSION['carrito'][$index]['unidades'] <= 0) {
+                    unset($_SESSION['carrito'][$index]);
+                    $_SESSION['carrito'] = array_values($_SESSION['carrito']);
+                }
+            }
+        }
+        echo json_encode(['status' => 'success']);
+    }
+
     // MUESTRA LA PÁGINA DE CHECKOUT
     public function checkout() {
     // 1. COMPROBAR CARRITO

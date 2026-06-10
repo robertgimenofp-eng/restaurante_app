@@ -22,6 +22,8 @@ if ($metodo === 'GET') {
         $controller->addMenuCompleto();
     } elseif ($action === 'addPackComplejo') {
         $controller->addPackComplejo();
+    } elseif ($action === 'changeQuantity') {
+        $controller->changeQuantity();
     }
 }
 ?>
