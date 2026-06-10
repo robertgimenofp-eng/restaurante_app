@@ -154,9 +154,8 @@ class PedidoController {
 
         try {
             $pedidos = $pedidoDAO->apiListarAdmin();
-            echo json_encode($pedidos);
+            echo json_encode($pedidos, JSON_UNESCAPED_UNICODE);
         } catch (PDOException $e) {
-            // Si falla, enviamos el error al JS para verlo en consola
             http_response_code(500);
             echo json_encode(['error' => $e->getMessage()]);
         }
