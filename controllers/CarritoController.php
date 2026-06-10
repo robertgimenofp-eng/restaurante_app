@@ -11,6 +11,9 @@ class CarritoController {
             session_start();
         }
 
+        $input = json_decode(file_get_contents('php://input'), true);
+        if(is_array($input)) { $_POST = array_merge($_POST, $input); }
+
         // Verificamos que lleguen los 3 datos
         if(isset($_POST['principal']) && isset($_POST['snack']) && isset($_POST['bebida'])) {
             
@@ -48,6 +51,9 @@ class CarritoController {
     // Recibe: id_pack y bebidas
     public function addPackComplejo() {
         if (session_status() == PHP_SESSION_NONE) session_start();
+        
+        $input = json_decode(file_get_contents('php://input'), true);
+        if(is_array($input)) { $_POST = array_merge($_POST, $input); }
 
         if(isset($_POST['id_pack'])) {
             $id_pack = $_POST['id_pack'];
@@ -139,6 +145,7 @@ class CarritoController {
         if (session_status() == PHP_SESSION_NONE) session_start();
         $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : [];
         $total = 0;
+        $total_unidades = 0;
 
         // Empezamos a guardar la respuesta en un buffer
         ob_start();
@@ -151,13 +158,23 @@ class CarritoController {
         <?php else: ?>
             <div class="d-flex flex-column gap-3">
                 <?php foreach($carrito as $indice => $item): ?>
-                    <?php $total += $item['precio']; ?>
+                    <?php 
+                        $unidades = isset($item['unidades']) ? $item['unidades'] : 1;
+                        $total += $item['precio'] * $unidades; 
+                        $total_unidades += $unidades;
+                    ?>
                     <div class="card shadow-sm border-0">
                         <div class="card-body position-relative">
-                            <button onclick="eliminarItem(<?=$indice?>)" class="btn btn-sm text-danger position-absolute top-0 end-0 fw-bold border-0" style="background:none;">&times;</button>
                             
                             <h6 class="fw-bold mb-1"><?= $item['nombre'] ?></h6>
-                            <div class="text-warning fw-bold mb-2"><?= number_format($item['precio'], 2) ?> €</div>
+                            <div class="text-warning fw-bold mb-2"><?= number_format($item['precio'] * $unidades, 2) ?> €</div>
+                            
+                            <!-- Botones +/- -->
+                            <div class="d-flex align-items-center mb-2">
+                                <button onclick="cambiarCantidadSidebar(<?=$indice?>, -1)" class="btn btn-sm btn-outline-secondary py-0 px-2">-</button>
+                                <span class="mx-2 fw-bold"><?= $unidades ?></span>
+                                <button onclick="cambiarCantidadSidebar(<?=$indice?>, 1)" class="btn btn-sm btn-outline-secondary py-0 px-2">+</button>
+                            </div>
                             
                             <ul class="list-unstyled small text-muted mb-0">
                                 <?php if($item['tipo'] == 'menu_personalizado'): ?>
@@ -181,13 +198,16 @@ class CarritoController {
         // Devolvemos un JSON con el HTML y el Total calculado
         echo json_encode([
             'html' => $html_items,
-            'total' => number_format($total, 2)
+            'total' => number_format($total, 2),
+            'count' => $total_unidades
         ]);
     }
 
     // Función para eliminar
     public function remove() {
         if (session_status() == PHP_SESSION_NONE) session_start();
+        $input = json_decode(file_get_contents('php://input'), true);
+        if(is_array($input)) { $_POST = array_merge($_POST, $input); }
         if(isset($_POST['index'])) {
             $index = $_POST['index'];
             if(isset($_SESSION['carrito'][$index])) {
@@ -201,6 +221,8 @@ class CarritoController {
     // Función para cambiar cantidad
     public function changeQuantity() {
         if (session_status() == PHP_SESSION_NONE) session_start();
+        $input = json_decode(file_get_contents('php://input'), true);
+        if(is_array($input)) { $_POST = array_merge($_POST, $input); }
         if(isset($_POST['index']) && isset($_POST['change'])) {
             $index = $_POST['index'];
             $change = (int)$_POST['change'];

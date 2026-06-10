@@ -1,28 +1,29 @@
-document.addEventListener('DOMContentLoaded', function() {
-    
+document.addEventListener('DOMContentLoaded', function () {
+
     // ==========================================
     // 1. LOGICA PARA EL MENÚ INDIVIDUAL (13.50€)
     // ==========================================
     const btnMenu = document.getElementById('btn-add-menu');
-    
+
     if (btnMenu) {
-        btnMenu.addEventListener('click', function() {
+        btnMenu.addEventListener('click', function () {
             let principal = document.getElementById('select-principal').value;
             let snack = document.getElementById('select-snack').value;
             let bebida = document.getElementById('select-bebida').value;
             let msg = document.getElementById('mensaje-menu');
-            let urlDestino = btnMenu.getAttribute('data-url'); 
+            let urlDestino = btnMenu.getAttribute('data-url');
 
             // Validación
-            if(!principal || !snack || !bebida) {
+            if (!principal || !snack || !bebida) {
                 mostrarError(msg, "⚠️ Por favor, selecciona las 3 opciones.");
                 return;
             }
 
-            let datos = new FormData();
-            datos.append('principal', principal);
-            datos.append('snack', snack);
-            datos.append('bebida', bebida);
+            let datos = {
+                principal: principal,
+                snack: snack,
+                bebida: bebida
+            };
 
             enviarAlCarrito(urlDestino, datos, msg);
         });
@@ -32,22 +33,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // 2. LOGICA PARA PACKS CONFIGURABLES (Amigos / Familiar)
     // ==========================================
     const complexButtons = document.querySelectorAll('.btn-add-complex-pack');
-    
+
     complexButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const formId = btn.getAttribute('data-form');
             const msgId = btn.getAttribute('data-msg');
             const urlDestino = btn.getAttribute('data-url');
-            
+
             const form = document.getElementById(formId);
             const msg = document.getElementById(msgId);
-            
+
             // Validación automática
             const selects = form.querySelectorAll('select');
             let completo = true;
-            
+
             selects.forEach(select => {
-                if(select.value === "") {
+                if (select.value === "") {
                     select.classList.add('border', 'border-danger');
                     completo = false;
                 } else {
@@ -55,12 +56,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
 
-            if(!completo) {
+            if (!completo) {
                 mostrarError(msg, "⚠️ Elige todas las bebidas antes de añadir.");
                 return;
             }
 
-            let datos = new FormData(form);
+            let datos = {};
+            form.querySelectorAll('input, select, textarea').forEach(input => {
+                if (input.name && input.value) {
+                    if (datos[input.name]) {
+                        if (!Array.isArray(datos[input.name])) datos[input.name] = [datos[input.name]];
+                        datos[input.name].push(input.value);
+                    } else {
+                        datos[input.name] = input.value;
+                    }
+                }
+            });
             enviarAlCarrito(urlDestino, datos, msg);
         });
     });
@@ -71,10 +82,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const simpleButtons = document.querySelectorAll('.btn-add-simple-pack');
 
     simpleButtons.forEach(btn => {
-        btn.addEventListener('click', function() {
+        btn.addEventListener('click', function () {
             const urlDestino = btn.getAttribute('data-url');
-            let datos = new FormData(); 
-            
+            let datos = {};
+
             const originalText = btn.innerText;
             const originalClass = btn.className; // Guardamos clases originales
 
@@ -82,37 +93,37 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.disabled = true;
 
             api.post(urlDestino, datos)
-            .then(data => {
-                if(data.status === 'success') {
-                    // Feedback visual
-                    btn.classList.remove('btn-success');
-                    btn.classList.add('btn-dark');
-                    btn.innerText = "✅ ¡Añadido!";
-                    
-                    // 1. ACTUALIZAR EL CARRITO LATERAL
-                    if (typeof actualizarVisualizacionCarrito === "function") {
-                        actualizarVisualizacionCarrito();
-                    }
+                .then(data => {
+                    if (data.status === 'success') {
+                        // Feedback visual
+                        btn.classList.remove('btn-success');
+                        btn.classList.add('btn-dark');
+                        btn.innerText = "✅ ¡Añadido!";
 
-                    // 2. Restaurar botón tras 2 segundos
-                    setTimeout(() => { 
-                        btn.className = originalClass; // Vuelve a ser verde
+                        // 1. ACTUALIZAR EL CARRITO LATERAL
+                        if (typeof actualizarVisualizacionCarrito === "function") {
+                            actualizarVisualizacionCarrito();
+                        }
+
+                        // 2. Restaurar botón tras 2 segundos
+                        setTimeout(() => {
+                            btn.className = originalClass; // Vuelve a ser verde
+                            btn.innerText = originalText;
+                            btn.disabled = false;
+                        }, 2000);
+
+                    } else {
+                        alert("Error: " + data.msg);
                         btn.innerText = originalText;
                         btn.disabled = false;
-                    }, 2000);
-
-                } else {
-                    alert("Error: " + data.msg);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Error en el servidor");
                     btn.innerText = originalText;
                     btn.disabled = false;
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert("Error en el servidor");
-                btn.innerText = originalText;
-                btn.disabled = false;
-            });
+                });
         });
     });
 
@@ -120,7 +131,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // FUNCIONES AUXILIARES
     // ==========================================
     function mostrarError(elemento, texto) {
-        if(elemento) {
+        if (elemento) {
             elemento.style.display = 'block';
             elemento.style.color = '#dc3545';
             elemento.innerText = texto;
@@ -130,39 +141,39 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function enviarAlCarrito(url, datos, msgElement) {
-        if(msgElement) {
+        if (msgElement) {
             msgElement.style.display = 'block';
             msgElement.style.color = 'black';
             msgElement.innerText = "Procesando...";
         }
 
         api.post(url, datos)
-        .then(data => {
-            if(data.status === 'success') {
-                if(msgElement) {
-                    msgElement.style.color = '#198754';
-                    msgElement.innerText = "✅ ¡Añadido correctamente!";
-                }
-                
-                // 1. ACTUALIZAR EL CARRITO LATERAL
-                if (typeof actualizarVisualizacionCarrito === "function") {
-                    actualizarVisualizacionCarrito();
+            .then(data => {
+                if (data.status === 'success') {
+                    if (msgElement) {
+                        msgElement.style.color = '#198754';
+                        msgElement.innerText = "✅ ¡Añadido correctamente!";
+                    }
+
+                    // 1. ACTUALIZAR EL CARRITO LATERAL
+                    if (typeof actualizarVisualizacionCarrito === "function") {
+                        actualizarVisualizacionCarrito();
+                    } else {
+                        console.error("Falta cargar carrito.js");
+                    }
+
+                    // 2. Ocultar mensaje de éxito tras 2 segundos para limpiar pantalla
+                    setTimeout(() => {
+                        if (msgElement) msgElement.style.display = 'none';
+                    }, 2000);
+
                 } else {
-                    console.error("Falta cargar carrito.js");
+                    mostrarError(msgElement, "Error: " + (data.msg || "Desconocido"));
                 }
-
-                // 2. Ocultar mensaje de éxito tras 2 segundos para limpiar pantalla
-                setTimeout(() => { 
-                    if(msgElement) msgElement.style.display = 'none';
-                }, 2000);
-
-            } else {
-                mostrarError(msgElement, "Error: " + (data.msg || "Desconocido"));
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            mostrarError(msgElement, "❌ Error de conexión.");
-        });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                mostrarError(msgElement, "❌ Error de conexión.");
+            });
     }
 });

@@ -51,12 +51,24 @@
     <?php if (!isset($_GET['action']) || strpos($_GET['action'], 'gestion') === false) {
     require_once 'views/layout/footer.php';
 }?>
-    <button class="btn btn-dark position-fixed bottom-0 end-0 m-4 p-3 shadow rounded-circle" 
+    <?php 
+        // Calcular la cantidad inicial del carrito
+        $cart_count = 0;
+        if(isset($_SESSION['carrito'])) {
+            foreach($_SESSION['carrito'] as $c) {
+                $cart_count += isset($c['unidades']) ? $c['unidades'] : 1;
+            }
+        }
+    ?>
+    <button class="btn btn-dark position-fixed bottom-0 end-0 m-4 p-3 shadow rounded-circle position-relative" 
             style="z-index: 1050; width: 60px; height: 60px;"
             data-bs-toggle="offcanvas" data-bs-target="#carritoSidebar">
         🛒
+        <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" 
+              style="display: <?= $cart_count > 0 ? 'block' : 'none' ?>;">
+            <?= $cart_count ?>
+        </span>
     </button>
-
 
 
     <?php require_once 'layout/carrito_sidebar.php'; ?>

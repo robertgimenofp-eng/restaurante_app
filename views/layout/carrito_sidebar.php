@@ -4,7 +4,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
               <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
             </svg>
-            Volver
+            Seguir comprando
         </button>
         <h5 class="offcanvas-title fw-bold m-0 position-absolute start-50 translate-middle-x" id="carritoLabel">TU PEDIDO 🍔</h5>
     </div>
@@ -32,7 +32,10 @@
             <span class="h4 fw-bold text-success mb-0" id="carrito-total-price">
                 <?php 
                     $total = 0; 
-                    foreach($carrito as $c) $total += $c['precio'];
+                    foreach($carrito as $c) {
+                        $unidades = isset($c['unidades']) ? $c['unidades'] : 1;
+                        $total += $c['precio'] * $unidades;
+                    }
                     echo number_format($total, 2) . ' €';
                 ?>
             </span>
