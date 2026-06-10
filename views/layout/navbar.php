@@ -2,7 +2,7 @@
     <div class="container-fluid px-lg-5">
 
         <a class="navbar-brand d-flex align-items-center" href="index.php">
-            <img src="/assets/img/logovivaeats.svg" alt="Logo" class="nav-logo">
+            <img src="assets/img/logovivaeats.svg" alt="Logo" class="nav-logo">
         </a>
 
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -40,16 +40,29 @@
                     </a>
                     
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3 p-3">
-                        <li class="mb-2">
-                            <span class="text-secondary fw-bold small">Hola, <?php echo isset($_SESSION['identity']) ? $_SESSION['identity']->getNombre() : 'Gourmet'; ?></span>
-                        </li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li>
-                            <a class="dropdown-item text-danger d-flex align-items-center p-0 pt-2" href="index.php?controller=Auth&action=logout">
-                                <svg class="me-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-                                Cerrar Sesión
-                            </a>
-                        </li>
+                        <?php if(isset($_SESSION['identity'])): ?>
+                            <li class="mb-2">
+                                <span class="text-secondary fw-bold small">Hola, <?php echo $_SESSION['identity']->getNombre(); ?></span>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-danger d-flex align-items-center p-0 pt-2" href="index.php?controller=Auth&action=logout">
+                                    <svg class="me-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+                                    Cerrar Sesión
+                                </a>
+                            </li>
+                        <?php else: ?>
+                            <li class="mb-2">
+                                <span class="text-secondary fw-bold small">Hola, Gourmet</span>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-primary d-flex align-items-center p-0 pt-2" href="index.php?controller=Auth&action=login">
+                                    <svg class="me-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+                                    Iniciar Sesión
+                                </a>
+                            </li>
+                        <?php endif; ?>
                     </ul>
                 </div>
             </div> </div>

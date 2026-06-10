@@ -1,10 +1,12 @@
 <?php
 
 
-class AuthController {
+class AuthController
+{
 
     // ACCIÃ“N 1: Solo sirve para MOSTRAR el formulario (GET)
-    public function showLogin() {
+    public function showLogin()
+    {
         // 1. Definimos la vista INTERNA
         $view = 'views/auth/login.php';
         // 2. Cargamos el LAYOUT (que contiene html, head, navbar y footer)
@@ -15,10 +17,11 @@ class AuthController {
     // ACCIÃ“N 2: Solo sirve para PROCESAR los datos (POST)
     // El Router llamarÃ¡ aquÃ­ cuando el formulario se envÃ­e
 
-    public function login() {
+    public function login()
+    {
         // 1. Recoger datos
         $email = $_POST['email'];
-        $password = $_POST['contraseÃ±a'];
+        $password = $_POST['contrasena'];
 
         // 2. Llamar al modelo
         require_once 'models/UsuarioDAO.php';
@@ -26,18 +29,18 @@ class AuthController {
 
         $usuario = $userModel->getByEmail($email);
 
-        // 3. Verificar contraseÃ±a
-        if ($usuario && password_verify($password, $usuario->getContraseÃ±a())) {
-            
+        // 3. Verificar contraseña
+        if ($usuario && password_verify($password, $usuario->getPassword())) {
+
             // LOGUEO EXITOSO
             $_SESSION['identity'] = $usuario;
-        
+
             // Comprobamos si hay productos en el carrito esperando
-            if(isset($_SESSION['carrito']) && count($_SESSION['carrito']) >= 1) {
-                
+            if (isset($_SESSION['carrito']) && count($_SESSION['carrito']) >= 1) {
+
                 // Si hay carrito, lo mandamos directo a finalizar la compra.
-                header("Location: index.php?controller=Carrito&action=checkout"); 
-                
+                header("Location: index.php?controller=Carrito&action=checkout");
+
             } else {
                 // Si NO hay carrito, lo mandamos al home como siempre
                 header("Location: index.php?controller=Home&action=index");
@@ -52,7 +55,8 @@ class AuthController {
     }
 
     // REGISTRO
-    public function showRegister() {
+    public function showRegister()
+    {
         // 1. Definimos el contenido
         $view = 'views/auth/register.php';
         // 2. Cargamos el Layout
@@ -60,7 +64,8 @@ class AuthController {
     }
 
     // 2. Procesa los datos (POST)
-    public function register() {
+    public function register()
+    {
         // Verificar si vienen datos por POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -70,19 +75,19 @@ class AuthController {
             // 2.1 Recoger datos del formulario
             $nombre = $_POST['nombre'];
             $email = $_POST['email'];
-            $password = $_POST['contraseÃ±a'];
+            $password = $_POST['contrasena'];
             $telefono = $_POST['telefono'];
             $direccion = $_POST['direccion'];
 
             // 2.2 Comprobar si el email ya existe
             if ($userModel->getByEmail($email)) {
-                $error = "Ese email ya estÃ¡ registrado";
+                $error = "Ese email ya està registrado";
                 $view = 'views/auth/register.php';
                 require_once 'views/main.php';
                 return;
             }
 
-            // 2.3 ENCRIPTAR LA CONTRASEÃ‘A
+            // 2.3 ENCRIPTAR LA CONTRASEÑA
             $passwordHash = password_hash($password, PASSWORD_DEFAULT);
 
             // 2.4 Preparar datos para el modelo
@@ -107,7 +112,8 @@ class AuthController {
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }

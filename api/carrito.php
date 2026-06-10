@@ -15,6 +15,12 @@ if ($metodo === 'GET') {
 } elseif ($metodo === 'POST') {
     if ($action === 'remove') {
         $controller->remove();
+    } elseif ($action === 'add') {
+        $controller->add();
+    } elseif ($action === 'addMenuCompleto') {
+        $controller->addMenuCompleto();
+    } elseif ($action === 'addPackComplejo') {
+        $controller->addPackComplejo();
     }
 }
 ?>

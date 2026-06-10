@@ -30,7 +30,7 @@
                         </span>
 
                         <div class="img-contenedor-producto rounded-top">
-                            <img src=" /assets/img/productos/<?php echo $prod->getImagen_url(); ?>"
+                            <img src="assets/img/productos/<?php echo $prod->getImagen_url(); ?>"
                                 alt="<?php echo $prod->getNombre(); ?>"
                                 onerror="this.src='https://via.placeholder.com/200?text=Sin+Imagen'">
                         </div>
@@ -44,7 +44,7 @@
                             <div class="mt-3">
                                 <button type="button" 
                                         class="btn btn-naranja rounded-pill w-100 fw-bold btn-add-producto"
-                                        data-url="api/carrito.php?action=add&id=<?= $prod->getId_producto() ?>">
+                                        data-url="carrito.php?action=add&id=<?= $prod->getId_producto() ?>">
                                     Añadir +
                                 </button>
                             </div>
