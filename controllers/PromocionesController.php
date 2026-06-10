@@ -13,23 +13,24 @@ class PromocionesController {
         $data = json_decode(file_get_contents('php://input'), true);
         $codigo = isset($data['codigo']) ? $data['codigo'] : '';
 
-        // Usamos el nuevo modelo Oferta
-        $oferta = Oferta::buscarPorCodigo($codigo);
+        require_once __DIR__ . '/../models/OfertaDAO.php';
+        $ofertaDao = new OfertaDAO();
+        $oferta = $ofertaDao->buscarPorCodigo($codigo);
 
         if ($oferta) {
             // Â¡ENCONTRADO Y VÃLIDO!
             
             // Guardamos en sesiÃ³n usando tus nombres de columna
             $_SESSION['descuento_activo'] = [
-                'codigo' => $oferta->getCodigo_opcional(), // Tu columna de la BBDD
-                'valor' => $oferta->valor,            // Tu columna de la BBDD
-                'tipo'  => $oferta->tipo              // Tu columna (por si es % o â‚¬ fijos)
+                'codigo' => $oferta->getCodigo_opcional(),
+                'valor' => $oferta->getDescuento_porcentaje(),
+                'tipo'  => '%'
             ];
             // Formateamos el mensaje segÃºn el valor
             // Nota: asumo que 'valor' es un porcentaje, ej: 20
             echo json_encode([
                 'success' => true, 
-                'mensaje' => "Â¡CÃ³digo {$oferta->getCodigo_opcional()} aplicado! Tienes un {$oferta->valor}% de descuento."
+                'mensaje' => "¡Código {$oferta->getCodigo_opcional()} aplicado! Tienes un {$oferta->getDescuento_porcentaje()}% de descuento."
             ]);
         } else {
             // NO EXISTE O CADUCÃ“

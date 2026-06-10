@@ -55,5 +55,4 @@
 
         </div>
     <?php endforeach; ?>
-</div>
-<script src="assets/js/carta/productos.js"></script>
+</div>

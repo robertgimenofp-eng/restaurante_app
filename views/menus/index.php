@@ -49,7 +49,7 @@
                 <button type="button" 
                         id="btn-add-menu" 
                         class="btn btn-dark w-100 py-3 fw-bold mt-2"
-                        data-url="api/carrito.php?action=addMenuCompleto">
+                        data-url="carrito.php?action=addMenuCompleto">
                     AÑADIR MENÚ AL CARRITO 🛒
                 </button>
                 
@@ -117,7 +117,7 @@
                     
                     <button type="button" 
                         class="btn btn-vg-green w-100 mt-auto btn-add-simple-pack"
-                        data-url="api/carrito.php?action=add&id=<?= $p->getId_producto() ?>"> 
+                        data-url="carrito.php?action=add&id=<?= $p->getId_producto() ?>"> 
                         Añadir <?= $p->getNombre() ?> 🛒
                     </button>
                 </div>
@@ -154,7 +154,7 @@
             <button type="button" class="btn btn-dark w-100 btn-add-complex-pack" 
                 data-form="form-amigos" 
                 data-msg="msg-amigos"
-                data-url="api/carrito.php?action=addPackComplejo">
+                data-url="carrito.php?action=addPackComplejo">
                 AÑADIR AL CARRITO
             </button>
         </form>
@@ -187,7 +187,7 @@
             <button type="button" class="btn btn-dark w-100 btn-add-complex-pack" 
                 data-form="form-familiar" 
                 data-msg="msg-familiar"
-                data-url="api/carrito.php?action=addPackComplejo">
+                data-url="carrito.php?action=addPackComplejo">
                 AÑADIR AL CARRITO
             </button>
         </form>
