@@ -66,34 +66,70 @@ function loadModule(section) {
 document.getElementById('btn-logs')?.addEventListener('click', () => {
     api.get('logs.php')
         .then(data => {
-            let html = `
-                <h3 class="mb-4">🛡️ Auditoría de Sistema</h3>
-                <table class="table table-sm table-hover shadow-sm bg-white">
-                    <thead class="table-dark">
-                        <tr>
-                            <th>Fecha</th>
-                            <th>Usuario</th>
-                            <th>Acción</th>
-                            <th>Entidad</th>
-                            <th>Descripción</th>
-                        </tr>
-                    </thead>
-                    <tbody>`;
+            const container = document.getElementById('admin-content');
+            container.textContent = ''; // Limpiar
+
+            const title = document.createElement('h3');
+            title.className = 'mb-4';
+            title.textContent = '🛡️ Auditoría de Sistema';
+            container.appendChild(title);
+
+            const table = document.createElement('table');
+            table.className = 'table table-sm table-hover shadow-sm bg-white';
+
+            const thead = document.createElement('thead');
+            thead.className = 'table-dark';
+            const trHead = document.createElement('tr');
+            ['Fecha', 'Usuario', 'Acción', 'Entidad', 'Descripción'].forEach(text => {
+                const th = document.createElement('th');
+                th.textContent = text;
+                trHead.appendChild(th);
+            });
+            thead.appendChild(trHead);
+            table.appendChild(thead);
+
+            const tbody = document.createElement('tbody');
             
             data.forEach(log => {
-                const badgeColor = log.accion === 'DELETE' ? 'bg-danger' : 'bg-primary';
-                html += `
-                    <tr>
-                        <td><small>${log.fecha_hora}</small></td>
-                        <td><span class="badge bg-light text-dark border">${log.nombre_usuario || 'Sistema'}</span></td>
-                        <td><span class="badge ${badgeColor}">${log.accion}</span></td>
-                        <td><b class="text-uppercase">${log.entidad_afectada}</b> (ID: ${log.id_entidad})</td>
-                        <td>${log.descripcion}</td>
-                    </tr>`;
+                const tr = document.createElement('tr');
+
+                const tdFecha = document.createElement('td');
+                const smallFecha = document.createElement('small');
+                smallFecha.textContent = log.fecha_hora;
+                tdFecha.appendChild(smallFecha);
+                tr.appendChild(tdFecha);
+
+                const tdUser = document.createElement('td');
+                const spanUser = document.createElement('span');
+                spanUser.className = 'badge bg-light text-dark border';
+                spanUser.textContent = log.nombre_usuario || 'Sistema';
+                tdUser.appendChild(spanUser);
+                tr.appendChild(tdUser);
+
+                const tdAccion = document.createElement('td');
+                const spanAccion = document.createElement('span');
+                spanAccion.className = log.accion === 'DELETE' ? 'badge bg-danger' : 'badge bg-primary';
+                spanAccion.textContent = log.accion;
+                tdAccion.appendChild(spanAccion);
+                tr.appendChild(tdAccion);
+
+                const tdEntidad = document.createElement('td');
+                const bEntidad = document.createElement('b');
+                bEntidad.className = 'text-uppercase';
+                bEntidad.textContent = log.entidad_afectada;
+                tdEntidad.appendChild(bEntidad);
+                tdEntidad.appendChild(document.createTextNode(` (ID: ${log.id_entidad})`));
+                tr.appendChild(tdEntidad);
+
+                const tdDesc = document.createElement('td');
+                tdDesc.textContent = log.descripcion;
+                tr.appendChild(tdDesc);
+
+                tbody.appendChild(tr);
             });
 
-            html += `</tbody></table>`;
-            document.getElementById('admin-content').innerHTML = html;
+            table.appendChild(tbody);
+            container.appendChild(table);
         });
 });
 
