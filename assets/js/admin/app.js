@@ -3,12 +3,14 @@
 import ProductManager from './modules/ProductManager.js';
 import OrderManager from './modules/OrderManager.js';
 import CurrencyManager from './modules/CurrencyManager.js';
+import UserManager from './modules/UserManager.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     
     // 1. Seleccionamos los botones
     const btnProductos = document.getElementById('btn-productos');
     const btnPedidos = document.getElementById('btn-pedidos');
+    const btnUsuarios = document.getElementById('btn-usuarios');
     
 
     // 2. Evento para Botón PRODUCTOS
@@ -25,6 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             console.log("¡CLICK DETECTADO EN PEDIDOS!"); 
             loadModule('pedidos');
+        });
+    }
+
+    if (btnUsuarios) {
+        btnUsuarios.addEventListener('click', (e) => {
+            e.preventDefault();
+            loadModule('usuarios');
         });
     }
 
@@ -50,6 +59,10 @@ function loadModule(section) {
             
         case 'pedidos':
             manager = new OrderManager();
+            break;
+            
+        case 'usuarios':
+            manager = new UserManager();
             break;
             
         default:

@@ -17,7 +17,7 @@ function actualizarTasasDeCambio() {
         })
         .catch(error => {
             console.error("Error en la API externa:", error);
-            document.getElementById('rates-loading').innerText = "Error al cargar divisas";
+            document.getElementById('rates-loading').innerText = "No disponible";
         });
 }
 

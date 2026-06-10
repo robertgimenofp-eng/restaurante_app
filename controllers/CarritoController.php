@@ -12,10 +12,12 @@ class CarritoController {
         }
 
         $input = json_decode(file_get_contents('php://input'), true);
-        if(is_array($input)) { $_POST = array_merge($_POST, $input); }
+        $principal = $_POST['principal'] ?? $input['principal'] ?? null;
+        $snack = $_POST['snack'] ?? $input['snack'] ?? null;
+        $bebida = $_POST['bebida'] ?? $input['bebida'] ?? null;
 
         // Verificamos que lleguen los 3 datos
-        if(isset($_POST['principal']) && isset($_POST['snack']) && isset($_POST['bebida'])) {
+        if($principal && $snack && $bebida) {
             
             // Creamos el carrito si no existe
             if(!isset($_SESSION['carrito'])) {
@@ -32,9 +34,9 @@ class CarritoController {
                 "precio" => 13.50,
                 "unidades" => 1,
                 "ingredientes" => [
-                    "principal_id" => $_POST['principal'],
-                    "snack_id"     => $_POST['snack'],
-                    "bebida_id"    => $_POST['bebida']
+                    "principal_id" => $principal,
+                    "snack_id"     => $snack,
+                    "bebida_id"    => $bebida
                 ]
             ];
 
@@ -53,17 +55,22 @@ class CarritoController {
         if (session_status() == PHP_SESSION_NONE) session_start();
         
         $input = json_decode(file_get_contents('php://input'), true);
-        if(is_array($input)) { $_POST = array_merge($_POST, $input); }
+        $id_pack = $_POST['id_pack'] ?? $input['id_pack'] ?? null;
 
-        if(isset($_POST['id_pack'])) {
-            $id_pack = $_POST['id_pack'];
+        if($id_pack) {
             
             // Recogemos las bebidas dinámicamente
             $bebidas_elegidas = [];
-            foreach($_POST as $key => $value) {
+            $fuente_datos = is_array($input) ? $input : $_POST;
+            
+            foreach($fuente_datos as $key => $value) {
                 // Buscamos campos que contengan la palabra "bebida" 
                 if(strpos($key, 'bebida') !== false && !empty($value)) {
-                    $bebidas_elegidas[] = $value; // Guardamos el ID de la bebida
+                    if (is_array($value)) {
+                        $bebidas_elegidas = array_merge($bebidas_elegidas, $value);
+                    } else {
+                        $bebidas_elegidas[] = $value; // Guardamos el ID de la bebida
+                    }
                 }
             }
 
@@ -206,10 +213,11 @@ class CarritoController {
     // Función para eliminar
     public function remove() {
         if (session_status() == PHP_SESSION_NONE) session_start();
+        
         $input = json_decode(file_get_contents('php://input'), true);
-        if(is_array($input)) { $_POST = array_merge($_POST, $input); }
-        if(isset($_POST['index'])) {
-            $index = $_POST['index'];
+        $index = $_POST['index'] ?? $input['index'] ?? null;
+        
+        if($index !== null) {
             if(isset($_SESSION['carrito'][$index])) {
                 unset($_SESSION['carrito'][$index]);
                 $_SESSION['carrito'] = array_values($_SESSION['carrito']); // Reordenar índices
@@ -221,11 +229,13 @@ class CarritoController {
     // Función para cambiar cantidad
     public function changeQuantity() {
         if (session_status() == PHP_SESSION_NONE) session_start();
+        
         $input = json_decode(file_get_contents('php://input'), true);
-        if(is_array($input)) { $_POST = array_merge($_POST, $input); }
-        if(isset($_POST['index']) && isset($_POST['change'])) {
-            $index = $_POST['index'];
-            $change = (int)$_POST['change'];
+        $index = $_POST['index'] ?? $input['index'] ?? null;
+        $change = $_POST['change'] ?? $input['change'] ?? null;
+        
+        if($index !== null && $change !== null) {
+            $change = (int)$change;
             
             if(isset($_SESSION['carrito'][$index])) {
                 $_SESSION['carrito'][$index]['unidades'] += $change;

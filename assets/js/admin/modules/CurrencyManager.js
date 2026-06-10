@@ -101,10 +101,6 @@ export default class CurrencyManager {
                 const display = document.getElementById('rates-display');
                 if(display) {
                     display.textContent = '';
-                    const errSmall = document.createElement('small');
-                    errSmall.className = 'text-danger';
-                    errSmall.textContent = 'Error al cargar divisas';
-                    display.appendChild(errSmall);
                 }
             });
     }

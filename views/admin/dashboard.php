@@ -3,17 +3,20 @@
     <div class="row">
         <div class="col-md-2">
             <div class="list-group">
-                <button id="btn-inicio" class="list-group-item list-group-item-action bg-primary text-white">
-                    🏠 Inicio
+                <button id="btn-inicio" class="list-group-item list-group-item-action bg-primary text-white" style="background-color: #ff4e00 !important; border-color: #ff4e00 !important;">
+                    Admin Home
                 </button>
                 <button id="btn-productos" class="list-group-item list-group-item-action">
-                    🍔 Productos
+                    Gestion Productos
                 </button>
                 <button id="btn-pedidos" class="list-group-item list-group-item-action">
-                    📦 Pedidos
+                    Gestion Pedidos
+                </button>
+                <button id="btn-usuarios" class="list-group-item list-group-item-action">
+                    Gestion Usuarios
                 </button>
                 <button id="btn-logs" class="list-group-item list-group-item-action">
-                    🛡️ Auditoría (Logs)
+                    Logs
                 </button>
             </div>
         </div>

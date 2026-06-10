@@ -57,5 +57,39 @@ class UsuarioDAO
             return false;
         }
     }
+
+    public function getAll() {
+        $sql = "SELECT id_usuario, nombre, email, telefono, direccion, rol, fecha_registro FROM usuario ORDER BY id_usuario DESC";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function update($id, $datos) {
+        try {
+            $sql = "UPDATE usuario SET nombre = :nombre, email = :email, telefono = :telefono, direccion = :direccion, rol = :rol WHERE id_usuario = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':nombre', $datos['nombre']);
+            $stmt->bindParam(':email', $datos['email']);
+            $stmt->bindParam(':telefono', $datos['telefono']);
+            $stmt->bindParam(':direccion', $datos['direccion']);
+            $stmt->bindParam(':rol', $datos['rol']);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function delete($id) {
+        try {
+            $sql = "DELETE FROM usuario WHERE id_usuario = :id";
+            $stmt = $this->db->prepare($sql);
+            $stmt->bindParam(':id', $id);
+            return $stmt->execute();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
 }
 ?>
