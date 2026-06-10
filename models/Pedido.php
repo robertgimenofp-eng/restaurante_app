@@ -13,7 +13,7 @@ class Pedido implements JsonSerializable {
 
     public function __construct() {}
 
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         return [
             'id_pedido' => $this->id_pedido,
             'id_usuario' => $this->id_usuario,

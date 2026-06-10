@@ -135,7 +135,7 @@ document.getElementById('btn-logs')?.addEventListener('click', () => {
                 tr.appendChild(tdEntidad);
 
                 const tdDesc = document.createElement('td');
-                tdDesc.innerHTML = log.descripcion;
+                tdDesc.textContent = log.descripcion;
                 tr.appendChild(tdDesc);
 
                 tbody.appendChild(tr);

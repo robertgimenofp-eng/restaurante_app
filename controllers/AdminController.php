@@ -41,7 +41,7 @@ class AdminController {
     $logs = $logDAO->getAll();
 
     header('Content-Type: application/json');
-    echo json_encode($logs, JSON_UNESCAPED_UNICODE);
+    echo json_encode($logs);
     exit();
 }
 }

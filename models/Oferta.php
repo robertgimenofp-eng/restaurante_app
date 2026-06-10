@@ -10,7 +10,7 @@ class Oferta implements JsonSerializable {
 
     public function __construct() {}
 
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         return [
             'id_oferta' => $this->id_oferta,
             'tipo' => $this->tipo,

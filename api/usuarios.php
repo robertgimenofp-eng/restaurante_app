@@ -15,7 +15,7 @@ $usuarioDAO = new UsuarioDAO();
 
 if ($metodo === 'GET') {
     $usuarios = $usuarioDAO->getAll();
-    echo json_encode($usuarios, JSON_UNESCAPED_UNICODE);
+    echo json_encode($usuarios);
 } elseif ($metodo === 'POST') {
     $input = json_decode(file_get_contents('php://input'), true);
     if(isset($input['action'])) {

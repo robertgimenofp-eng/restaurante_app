@@ -14,7 +14,7 @@ class Producto implements JsonSerializable {
     public function __construct() {}
 
     //Metodo para serializar a JSON
-    public function jsonSerialize() {
+    public function jsonSerialize(): mixed {
         return [
             'id_producto' => $this->id_producto,
             'nombre' => $this->nombre,

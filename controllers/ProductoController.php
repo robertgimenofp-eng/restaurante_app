@@ -38,7 +38,7 @@
 
                 // 4. Devolver JSON (Aquí está la clave)
                 header('Content-Type: application/json');
-                echo json_encode($lista, JSON_UNESCAPED_UNICODE);
+                echo json_encode($lista);
                 exit();
             }
 

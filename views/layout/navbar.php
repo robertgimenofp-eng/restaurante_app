@@ -22,7 +22,7 @@
             <div class="d-flex align-items-center gap-3">
                 
                 <?php if(isset($_SESSION['identity']) && $_SESSION['identity']->getRol() == 'admin'): ?>
-                    <a class="nav-link fw-bold d-flex align-items-center small" href="index.php?controller=Admin&action=index" style="color: #ff4e00 !important; white-space: nowrap;">
+                    <a class="nav-link fw-bold d-flex align-items-center small" href="index.php?controller=Admin&action=index" style="color: #000 !important; white-space: nowrap;">
                         Panel Admin
                     </a>
                 <?php endif; ?>
