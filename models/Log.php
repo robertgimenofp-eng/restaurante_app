@@ -14,7 +14,7 @@ class Log implements JsonSerializable {
 
     public function __construct() {}
 
-    public function jsonSerialize(): mixed {
+    public function jsonSerialize() {
         return [
             'id_usuario' => $this->id_usuario,
             'id_entidad' => $this->id_entidad,
