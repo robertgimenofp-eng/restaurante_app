@@ -27,8 +27,8 @@ export default class ProductManager {
 
             const btnCrear = document.createElement('button');
             btnCrear.id = 'btn-crear';
-            btnCrear.className = 'btn btn-primary';
-            btnCrear.textContent = '+ Nuevo Producto';
+            btnCrear.className = 'btn btn-success text-nowrap';
+            btnCrear.textContent = 'Crear Producto';
             headerDiv.appendChild(btnCrear);
             this.container.appendChild(headerDiv);
 
@@ -44,6 +44,7 @@ export default class ProductManager {
             ['Img', 'Nombre', 'Precio', 'Acciones'].forEach(txt => {
                 const th = document.createElement('th');
                 th.textContent = txt;
+                if (txt === 'Acciones') th.className = 'text-end';
                 trHead.appendChild(th);
             });
             thead.appendChild(trHead);
@@ -73,16 +74,17 @@ export default class ProductManager {
                 tr.appendChild(tdPrecio);
 
                 const tdAcciones = document.createElement('td');
+                tdAcciones.className = 'text-end';
                 const btnEditar = document.createElement('button');
-                btnEditar.className = 'btn btn-sm btn-warning btn-editar me-1';
+                btnEditar.className = 'btn btn-sm btn-outline-primary btn-editar me-1';
                 btnEditar.dataset.id = prod.id_producto;
-                btnEditar.textContent = '✏️';
+                btnEditar.textContent = 'Editar';
                 tdAcciones.appendChild(btnEditar);
 
                 const btnBorrar = document.createElement('button');
-                btnBorrar.className = 'btn btn-sm btn-danger btn-borrar';
+                btnBorrar.className = 'btn btn-sm btn-outline-danger btn-borrar';
                 btnBorrar.dataset.id = prod.id_producto;
-                btnBorrar.textContent = '🗑️';
+                btnBorrar.textContent = 'Borrar';
                 tdAcciones.appendChild(btnBorrar);
                 tr.appendChild(tdAcciones);
 
