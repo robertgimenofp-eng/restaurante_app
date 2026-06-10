@@ -19,7 +19,7 @@ class PedidoController {
         $pedidoDAO = new PedidoDAO();
    
             // 2. CÁLCULO DE COSTES
-        $usuario_id = $_SESSION['identity']->id_usuario; 
+        $usuario_id = $_SESSION['identity']->getId_usuario(); 
         
         // A) Subtotal de los productos (Hamburguesas, bebidas...)
         $subtotal_productos = 0;
@@ -86,7 +86,7 @@ class PedidoController {
     // API: Listar todos los pedidos (para el Admin)
     public function apiListar() {
         // Seguridad: Solo admin
-        if (!isset($_SESSION['identity']) || $_SESSION['identity']->rol != 'admin') {
+        if (!isset($_SESSION['identity']) || $_SESSION['identity']->getRol() != 'admin') {
             echo json_encode([]);
             exit();
         }

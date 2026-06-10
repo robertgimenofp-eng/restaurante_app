@@ -18,21 +18,21 @@ class MenuController {
 
         // 2. Clasificamos
         foreach($todos as $prod) {
-            $cat = strtolower(trim($prod->categoria));
-            $nom = strtolower(trim($prod->nombre));
+            $cat = strtolower(trim($prod->getCategoria()));
+            $nom = strtolower(trim($prod->getNombre()));
 
             // A) Packs (IDs 34 y 35 o categoría Menús)
-           // Añadimos || $prod->id_producto == 36 para asegurar que pilla el Vegano
-                if ($prod->id_producto == 34 || $prod->id_producto == 35 || $prod->id_producto == 36 || $cat == 'menús' || $cat == 'menus' || $cat == 'packs') {
+           // Añadimos || $prod->getId_producto() == 36 para asegurar que pilla el Vegano
+                if ($prod->getId_producto() == 34 || $prod->getId_producto() == 35 || $prod->getId_producto() == 36 || $cat == 'menús' || $cat == 'menus' || $cat == 'packs') {
                 // Excluimos el menú de 12€ (ID 33) de esta lista
-                if ($prod->id_producto != 33) {
-                    $packs[$prod->id_producto] = $prod; // Usamos el ID como clave para buscarlo fácil luego
+                if ($prod->getId_producto() != 33) {
+                    $packs[$prod->getId_producto()] = $prod; // Usamos el ID como clave para buscarlo fácil luego
                 }
                 continue;
             }
             
             // B) Ignoramos el Menú Personalizado (ID 33)
-            if ($prod->id_producto == 33) continue;
+            if ($prod->getId_producto() == 33) continue;
 
             // C) Ingredientes Individuales
             

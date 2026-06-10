@@ -13,7 +13,7 @@ class AdminController {
 
         // 2. Es admin? (Asumiendo que guardamos el rol en la sesión al loguear)
         // Nota: Tendremos que revisar AuthController para asegurarnos de que guarda el rol.
-        if ($_SESSION['identity']->rol != 'admin') {
+        if ($_SESSION['identity']->getRol() != 'admin') {
             header("Location: index.php"); // Lo mandamos al inicio
             exit();
         }
@@ -28,7 +28,7 @@ class AdminController {
     }
     public function apiListarLogs() {
     // Seguridad
-    if (!isset($_SESSION['identity']) || $_SESSION['identity']->rol != 'admin') {
+    if (!isset($_SESSION['identity']) || $_SESSION['identity']->getRol() != 'admin') {
         echo json_encode(['status' => 'error', 'message' => 'No autorizado']);
         exit();
     }

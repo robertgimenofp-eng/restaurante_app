@@ -14,7 +14,7 @@
             $productosPorCategoria = [];
 
             foreach ($todosLosProductos as $prod) {
-                $productosPorCategoria[$prod->categoria][] = $prod;
+                $productosPorCategoria[$prod->getCategoria()][] = $prod;
             }
 
             // Cargamos la vista
@@ -24,7 +24,7 @@
 
         public function apiListar() {
             // 1. Seguridad: Solo admin
-                if (!isset($_SESSION['identity']) || $_SESSION['identity']->rol != 'admin') {
+                if (!isset($_SESSION['identity']) || $_SESSION['identity']->getRol() != 'admin') {
                     echo json_encode(['status' => 'error', 'message' => 'No autorizado']);
                     exit();
                 }
@@ -44,7 +44,7 @@
 
            public function save() {
     // 1. Verificación de seguridad
-    if (!isset($_SESSION['identity']) || $_SESSION['identity']->rol != 'admin') {
+    if (!isset($_SESSION['identity']) || $_SESSION['identity']->getRol() != 'admin') {
         echo json_encode(['status' => 'error', 'message' => 'No autorizado']);
         exit();
     }
@@ -113,7 +113,7 @@
         // Y añade la de BORRAR también para devolver JSON
         public function borrar() {
             // Seguridad
-            if (!isset($_SESSION['identity']) || $_SESSION['identity']->rol != 'admin') {
+            if (!isset($_SESSION['identity']) || $_SESSION['identity']->getRol() != 'admin') {
                 echo json_encode(['status' => 'error', 'message' => 'No autorizado']);
                 exit();
             }

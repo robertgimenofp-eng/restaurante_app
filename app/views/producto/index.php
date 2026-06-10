@@ -26,25 +26,25 @@
                     <div class="card h-100 shadow-sm border-0 product-card">
 
                         <span class="badge bg-white text-dark position-absolute top-0 end-0 m-3 shadow-sm px-3 py-2 fw-bold rounded-pill">
-                            <?php echo $prod->precio; ?>€
+                            <?php echo $prod->getPrecio(); ?>€
                         </span>
 
                         <div class="img-contenedor-producto rounded-top">
-                            <img src=" /public/img/productos/<?php echo $prod->imagen_url; ?>"
-                                alt="<?php echo $prod->nombre; ?>"
+                            <img src=" /public/img/productos/<?php echo $prod->getImagen_url(); ?>"
+                                alt="<?php echo $prod->getNombre(); ?>"
                                 onerror="this.src='https://via.placeholder.com/200?text=Sin+Imagen'">
                         </div>
 
                         <div class="card-body text-center d-flex flex-column">
-                            <h5 class="card-title fw-bold" style="font-size: 1.1rem;"><?php echo $prod->nombre; ?></h5>
+                            <h5 class="card-title fw-bold" style="font-size: 1.1rem;"><?php echo $prod->getNombre(); ?></h5>
                             <p class="card-text text-muted small flex-grow-1">
-                                <?php echo $prod->descripcion; ?>
+                                <?php echo $prod->getDescripcion(); ?>
                             </p>
 
                             <div class="mt-3">
                                 <button type="button" 
                                         class="btn btn-naranja rounded-pill w-100 fw-bold btn-add-producto"
-                                        data-url="index.php?controller=Carrito&action=add&id=<?= $prod->id_producto ?>">
+                                        data-url="index.php?controller=Carrito&action=add&id=<?= $prod->getId_producto() ?>">
                                     Añadir +
                                 </button>
                             </div>

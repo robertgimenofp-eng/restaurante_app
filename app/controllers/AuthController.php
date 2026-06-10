@@ -27,7 +27,7 @@ class AuthController {
         $usuario = $userModel->getByEmail($email);
 
         // 3. Verificar contraseña
-        if ($usuario && password_verify($password, $usuario->contraseña)) {
+        if ($usuario && password_verify($password, $usuario->getContraseña())) {
             
             // LOGUEO EXITOSO
             $_SESSION['identity'] = $usuario;

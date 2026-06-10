@@ -110,7 +110,7 @@ class CarritoController {
             $producto_encontrado = null;
 
             foreach($todos as $p) {
-                if($p->id_producto == $id) {
+                if($p->getId_producto() == $id) {
                     $producto_encontrado = $p;
                     break;
                 }
@@ -120,9 +120,9 @@ class CarritoController {
                 if(!isset($_SESSION['carrito'])) $_SESSION['carrito'] = [];
                 
                 $_SESSION['carrito'][] = [
-                    "id_producto" => $producto_encontrado->id_producto,
-                    "nombre" => $producto_encontrado->nombre,
-                    "precio" => $producto_encontrado->precio,
+                    "id_producto" => $producto_encontrado->getId_producto(),
+                    "nombre" => $producto_encontrado->getNombre(),
+                    "precio" => $producto_encontrado->getPrecio(),
                     "unidades" => 1,
                     "tipo" => "simple"
                 ];

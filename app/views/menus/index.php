@@ -21,7 +21,7 @@
                     <select id="select-principal" class="form-select">
                         <option value="" selected disabled>Selecciona una opción...</option>
                         <?php foreach($principales as $p): ?>
-                            <option value="<?= $p->id_producto ?>"><?= $p->nombre ?></option>
+                            <option value="<?= $p->getId_producto() ?>"><?= $p->getNombre() ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -31,7 +31,7 @@
                     <select id="select-snack" class="form-select">
                         <option value="" selected disabled>Selecciona una opción...</option>
                         <?php foreach($snacks as $s): ?>
-                            <option value="<?= $s->id_producto ?>"><?= $s->nombre ?></option>
+                            <option value="<?= $s->getId_producto() ?>"><?= $s->getNombre() ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -41,7 +41,7 @@
                     <select id="select-bebida" class="form-select">
                         <option value="" selected disabled>Selecciona una opción...</option>
                         <?php foreach($bebidas as $b): ?>
-                            <option value="<?= $b->id_producto ?>"><?= $b->nombre ?></option>
+                            <option value="<?= $b->getId_producto() ?>"><?= $b->getNombre() ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -64,8 +64,8 @@
         <?php if(isset($packs[34])): $p = $packs[34]; ?>
         <div class="col">
             <div class="card h-100 shadow-sm border-0"> <div class="card-body d-flex flex-column">
-                    <h4 class="card-title fw-bold" style="color: #FF9D00;"><?= $p->nombre ?></h4>
-                    <span class="badge bg-vg-orange fs-5 mb-3"><?= $p->precio ?> €</span>
+                    <h4 class="card-title fw-bold" style="color: #FF9D00;"><?= $p->getNombre() ?></h4>
+                    <span class="badge bg-vg-orange fs-5 mb-3"><?= $p->getPrecio() ?> €</span>
                     <ul class="small text-muted mb-4">
                         <li>🍔 Spicy Grill + Fit Pollo</li>
                         <li>🌯 Chicken Protein Wrap</li>
@@ -85,8 +85,8 @@
         <div class="col">
             <div class="card h-100 shadow-sm border-0">
                 <div class="card-body d-flex flex-column">
-                    <h4 class="card-title fw-bold" style="color: #5DADE2;"><?= $p->nombre ?></h4>
-                    <span class="badge bg-vg-blue fs-5 mb-3"><?= $p->precio ?> €</span>
+                    <h4 class="card-title fw-bold" style="color: #5DADE2;"><?= $p->getNombre() ?></h4>
+                    <span class="badge bg-vg-blue fs-5 mb-3"><?= $p->getPrecio() ?> €</span>
                     <ul class="small text-muted mb-4">
                         <li>🍔 3 Burgers Variadas</li>
                         <li>🌯 2 Wraps Variados</li>
@@ -106,8 +106,8 @@
         <div class="col">
             <div class="card h-100 shadow-sm border-0">
                 <div class="card-body d-flex flex-column">
-                    <h4 class="card-title fw-bold" style="color: #82E0AA;"><?= $p->nombre ?></h4>
-                    <span class="badge bg-vg-green fs-5 mb-3"><?= $p->precio ?> €</span>
+                    <h4 class="card-title fw-bold" style="color: #82E0AA;"><?= $p->getNombre() ?></h4>
+                    <span class="badge bg-vg-green fs-5 mb-3"><?= $p->getPrecio() ?> €</span>
                     <ul class="small text-muted mb-4">
                         <li>🍔 Vegan Crunch Burger</li>
                         <li>🌯 Vegan Energy Wrap</li>
@@ -117,8 +117,8 @@
                     
                     <button type="button" 
                         class="btn btn-vg-green w-100 mt-auto btn-add-simple-pack"
-                        data-url="index.php?controller=Carrito&action=add&id=<?= $p->id_producto ?>"> 
-                        Añadir <?= $p->nombre ?> 🛒
+                        data-url="index.php?controller=Carrito&action=add&id=<?= $p->getId_producto() ?>"> 
+                        Añadir <?= $p->getNombre() ?> 🛒
                     </button>
                 </div>
             </div>
@@ -140,13 +140,13 @@
             <label class="form-label">Bebida 1</label>
             <select name="bebida1" class="form-select mb-3">
                 <option value="">-- Elige --</option>
-                <?php foreach($bebidas as $b) echo "<option value='$b->id_producto'>$b->nombre</option>"; ?>
+                <?php foreach($bebidas as $b) echo "<option value='" . $b->getId_producto() . "'>" . $b->getNombre() . "</option>"; ?>
             </select>
 
             <label class="form-label">Bebida 2</label>
             <select name="bebida2" class="form-select mb-3">
                 <option value="">-- Elige --</option>
-                <?php foreach($bebidas as $b) echo "<option value='$b->id_producto'>$b->nombre</option>"; ?>
+                <?php foreach($bebidas as $b) echo "<option value='" . $b->getId_producto() . "'>" . $b->getNombre() . "</option>"; ?>
             </select>
             
             <div id="msg-amigos" class="text-center fw-bold small mb-2" style="display:none;"></div>
@@ -178,7 +178,7 @@
                 <label class="form-label">Bebida <?=$i?></label>
                 <select name="bebida<?=$i?>" class="form-select mb-2">
                     <option value="">-- Elige --</option>
-                    <?php foreach($bebidas as $b) echo "<option value='$b->id_producto'>$b->nombre</option>"; ?>
+                    <?php foreach($bebidas as $b) echo "<option value='" . $b->getId_producto() . "'>" . $b->getNombre() . "</option>"; ?>
                 </select>
             <?php endfor; ?>
             

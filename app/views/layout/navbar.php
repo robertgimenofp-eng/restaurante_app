@@ -21,7 +21,7 @@
 
             <div class="d-flex align-items-center gap-3">
                 
-                <?php if(isset($_SESSION['identity']) && $_SESSION['identity']->rol == 'admin'): ?>
+                <?php if(isset($_SESSION['identity']) && $_SESSION['identity']->getRol() == 'admin'): ?>
                     <a class="nav-link text-warning fw-bold d-flex align-items-center small" href="index.php?controller=Admin&action=index" style="color: #6c757d !important; white-space: nowrap;">
                         <span class="me-1">⚙️</span> Panel Admin
                     </a>
@@ -41,7 +41,7 @@
                     
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3 p-3">
                         <li class="mb-2">
-                            <span class="text-secondary fw-bold small">Hola, <?php echo $_SESSION['identity']->nombre ?? 'Gourmet'; ?></span>
+                            <span class="text-secondary fw-bold small">Hola, <?php echo $_SESSION['identity']->getNombre() ?? 'Gourmet'; ?></span>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>

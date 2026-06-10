@@ -21,7 +21,7 @@ class PromocionesController {
             
             // Guardamos en sesión usando tus nombres de columna
             $_SESSION['descuento_activo'] = [
-                'codigo' => $oferta->codigo_opcional, // Tu columna de la BBDD
+                'codigo' => $oferta->getCodigo_opcional(), // Tu columna de la BBDD
                 'valor' => $oferta->valor,            // Tu columna de la BBDD
                 'tipo'  => $oferta->tipo              // Tu columna (por si es % o € fijos)
             ];
@@ -29,7 +29,7 @@ class PromocionesController {
             // Nota: asumo que 'valor' es un porcentaje, ej: 20
             echo json_encode([
                 'success' => true, 
-                'mensaje' => "¡Código {$oferta->codigo_opcional} aplicado! Tienes un {$oferta->valor}% de descuento."
+                'mensaje' => "¡Código {$oferta->getCodigo_opcional()} aplicado! Tienes un {$oferta->valor}% de descuento."
             ]);
         } else {
             // NO EXISTE O CADUCÓ
