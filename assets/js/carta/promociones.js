@@ -1,3 +1,11 @@
+/**
+ * Archivo: promociones.js
+ * -----------------------
+ * Lógica para la validación y canjeo de cupones de descuento.
+ * Envía el código introducido por el usuario a la API para verificar
+ * si es válido en la sesión actual, mostrando alertas (SweetAlert2)
+ * en caso de éxito o error.
+ */
 document.addEventListener('DOMContentLoaded', function() {
     
     // --- 1. LÓGICA DE CANJEAR REAL (CONECTADA A PHP) ---

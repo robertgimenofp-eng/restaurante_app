@@ -1,3 +1,12 @@
+/**
+ * Clase ProductManager
+ * --------------------
+ * Gestiona el panel de administración de los productos del restaurante.
+ * Se encarga de:
+ * 1. Cargar y renderizar la tabla de productos desde la base de datos.
+ * 2. Mostrar el formulario para crear/editar productos usando FormData para incluir imágenes.
+ * 3. Filtrar y procesar las peticiones a la API para guardar o borrar productos.
+ */
 export default class ProductManager {
     constructor() {
         this.container = document.getElementById('admin-content');
@@ -13,6 +22,10 @@ export default class ProductManager {
     }
 
     // --- 1. VISTA TABLA (Listar productos) ---
+    /**
+     * Muestra la tabla principal con todos los productos.
+     * Limpia el contenedor y genera dinámicamente el HTML de la tabla.
+     */
     async renderTable() {
         try {
             const productos = await api.get('productos.php');
@@ -107,6 +120,10 @@ export default class ProductManager {
     }
 
     // --- 2. GESTIÓN DE EVENTOS (Clicks en botones) ---
+    /**
+     * Añade los escuchadores de eventos (event listeners) a los botones
+     * de "Crear Producto", "Editar" y "Borrar" después de renderizar la tabla.
+     */
     attachTableEvents() {
         const btnCrear = document.getElementById('btn-crear');
         if (btnCrear) {

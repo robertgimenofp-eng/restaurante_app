@@ -1,3 +1,14 @@
+/**
+ * Archivo: carrito.js
+ * -------------------
+ * Lógica principal del Frontend para el Carrito de Compras.
+ * Se encarga de hacer peticiones asíncronas al servidor (vía API) para:
+ * 1. Añadir productos al carrito.
+ * 2. Modificar cantidades (+1, -1).
+ * 3. Eliminar productos.
+ * 4. Actualizar visualmente la barra lateral del carrito sin recargar la página.
+ */
+
 // Función principal que actualiza el carrito visualmente
 function actualizarVisualizacionCarrito() {
     api.get('carrito.php?action=getHtml')

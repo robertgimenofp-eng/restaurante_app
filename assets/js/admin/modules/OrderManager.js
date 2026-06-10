@@ -1,3 +1,13 @@
+/**
+ * Clase OrderManager
+ * ------------------
+ * Gestiona el panel de administración de los Pedidos.
+ * Se encarga de:
+ * 1. Cargar y renderizar la tabla de pedidos con su información.
+ * 2. Permitir el filtrado de pedidos por usuario, estado, fecha y orden por precio.
+ * 3. Convertir precios dinámicamente a divisas usando una API externa.
+ * 4. Actualizar el estado de los pedidos y borrarlos.
+ */
 export default class OrderManager {
     constructor() {
         this.container = document.getElementById('admin-content');

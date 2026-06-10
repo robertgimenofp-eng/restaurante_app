@@ -1,6 +1,10 @@
-// ==== SERVICIO API CENTRALIZADO ====
-// Clase para centralizar todas las peticiones fetch a la API
-
+/**
+ * Clase ApiService
+ * ----------------
+ * Patrón Singleton que centraliza todas las peticiones HTTP (Fetch API) del frontend.
+ * Abstrae la lógica de enviar peticiones GET, POST, y POST con FormData (imágenes),
+ * manejando automáticamente los encabezados JSON y los errores de red.
+ */
 class ApiService {
     constructor(baseUrl = 'api/') {
         this.baseUrl = baseUrl;

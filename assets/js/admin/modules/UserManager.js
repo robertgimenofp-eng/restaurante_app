@@ -1,3 +1,11 @@
+/**
+ * Clase UserManager
+ * -----------------
+ * Gestiona el panel de administración de usuarios.
+ * Se encarga de mostrar la lista de usuarios, filtrarlos,
+ * y mostrar el formulario para crear o editar usuarios.
+ * Utiliza la API para comunicarse con el backend (usuarios.php).
+ */
 export default class UserManager {
     constructor() {
         this.containerId = 'admin-content';

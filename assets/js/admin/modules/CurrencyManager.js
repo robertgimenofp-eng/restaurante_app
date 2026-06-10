@@ -1,5 +1,10 @@
-// public/js/admin/modules/CurrencyManager.js
-
+/**
+ * Clase CurrencyManager
+ * ---------------------
+ * Módulo de bienvenida del Admin. 
+ * Muestra las tasas de cambio actuales usando la API pública externa
+ * de Frankfurter, dando un contexto financiero en tiempo real.
+ */
 export default class CurrencyManager {
     constructor() {
         this.containerId = 'admin-content';

@@ -5,6 +5,14 @@ import OrderManager from './modules/OrderManager.js';
 import CurrencyManager from './modules/CurrencyManager.js';
 import UserManager from './modules/UserManager.js';
 
+/**
+ * Archivo: app.js
+ * ---------------
+ * Script principal del Panel de Administración.
+ * Se encarga de inicializar la interfaz de administrador y cargar dinámicamente
+ * los distintos módulos (Productos, Pedidos, Auditoría, Usuarios) 
+ * cuando el administrador hace clic en el menú lateral.
+ */
 document.addEventListener('DOMContentLoaded', () => {
     
     // 1. Seleccionamos los botones

@@ -1,3 +1,11 @@
+/**
+ * Archivo: menu.js
+ * ----------------
+ * Maneja la lógica interactiva de los menús (packs) en la carta.
+ * Como los menús permiten elegir opciones (ej: principal, bebida, postre),
+ * este archivo valida que el usuario haya seleccionado todas las opciones
+ * antes de permitirle añadir el "Menú" al carrito de compras.
+ */
 document.addEventListener('DOMContentLoaded', function () {
 
     // ==========================================

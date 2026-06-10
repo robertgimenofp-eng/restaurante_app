@@ -1,3 +1,10 @@
+/**
+ * Archivo: productos.js
+ * ---------------------
+ * Gestiona el evento de clic en los botones de "Añadir" en la carta normal.
+ * Hace la petición a la API y muestra una pequeña animación en el botón
+ * para dar feedback al usuario ("¡Añadido!").
+ */
 document.addEventListener('DOMContentLoaded', function() {
     
     // Seleccionamos todos los botones de añadir producto
