@@ -91,7 +91,7 @@
                             <span class="fw-bold fs-3 text-dark"><?= number_format($total_pedido, 2) ?>€</span>
                         </div>
 
-                        <button type="submit" class="btn btn-viva-finalizar w-100 py-3 fw-bold fs-5 shadow-sm text-dark" style="background-color: #ffc107; border:none; border-radius: 8px;">
+                        <button type="submit" class="btn btn-viva-finalizar w-100 py-3 fw-bold fs-5 shadow-sm text-white" style="background-color: #ff4e00; border:none; border-radius: 8px;">
                             Finalizar Pedido
                         </button>
                     </div>
@@ -104,14 +104,14 @@
 <style>
 .payment-method:hover {
     background-color: #f8f9fa;
-    border-color: #ffc107 !important;
+    border-color: #ff4e00 !important;
 }
 .payment-method input:checked {
-    background-color: #ffc107;
-    border-color: #ffc107;
+    background-color: #ff4e00;
+    border-color: #ff4e00;
 }
 .payment-method:has(input:checked) {
-    border-color: #ffc107 !important;
-    background-color: #fffdf5;
+    border-color: #ff4e00 !important;
+    background-color: #fffaf7;
 }
 </style>

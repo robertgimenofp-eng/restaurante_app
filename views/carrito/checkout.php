@@ -110,7 +110,7 @@
             </div>
         </div>
 
-        <a href="index.php?controller=Pedido&action=pasarela" class="btn btn-viva-finalizar w-100 py-3 fw-bold fs-4 shadow-sm d-block text-center text-dark text-decoration-none" style="background-color: #ffc107; border:none;">
+        <a href="index.php?controller=Pedido&action=pasarela" class="btn btn-viva-finalizar w-100 py-3 fw-bold fs-4 shadow-sm d-block text-center text-white text-decoration-none" style="background-color: #ff4e00; border:none;">
             Tramitar pedido
         </a>
     </div>
