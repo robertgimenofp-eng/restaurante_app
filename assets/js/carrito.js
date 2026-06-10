@@ -28,6 +28,17 @@ function eliminarItem(index) {
         document.getElementById('carrito-total-price').innerText = data.total + " €";
     });
 }
+
+function eliminarItemCheckout(index) {
+    let formData = new FormData();
+    formData.append('index', index);
+    
+    api.post('carrito.php?action=remove', formData)
+    .then(data => {
+        // Recargar página para recalcular carrito en checkout
+        location.reload();
+    });
+}
 function aplicarCodigo() {
     const codigo = document.getElementById('codigo_input').value;
     const mensajeDiv = document.getElementById('mensaje-cupon');

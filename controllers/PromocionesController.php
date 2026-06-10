@@ -24,7 +24,7 @@ class PromocionesController {
             $_SESSION['descuento_activo'] = [
                 'codigo' => $oferta->getCodigo_opcional(),
                 'valor' => $oferta->getDescuento_porcentaje(),
-                'tipo'  => '%'
+                'tipo'  => 'porcentaje'
             ];
             // Formateamos el mensaje según el valor
             // Nota: asumo que 'valor' es un porcentaje, ej: 20

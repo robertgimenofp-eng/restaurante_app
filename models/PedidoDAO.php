@@ -37,7 +37,7 @@ class PedidoDAO
             }
 
             $this->db->commit();
-            return true;
+            return $pedido_id;
         } catch (PDOException $e) {
             $this->db->rollBack();
             throw $e;

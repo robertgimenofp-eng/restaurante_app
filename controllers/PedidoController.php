@@ -66,15 +66,20 @@ class PedidoController {
 
         try {
             // 3. y 4. GUARDAR EL PEDIDO Y SUS LÍNEAS a través del DAO
-            $pedidoDAO->crearPedidoCompleto($usuario_id, $total_pedido, $_SESSION['carrito']);
+            $pedido_id = $pedidoDAO->crearPedidoCompleto($usuario_id, $total_pedido, $_SESSION['carrito']);
 
-            // 5. LIMPIEZA
+            // 5. GUARDAR DATOS PARA LA PANTALLA DE GRACIAS Y LIMPIAR
+            $_SESSION['ultimo_pedido'] = [
+                'id' => $pedido_id,
+                'fecha' => date('Y-m-d H:i:s'),
+                'total' => $total_pedido
+            ];
+            
             unset($_SESSION['carrito']);
             if(isset($_SESSION['descuento_activo'])) unset($_SESSION['descuento_activo']);
 
-            // 6. MENSAJE DE ÉXITO Y REDIRECCIÓN
-            $_SESSION['mensaje'] = "✅ Pedido confirmado.\n\nSubtotal: " . number_format($subtotal_productos, 2) . "€\n+ Envío: 3.00€\n- Descuento: " . number_format($descuento_total, 2) . "€\n------------------\nTOTAL: " . number_format($total_pedido, 2) . "€";
-            header("Location: index.php");
+            // 6. REDIRECCIÓN A PANTALLA DE ÉXITO
+            header("Location: index.php?controller=Pedido&action=gracias");
             exit();
 
         } catch (PDOException $e) {
@@ -83,6 +88,59 @@ class PedidoController {
             exit();
         }
     }
+    // PASARELA DE PAGO
+    public function pasarela() {
+        if (!isset($_SESSION['identity'])) {
+            header("Location: index.php?controller=Auth&action=showlogin");
+            exit(); 
+        }
+
+        if (!isset($_SESSION['carrito']) || count($_SESSION['carrito']) == 0) {
+            header("Location: index.php");
+            exit();
+        }
+
+        $subtotal_productos = 0;
+        foreach($_SESSION['carrito'] as $elemento){
+            $subtotal_productos += $elemento['precio'] * $elemento['unidades'];
+        }
+
+        $gastos_envio = 3.00;
+        $descuento_total = 0;
+
+        if(isset($_SESSION['descuento_activo'])){
+            $promo = $_SESSION['descuento_activo'];
+            if($promo['tipo'] == 'porcentaje') {
+                $descuento_total = $subtotal_productos * ($promo['valor'] / 100);
+            } elseif($promo['tipo'] == 'envio') {
+                $descuento_total = $gastos_envio; 
+            } elseif($promo['tipo'] == 'fijo') {
+                $descuento_total = $promo['valor'];
+            }
+        }
+
+        $total_pedido = ($subtotal_productos + 3.00) - $descuento_total;
+        if(isset($promo) && $promo['tipo'] == 'envio') {
+             $total_pedido = $subtotal_productos;
+        }
+        if($total_pedido < 0) $total_pedido = 0;
+
+        $view = 'views/pedido/pasarela.php';
+        require_once __DIR__ . '/../views/main.php';
+    }
+
+    // PANTALLA DE GRACIAS
+    public function gracias() {
+        if(!isset($_SESSION['ultimo_pedido'])) {
+            header("Location: index.php");
+            exit();
+        }
+        
+        $pedido = $_SESSION['ultimo_pedido'];
+        $view = 'views/pedido/gracias.php';
+        require_once __DIR__ . '/../views/main.php';
+    }
+
     // API: Listar todos los pedidos (para el Admin)
     public function apiListar() {
         // Seguridad: Solo admin
