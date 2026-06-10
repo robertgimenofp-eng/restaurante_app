@@ -38,52 +38,6 @@ export default class UserManager {
                 </table>
             </div>
 
-            <!-- Modal Editar -->
-            <div class="modal fade" id="modalEditUser" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Editar Usuario</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="form-edit-user">
-                                <input type="hidden" id="edit-id">
-                                <div class="mb-3">
-                                    <label class="form-label">Nombre</label>
-                                    <input type="text" id="edit-nombre" class="form-control" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" id="edit-email" class="form-control" required>
-                                </div>
-                                <div class="mb-3" id="edit-password-container">
-                                    <label class="form-label">Contraseña (Solo al crear)</label>
-                                    <input type="password" id="edit-password" class="form-control">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Teléfono</label>
-                                    <input type="text" id="edit-telefono" class="form-control">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Dirección</label>
-                                    <input type="text" id="edit-direccion" class="form-control">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Rol</label>
-                                    <select id="edit-rol" class="form-select">
-                                        <option value="cliente">Cliente</option>
-                                        <option value="admin">Admin</option>
-                                    </select>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" id="btn-save-user">Guardar</button>
-                        </div>
-                    </div>
-                </div>
             </div>
         `;
 
@@ -92,11 +46,7 @@ export default class UserManager {
         });
 
         document.getElementById('btn-create-user').addEventListener('click', () => {
-            this.openCreateModal();
-        });
-
-        document.getElementById('btn-save-user').addEventListener('click', () => {
-            this.saveUser();
+            this.renderForm();
         });
     }
 
@@ -114,8 +64,8 @@ export default class UserManager {
 
     filterTable(term) {
         term = term.toLowerCase();
-        const filtered = this.usuarios.filter(u => 
-            u.nombre.toLowerCase().includes(term) || 
+        const filtered = this.usuarios.filter(u =>
+            u.nombre.toLowerCase().includes(term) ||
             u.email.toLowerCase().includes(term) ||
             u.rol.toLowerCase().includes(term)
         );
@@ -133,9 +83,9 @@ export default class UserManager {
 
         data.forEach(u => {
             const tr = document.createElement('tr');
-            
-            let rolBadge = u.rol === 'admin' 
-                ? '<span class="badge bg-danger">Admin</span>' 
+
+            let rolBadge = u.rol === 'admin'
+                ? '<span class="badge bg-danger">Admin</span>'
                 : '<span class="badge bg-secondary">Cliente</span>';
 
             tr.innerHTML = `
@@ -154,7 +104,7 @@ export default class UserManager {
 
         // Eventos
         tbody.querySelectorAll('.btn-edit').forEach(btn => {
-            btn.addEventListener('click', (e) => this.openEditModal(e.target.dataset.id));
+            btn.addEventListener('click', (e) => this.renderForm(e.target.dataset.id));
         });
 
         tbody.querySelectorAll('.btn-del').forEach(btn => {
@@ -162,32 +112,67 @@ export default class UserManager {
         });
     }
 
-    openCreateModal() {
-        document.getElementById('form-edit-user').reset();
-        document.getElementById('edit-id').value = '';
-        document.querySelector('#modalEditUser .modal-title').textContent = 'Crear Usuario';
-        document.getElementById('edit-password-container').style.display = 'block';
-        
-        const modal = new bootstrap.Modal(document.getElementById('modalEditUser'));
-        modal.show();
-    }
+    renderForm(id = null) {
+        let user = null;
+        if (id) {
+            user = this.usuarios.find(u => u.id_usuario == id);
+            if (!user) return;
+        }
 
-    openEditModal(id) {
-        const user = this.usuarios.find(u => u.id_usuario == id);
-        if (!user) return;
+        const titulo = user ? 'Editar Usuario' : 'Crear Usuario';
+        const displayPassword = user ? 'none' : 'block';
 
-        document.querySelector('#modalEditUser .modal-title').textContent = 'Editar Usuario';
-        document.getElementById('edit-password-container').style.display = 'none';
+        const container = document.getElementById(this.containerId);
+        container.innerHTML = `
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title mb-0">${titulo}</h3>
+                </div>
+                <div class="card-body">
+                    <form id="form-user">
+                        <input type="hidden" id="edit-id" value="${user ? user.id_usuario : ''}">
+                        <div class="mb-3">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" id="edit-nombre" class="form-control" value="${user ? user.nombre : ''}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" id="edit-email" class="form-control" value="${user ? user.email : ''}" required>
+                        </div>
+                        <div class="mb-3" id="edit-password-container" style="display: ${displayPassword};">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" id="edit-password" class="form-control" ${!user ? 'required' : ''}>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Teléfono</label>
+                            <input type="text" id="edit-telefono" class="form-control" value="${user && user.telefono ? user.telefono : ''}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Dirección</label>
+                            <input type="text" id="edit-direccion" class="form-control" value="${user && user.direccion ? user.direccion : ''}">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Rol</label>
+                            <select id="edit-rol" class="form-select">
+                                <option value="cliente" ${user && user.rol === 'cliente' ? 'selected' : ''}>Cliente</option>
+                                <option value="admin" ${user && user.rol === 'admin' ? 'selected' : ''}>Admin</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-secondary me-2" id="btn-cancel-user">Cancelar</button>
+                        <button type="submit" class="btn btn-success" id="btn-save-user">Guardar</button>
+                    </form>
+                </div>
+            </div>
+        `;
 
-        document.getElementById('edit-id').value = user.id_usuario;
-        document.getElementById('edit-nombre').value = user.nombre;
-        document.getElementById('edit-email').value = user.email;
-        document.getElementById('edit-telefono').value = user.telefono || '';
-        document.getElementById('edit-direccion').value = user.direccion || '';
-        document.getElementById('edit-rol').value = user.rol;
+        document.getElementById('btn-cancel-user').addEventListener('click', () => {
+            this.init(); // Volver a pintar la tabla
+        });
 
-        const modal = new bootstrap.Modal(document.getElementById('modalEditUser'));
-        modal.show();
+        document.getElementById('form-user').addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.saveUser();
+        });
     }
 
     saveUser() {
@@ -210,8 +195,7 @@ export default class UserManager {
             .then(data => {
                 if (data.success) {
                     Swal.fire('Guardado', 'Usuario guardado', 'success');
-                    bootstrap.Modal.getInstance(document.getElementById('modalEditUser')).hide();
-                    this.fetchUsuarios();
+                    this.init();
                 } else {
                     Swal.fire('Error', 'No se pudo guardar', 'error');
                 }
