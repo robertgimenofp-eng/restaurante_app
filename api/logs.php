@@ -12,6 +12,6 @@ if ($metodo === 'GET') {
     $controller->apiListarLogs();
 } else {
     http_response_code(405);
-    echo json_encode(['status' => 'error', 'message' => 'MÃ©todo no permitido']);
+    echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
 }
 ?>

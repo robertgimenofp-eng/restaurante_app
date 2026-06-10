@@ -3,10 +3,10 @@
 
 class CarritoController {
 
-    // 1. LÃ“GICA PARA EL MENÃš PERSONALIZADO (13.50â‚¬)
+    // 1. LÓGICA PARA EL MENÚ PERSONALIZADO (13.50€)
     // Recibe: principal, snack, bebida (IDs) desde menu.js
     public function addMenuCompleto() {
-        // Iniciamos sesiÃ³n si no estÃ¡ iniciada (por seguridad)
+        // Iniciamos sesión si no está iniciada (por seguridad)
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
@@ -37,14 +37,14 @@ class CarritoController {
 
             $_SESSION['carrito'][] = $item;
 
-            // Respuesta al JS con Ã‰XITO
+            // Respuesta al JS con ÉXITO
             echo json_encode(['status' => 'success']);
         } else {
             // Respuesta al JS con ERROR
             echo json_encode(['status' => 'error', 'msg' => 'Faltan ingredientes']);
         }
     }
-// 1. LÃ“GICA PARA LOS PACKS DE BEBIDAS (Amigos y Familiar)
+// 1. LÓGICA PARA LOS PACKS DE BEBIDAS (Amigos y Familiar)
     // Recibe: id_pack y bebidas
     public function addPackComplejo() {
         if (session_status() == PHP_SESSION_NONE) session_start();
@@ -52,7 +52,7 @@ class CarritoController {
         if(isset($_POST['id_pack'])) {
             $id_pack = $_POST['id_pack'];
             
-            // Recogemos las bebidas dinÃ¡micamente
+            // Recogemos las bebidas dinámicamente
             $bebidas_elegidas = [];
             foreach($_POST as $key => $value) {
                 // Buscamos campos que contengan la palabra "bebida" 
@@ -94,7 +94,7 @@ class CarritoController {
         }
     }
 
-    // 3. LÃ“GICA PARA PRODUCTOS SIMPLES (Pack Vegano)
+    // 3. LÓGICA PARA PRODUCTOS SIMPLES (Pack Vegano)
     // Recibe: id (por URL GET)
     public function add() {
         if (session_status() == PHP_SESSION_NONE) session_start();
@@ -146,7 +146,7 @@ class CarritoController {
         if(empty($carrito)): ?>
             <div class="text-center py-5 text-muted">
                 <h1 class="display-1">🛒</h1>
-                <p>Tu carrito estÃ¡ vacÃ­o.</p>
+                <p>Tu carrito está vacío.</p>
             </div>
         <?php else: ?>
             <div class="d-flex flex-column gap-3">
@@ -157,7 +157,7 @@ class CarritoController {
                             <button onclick="eliminarItem(<?=$indice?>)" class="btn btn-sm text-danger position-absolute top-0 end-0 fw-bold border-0" style="background:none;">&times;</button>
                             
                             <h6 class="fw-bold mb-1"><?= $item['nombre'] ?></h6>
-                            <div class="text-warning fw-bold mb-2"><?= number_format($item['precio'], 2) ?> â‚¬</div>
+                            <div class="text-warning fw-bold mb-2"><?= number_format($item['precio'], 2) ?> €</div>
                             
                             <ul class="list-unstyled small text-muted mb-0">
                                 <?php if($item['tipo'] == 'menu_personalizado'): ?>
@@ -185,19 +185,19 @@ class CarritoController {
         ]);
     }
 
-    // FunciÃ³n para eliminar
+    // Función para eliminar
     public function remove() {
         if (session_status() == PHP_SESSION_NONE) session_start();
         if(isset($_POST['index'])) {
             $index = $_POST['index'];
             if(isset($_SESSION['carrito'][$index])) {
                 unset($_SESSION['carrito'][$index]);
-                $_SESSION['carrito'] = array_values($_SESSION['carrito']); // Reordenar Ã­ndices
+                $_SESSION['carrito'] = array_values($_SESSION['carrito']); // Reordenar índices
             }
         }
         $this->getCarritoHtml(); // Devolvemos el carrito actualizado directamente
     }
-    // MUESTRA LA PÃGINA DE CHECKOUT
+    // MUESTRA LA PÁGINA DE CHECKOUT
     public function checkout() {
     // 1. COMPROBAR CARRITO
     if (!isset($_SESSION['carrito'])) {
@@ -205,7 +205,7 @@ class CarritoController {
     }
     $carrito = $_SESSION['carrito'];
 
-    // 2. RESCATAR IMÃGENES DE LA BBDD
+    // 2. RESCATAR IMÁGENES DE LA BBDD
     require_once __DIR__ . '/../models/ProductoDAO.php';
     $productoDAO = new ProductoDAO();
 
@@ -216,7 +216,7 @@ class CarritoController {
 
     $imagenes_map = $productoDAO->getImagenesByIds($ids_productos);
 
-    // 3. CÃLCULOS
+    // 3. CÁLCULOS
     $subtotal = 0;
     foreach($carrito as $item) {
         $subtotal += $item['precio'] * $item['unidades'];
@@ -268,10 +268,10 @@ class CarritoController {
 
             $pedidoDAO->crearPedidoAntiguo($usuario_id, $fecha, $total, $estado, $carrito);
 
-            // 4. Vaciar carrito y Ã©xito
+            // 4. Vaciar carrito y éxito
             unset($_SESSION['carrito']);
             
-            // Redirigir a una pÃ¡gina de gracias
+            // Redirigir a una página de gracias
             header("Location: index.php?controller=Pedido&action=gracias"); 
         } else {
             header("Location: index.php");

@@ -8,30 +8,30 @@ class MenuController {
         $productoModel = new ProductoDAO();
         $todos = $productoModel->getAll();
 
-        // 1. Preparamos las cestas vacÃ­as
+        // 1. Preparamos las cestas vacías
         $burgers = [];
         $wraps = [];
         $bowls = [];
         $snacks = [];
         $bebidas = [];
-        $packs = []; // AquÃ­ guardaremos la info del pack (precio, nombre)
+        $packs = []; // Aquí guardaremos la info del pack (precio, nombre)
 
         // 2. Clasificamos
         foreach($todos as $prod) {
             $cat = strtolower(trim($prod->getCategoria()));
             $nom = strtolower(trim($prod->getNombre()));
 
-            // A) Packs (IDs 34 y 35 o categorÃ­a MenÃºs)
-           // AÃ±adimos || $prod->getId_producto() == 36 para asegurar que pilla el Vegano
-                if ($prod->getId_producto() == 34 || $prod->getId_producto() == 35 || $prod->getId_producto() == 36 || $cat == 'menÃºs' || $cat == 'menus' || $cat == 'packs') {
-                // Excluimos el menÃº de 12â‚¬ (ID 33) de esta lista
+            // A) Packs (IDs 34 y 35 o categoría Menús)
+           // Añadimos || $prod->getId_producto() == 36 para asegurar que pilla el Vegano
+                if ($prod->getId_producto() == 34 || $prod->getId_producto() == 35 || $prod->getId_producto() == 36 || $cat == 'menús' || $cat == 'menus' || $cat == 'packs') {
+                // Excluimos el menú de 12€ (ID 33) de esta lista
                 if ($prod->getId_producto() != 33) {
-                    $packs[$prod->getId_producto()] = $prod; // Usamos el ID como clave para buscarlo fÃ¡cil luego
+                    $packs[$prod->getId_producto()] = $prod; // Usamos el ID como clave para buscarlo fácil luego
                 }
                 continue;
             }
             
-            // B) Ignoramos el MenÃº Personalizado (ID 33)
+            // B) Ignoramos el Menú Personalizado (ID 33)
             if ($prod->getId_producto() == 33) continue;
 
             // C) Ingredientes Individuales
@@ -58,7 +58,7 @@ class MenuController {
             }
         }
         
-        // Creamos una variable combinada para el MenÃº de 13,5â‚¬ (que usa todo junto)
+        // Creamos una variable combinada para el Menú de 13,5€ (que usa todo junto)
         $principales = array_merge($burgers, $wraps, $bowls);
 
         $view = 'views/menus/index.php';

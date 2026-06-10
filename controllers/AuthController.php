@@ -4,18 +4,18 @@
 class AuthController
 {
 
-    // ACCIÃ“N 1: Solo sirve para MOSTRAR el formulario (GET)
+    // ACCIÓN 1: Solo sirve para MOSTRAR el formulario (GET)
     public function showLogin()
     {
         // 1. Definimos la vista INTERNA
         $view = 'views/auth/login.php';
         // 2. Cargamos el LAYOUT (que contiene html, head, navbar y footer)
-        // Al hacer require aquÃ­, main.php tendrÃ¡ acceso a la variable $view de arriba
+        // Al hacer require aquí, main.php tendrá acceso a la variable $view de arriba
         require_once __DIR__ . '/../views/main.php';
     }
 
-    // ACCIÃ“N 2: Solo sirve para PROCESAR los datos (POST)
-    // El Router llamarÃ¡ aquÃ­ cuando el formulario se envÃ­e
+    // ACCIÓN 2: Solo sirve para PROCESAR los datos (POST)
+    // El Router llamará aquí cuando el formulario se envíe
 
     public function login()
     {
@@ -104,7 +104,7 @@ class AuthController
                 // Redirigimos al Login para que entre
                 header("Location: index.php?controller=Auth&action=showLogin");
             } else {
-                // ERROR: Algo fallÃ³ en SQL
+                // ERROR: Algo falló en SQL
                 $error = "Error al guardar el usuario.";
                 $view = 'views/auth/register.php';
                 require_once __DIR__ . '/../views/main.php';

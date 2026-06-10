@@ -1,5 +1,5 @@
 <?php
-// API REST para gestiÃ³n de productos
+// API REST para gestión de productos
 require_once '../models/Usuario.php';
 session_start();
 
@@ -21,10 +21,10 @@ if ($metodo === 'GET') {
     if ($action === 'save') {
         $controller->save();
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'AcciÃ³n no vÃ¡lida']);
+        echo json_encode(['status' => 'error', 'message' => 'Acción no válida']);
     }
 } else {
     http_response_code(405);
-    echo json_encode(['status' => 'error', 'message' => 'MÃ©todo no permitido']);
+    echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
 }
 ?>

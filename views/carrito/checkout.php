@@ -14,7 +14,11 @@
                         <?php 
                             // Aquí la vista CONSULTA el mapa que preparó el controlador
                             $id = isset($item['id_producto']) ? $item['id_producto'] : null;
-                            $nombre_fichero = ($id && isset($imagenes_map[$id])) ? $imagenes_map[$id] : 'default.jpg';
+                            if (isset($item['tipo']) && $item['tipo'] == 'menu_personalizado') {
+                                $nombre_fichero = 'menupersonalizado.webp';
+                            } else {
+                                $nombre_fichero = ($id && isset($imagenes_map[$id])) ? $imagenes_map[$id] : 'default.jpg';
+                            }
                             $imgSrc = "assets/img/productos/" . $nombre_fichero;
                         ?>
                             <img src="<?= $imgSrc ?>" 

@@ -14,11 +14,11 @@ class PedidoController {
             exit();
         }
 
-            // --- CONEXIÃ“N BD ---
+            // --- CONEXIÓN BD ---
         require_once __DIR__ . '/../models/PedidoDAO.php';
         $pedidoDAO = new PedidoDAO();
    
-            // 2. CÃLCULO DE COSTES
+            // 2. CÁLCULO DE COSTES
         $usuario_id = $_SESSION['identity']->getId_usuario(); 
         
         // A) Subtotal de los productos (Hamburguesas, bebidas...)
@@ -27,7 +27,7 @@ class PedidoController {
             $subtotal_productos += $elemento['precio'] * $elemento['unidades'];
         }
 
-        // B) Gastos de envÃ­o (LO QUE PEDISTE: 3.00â‚¬ FIJOS)
+        // B) Gastos de envío (LO QUE PEDISTE: 3.00€ FIJOS)
         $gastos_envio = 3.00;
 
         // C) Calcular Descuento
@@ -37,13 +37,13 @@ class PedidoController {
             $promo = $_SESSION['descuento_activo'];
             
             if($promo['tipo'] == 'porcentaje') {
-                // El porcentaje se aplica sobre los productos, no sobre el envÃ­o
+                // El porcentaje se aplica sobre los productos, no sobre el envío
                 $descuento_total = $subtotal_productos * ($promo['valor'] / 100);
             } 
             elseif($promo['tipo'] == 'envio') {
-                // Si el cupÃ³n es de envÃ­o gratis, descontamos los 3.00â‚¬
+                // Si el cupón es de envío gratis, descontamos los 3.00€
                 $descuento_total = $gastos_envio; 
-                // Opcional: Si quieres poner envÃ­o a 0 visualmente
+                // Opcional: Si quieres poner envío a 0 visualmente
                 $gastos_envio = 0; 
             }
             elseif($promo['tipo'] == 'fijo') {
@@ -52,11 +52,11 @@ class PedidoController {
         }
 
         // D) TOTAL FINAL A GUARDAR EN LA BBDD
-        // (Subtotal + EnvÃ­o original 3â‚¬) - Descuento
-        // Nota: Si arriba pusimos gastos_envio a 0 por el cupÃ³n, aquÃ­ sumarÃ¡ 0.
+        // (Subtotal + Envío original 3€) - Descuento
+        // Nota: Si arriba pusimos gastos_envio a 0 por el cupón, aquí sumará 0.
         $total_pedido = ($subtotal_productos + 3.00) - $descuento_total;
         
-        // Si era cupÃ³n de envÃ­o gratis, ajustamos para que la matemÃ¡tica sea exacta:
+        // Si era cupón de envío gratis, ajustamos para que la matemática sea exacta:
         if(isset($promo) && $promo['tipo'] == 'envio') {
              $total_pedido = $subtotal_productos; // Solo paga productos
         }
@@ -65,15 +65,15 @@ class PedidoController {
 
 
         try {
-            // 3. y 4. GUARDAR EL PEDIDO Y SUS LÃNEAS a travÃ©s del DAO
+            // 3. y 4. GUARDAR EL PEDIDO Y SUS LÍNEAS a través del DAO
             $pedidoDAO->crearPedidoCompleto($usuario_id, $total_pedido, $_SESSION['carrito']);
 
             // 5. LIMPIEZA
             unset($_SESSION['carrito']);
             if(isset($_SESSION['descuento_activo'])) unset($_SESSION['descuento_activo']);
 
-            // 6. MENSAJE DE Ã‰XITO Y REDIRECCIÃ“N
-            $_SESSION['mensaje'] = "âœ… Pedido confirmado.\n\nSubtotal: " . number_format($subtotal_productos, 2) . "â‚¬\n+ EnvÃ­o: 3.00â‚¬\n- Descuento: " . number_format($descuento_total, 2) . "â‚¬\n------------------\nTOTAL: " . number_format($total_pedido, 2) . "â‚¬";
+            // 6. MENSAJE DE ÉXITO Y REDIRECCIÓN
+            $_SESSION['mensaje'] = "✅ Pedido confirmado.\n\nSubtotal: " . number_format($subtotal_productos, 2) . "€\n+ Envío: 3.00€\n- Descuento: " . number_format($descuento_total, 2) . "€\n------------------\nTOTAL: " . number_format($total_pedido, 2) . "€";
             header("Location: index.php");
             exit();
 
@@ -150,7 +150,7 @@ class PedidoController {
             $pedidoDAO = new PedidoDAO();
             
             if($pedidoDAO->delete($data['id_pedido'])){
-                LogDAO::save($data['id_pedido'], 'pedido', 'DELETE', "Se eliminÃ³ el pedido #" . $data['id_pedido']);
+                LogDAO::save($data['id_pedido'], 'pedido', 'DELETE', "Se eliminó el pedido #" . $data['id_pedido']);
                 echo json_encode(['status' => 'success']);
             } else {
                 echo json_encode(['status' => 'error', 'message' => 'Error al eliminar el pedido']);

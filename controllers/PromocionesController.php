@@ -18,28 +18,28 @@ class PromocionesController {
         $oferta = $ofertaDao->buscarPorCodigo($codigo);
 
         if ($oferta) {
-            // Â¡ENCONTRADO Y VÃLIDO!
+            // ¡ENCONTRADO Y VÁLIDO!
             
-            // Guardamos en sesiÃ³n usando tus nombres de columna
+            // Guardamos en sesión usando tus nombres de columna
             $_SESSION['descuento_activo'] = [
                 'codigo' => $oferta->getCodigo_opcional(),
                 'valor' => $oferta->getDescuento_porcentaje(),
                 'tipo'  => '%'
             ];
-            // Formateamos el mensaje segÃºn el valor
+            // Formateamos el mensaje según el valor
             // Nota: asumo que 'valor' es un porcentaje, ej: 20
             echo json_encode([
                 'success' => true, 
                 'mensaje' => "¡Código {$oferta->getCodigo_opcional()} aplicado! Tienes un {$oferta->getDescuento_porcentaje()}% de descuento."
             ]);
         } else {
-            // NO EXISTE O CADUCÃ“
+            // NO EXISTE O CADUCÓ
             echo json_encode([
                 'success' => false, 
-                'mensaje' => 'El cÃ³digo no existe o ha caducado.'
+                'mensaje' => 'El código no existe o ha caducado.'
             ]);
         }
-    }  // ... aquÃ­ tendrÃ¡s seguramente tu funciÃ³n 'validar' ...
+    }  // ... aquí tendrás seguramente tu función 'validar' ...
 
     public function quitar() {
         // 1. Comprobamos si existe el descuento y lo borramos
@@ -48,7 +48,7 @@ class PromocionesController {
         }
 
         // 2. Redirigimos de vuelta al checkout/carrito
-        // Esto harÃ¡ que la pÃ¡gina se recargue y se recalculen los precios sin el descuento
+        // Esto hará que la página se recargue y se recalculen los precios sin el descuento
         header("Location: index.php?controller=Carrito&action=checkout");
         exit();
     }

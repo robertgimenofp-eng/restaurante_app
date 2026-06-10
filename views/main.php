@@ -15,15 +15,15 @@
         <div class="container py-3">
             <div class="row align-items-center">
                 <div class="col-md-8 mb-3 mb-md-0 text-white">
-                        <h5 class="fw-bold text-viva">ðŸª Â¡Hola! Usamos cookies</h5>
+                        <h5 class="fw-bold text-viva">ðŸª ¡Hola! Usamos cookies</h5>
                         <p class="mb-0 small">
                             Utilizamos cookies propias y de terceros para mejorar tu experiencia.
-                            Si continÃºas navegando, consideramos que aceptas su uso.
+                            Si continúas navegando, consideramos que aceptas su uso.
                         </p>
                 </div>
                 <div class="col-md-4 text-end">
                         <button id="btn-rechazar-cookies" class="btn btn-outline-light btn-sm me-2">Rechazar</button>
-                        <button id="btn-aceptar-cookies" class="btn btn-viva-primary fw-bold">Â¡Acepto!</button>
+                        <button id="btn-aceptar-cookies" class="btn btn-viva-primary fw-bold">¡Acepto!</button>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
 
     <div class="contenido">
         <?php 
-        // Mostrar mensajes de sesiÃ³n globales
+        // Mostrar mensajes de sesión globales
         if (isset($_SESSION['mensaje'])) {
             echo "<script>document.addEventListener('DOMContentLoaded', function() { alert('" . addslashes($_SESSION['mensaje']) . "'); });</script>";
             unset($_SESSION['mensaje']);
@@ -73,7 +73,7 @@
             ?>
                 <div class="text-center py-5 text-muted">
                     <h1 class="display-1">🛒</h1>
-                    <p>Carrito vacÃ­o</p>
+                    <p>Carrito vacío</p>
                 </div>
             <?php else: ?>
                 <div class="text-center py-5">
@@ -89,12 +89,12 @@
                     <?php 
                         $total = 0; 
                         foreach($carrito as $c) $total += $c['precio'];
-                        echo number_format($total, 2) . ' â‚¬';
+                        echo number_format($total, 2) . ' €';
                     ?>
                 </span>
             </div>
             <a href="index.php?controller=Carrito&action=checkout" class="btn btn-dark w-100 py-3 fw-bold">
-                FINALIZAR PEDIDO âœ…
+                FINALIZAR PEDIDO ✅
             </a>
         </div>
         

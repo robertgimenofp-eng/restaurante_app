@@ -2,16 +2,16 @@
 require_once __DIR__ . '/../models/LogDAO.php';
 class AdminController {
 
-    // MÃ©todo para verificar si es admin
+    // Método para verificar si es admin
     // Lo ponemos private porque solo lo usaremos dentro de esta clase
     private function verificarAdmin() {
-        // 1. Â¿EstÃ¡ logueado?
+        // 1. ¿Está logueado?
         if (!isset($_SESSION['identity'])) {
             header("Location: index.php?controller=Auth&action=login");
             exit();
         }
 
-        // 2. Es admin? (Asumiendo que guardamos el rol en la sesiÃ³n al loguear)
+        // 2. Es admin? (Asumiendo que guardamos el rol en la sesión al loguear)
         // Nota: Tendremos que revisar AuthController para asegurarnos de que guarda el rol.
         if ($_SESSION['identity']->getRol() != 'admin') {
             header("Location: index.php"); // Lo mandamos al inicio

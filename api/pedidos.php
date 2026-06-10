@@ -1,9 +1,9 @@
 <?php
-// API REST para gestiÃ³n de pedidos
+// API REST para gestión de pedidos
 require_once '../models/Usuario.php';
 session_start();
 
-// Simular el controlador frontal para cargar la lÃ³gica MVC de forma limpia
+// Simular el controlador frontal para cargar la lógica MVC de forma limpia
 require_once '../controllers/PedidoController.php';
 $controller = new PedidoController();
 
@@ -24,11 +24,11 @@ switch ($metodo) {
         } elseif ($action === 'eliminar') {
             $controller->apiEliminar();
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'AcciÃ³n no vÃ¡lida']);
+            echo json_encode(['status' => 'error', 'message' => 'Acción no válida']);
         }
         break;
     default:
         http_response_code(405);
-        echo json_encode(['status' => 'error', 'message' => 'MÃ©todo no permitido']);
+        echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
 }
 ?>

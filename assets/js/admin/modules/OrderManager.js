@@ -35,13 +35,17 @@ export default class OrderManager {
     // --- 1. CARGAR DATOS (API Interna + API Externa) ---
     async loadData() {
         try {
-            const [pedidos, monedaData] = await Promise.all([
-                api.get('pedidos.php'),
-                api.get('https://api.frankfurter.app/latest?from=EUR&to=USD,GBP,MXN')
-            ]);
-
-            this.pedidos = pedidos;
-            this.rates = monedaData.rates;
+            // Cargar pedidos
+            this.pedidos = await api.get('pedidos.php');
+            
+            // Cargar divisas por separado para que si falla no rompa la tabla de pedidos
+            try {
+                const monedaData = await api.get('https://api.frankfurter.app/latest?from=EUR&to=USD,GBP,MXN');
+                this.rates = monedaData.rates || {};
+            } catch (currencyError) {
+                console.error("Error cargando divisas:", currencyError);
+                this.rates = { USD: 1.08, GBP: 0.85, MXN: 18.5 }; // Valores por defecto en caso de fallo
+            }
 
             this.render();
         } catch (error) {

@@ -9,8 +9,8 @@
             $productoModel = new ProductoDAO();
             $todosLosProductos = $productoModel->getAll();
 
-            // ORGANIZAR POR CATEGORÃAS
-            // Creamos un array donde la clave es la categorÃ­a y el valor es la lista de platos
+            // ORGANIZAR POR CATEGORÍAS
+            // Creamos un array donde la clave es la categoría y el valor es la lista de platos
             $productosPorCategoria = [];
 
             foreach ($todosLosProductos as $prod) {
@@ -36,14 +36,14 @@
                 // 3. Obtener el array de productos
                 $lista = $producto->getAll(); 
 
-                // 4. Devolver JSON (AquÃ­ estÃ¡ la clave)
+                // 4. Devolver JSON (Aquí está la clave)
                 header('Content-Type: application/json');
                 echo json_encode($lista);
                 exit();
             }
 
            public function save() {
-    // 1. VerificaciÃ³n de seguridad
+    // 1. Verificación de seguridad
     if (!isset($_SESSION['identity']) || $_SESSION['identity']->getRol() != 'admin') {
         echo json_encode(['status' => 'error', 'message' => 'No autorizado']);
         exit();
@@ -61,7 +61,7 @@
         $categoria = $_POST['categoria'] ?? 1; 
         $id = $_POST['id_producto'] ?? null; 
 
-        // --- 2. LÃ“GICA DE IMAGEN ---
+        // --- 2. LÓGICA DE IMAGEN ---
         $nombre_fichero = null;
         if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
             $archivo = $_FILES['imagen'];
@@ -82,7 +82,7 @@
                     // === MODO EDITAR (UPDATE) ===
                     $exito = $productoDAO->update($id, $nombre, $descripcion, $precio, $stock, $categoria, $nombre_fichero);
                     if ($exito) {
-                        LogDAO::save($id, 'producto', 'UPDATE', "Se actualizÃ³ el producto: $nombre (ID: $id)");
+                        LogDAO::save($id, 'producto', 'UPDATE', "Se actualizó el producto: $nombre (ID: $id)");
                     }
                 } else {
                     // === MODO CREAR (INSERT) ===
@@ -90,7 +90,7 @@
                     $nuevo_id = $productoDAO->create($nombre, $descripcion, $precio, $stock, $categoria, $img_final);
                     if ($nuevo_id) {
                         $exito = true;
-                        LogDAO::save($nuevo_id, 'producto', 'CREATE', "Se creÃ³ el producto: $nombre");
+                        LogDAO::save($nuevo_id, 'producto', 'CREATE', "Se creó el producto: $nombre");
                     }
                 }
 
@@ -110,7 +110,7 @@
     exit();
 }
     
-        // Y aÃ±ade la de BORRAR tambiÃ©n para devolver JSON
+        // Y añade la de BORRAR también para devolver JSON
         public function borrar() {
             // Seguridad
             if (!isset($_SESSION['identity']) || $_SESSION['identity']->getRol() != 'admin') {
@@ -127,7 +127,7 @@
                 
                 if ($productoDAO->delete($id)) {
                     // REGISTRO DE LOG
-                    LogDAO::save($id, 'producto', 'DELETE', "Se eliminÃ³ el producto con ID: $id");
+                    LogDAO::save($id, 'producto', 'DELETE', "Se eliminó el producto con ID: $id");
                     
                     echo json_encode(['status' => 'success']);
                 } else {
@@ -138,7 +138,7 @@
             }
             exit();
         }
-        // Nueva funciÃ³n para rellenar el formulario de ediciÃ³n
+        // Nueva función para rellenar el formulario de edición
         public function apiObtener() {
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];

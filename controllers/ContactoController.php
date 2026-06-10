@@ -11,9 +11,9 @@ class ContactoController {
         require_once __DIR__ . '/../views/main.php';
     }
 
-    // AcciÃ³n para procesar el formulario (simulada)
+    // Acción para procesar el formulario (simulada)
     public function enviar() {
-        $_SESSION['mensaje'] = "Â¡Mensaje enviado! Te responderemos pronto.";
+        $_SESSION['mensaje'] = "¡Mensaje enviado! Te responderemos pronto.";
         header("Location: index.php");
         exit();
     }
