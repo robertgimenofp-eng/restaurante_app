@@ -84,7 +84,7 @@ document.getElementById('btn-logs')?.addEventListener('click', () => {
 
             const title = document.createElement('h3');
             title.className = 'mb-4';
-            title.textContent = '🛡️ Auditoría de Sistema';
+            title.textContent = 'Auditoría de Sistema';
             container.appendChild(title);
 
             const table = document.createElement('table');
@@ -135,7 +135,7 @@ document.getElementById('btn-logs')?.addEventListener('click', () => {
                 tr.appendChild(tdEntidad);
 
                 const tdDesc = document.createElement('td');
-                tdDesc.textContent = log.descripcion;
+                tdDesc.innerHTML = log.descripcion;
                 tr.appendChild(tdDesc);
 
                 tbody.appendChild(tr);

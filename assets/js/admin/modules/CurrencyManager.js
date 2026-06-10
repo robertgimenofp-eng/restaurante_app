@@ -30,7 +30,7 @@ export default class CurrencyManager {
         
         const h4 = document.createElement('h4');
         h4.className = 'mb-0';
-        h4.textContent = '📊 Dashboard de Control';
+        h4.textContent = 'Dashboard de Control';
         textDiv.appendChild(h4);
 
         const p = document.createElement('p');

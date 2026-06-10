@@ -13,7 +13,7 @@ export default class UserManager {
         const container = document.getElementById(this.containerId);
         container.innerHTML = `
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h3>👥 Gestión de Usuarios</h3>
+                <h3>Gestión de Usuarios</h3>
                 <div class="d-flex gap-2">
                     <input type="text" id="filter-usuarios" class="form-control" placeholder="Filtrar por nombre o email...">
                 </div>
