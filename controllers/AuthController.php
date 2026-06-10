@@ -19,38 +19,38 @@ class AuthController
 
     public function login()
     {
-        // 1. Recoger datos
-        $email = $_POST['email'];
-        $password = $_POST['contrasena'];
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // 1. Recoger datos
+            $email = $_POST['email'] ?? '';
+            $password = $_POST['contrasena'] ?? '';
 
-        // 2. Llamar al modelo
-        require_once 'models/UsuarioDAO.php';
-        $userModel = new UsuarioDAO();
+            // 2. Llamar al modelo
+            require_once 'models/UsuarioDAO.php';
+            $userModel = new UsuarioDAO();
 
-        $usuario = $userModel->getByEmail($email);
+            $usuario = $userModel->getByEmail($email);
 
-        // 3. Verificar contraseña
-        if ($usuario && password_verify($password, $usuario->getPassword())) {
+            // 3. Verificar contraseña
+            if ($usuario && password_verify($password, $usuario->getPassword())) {
 
-            // LOGUEO EXITOSO
-            $_SESSION['identity'] = $usuario;
+                // LOGUEO EXITOSO
+                $_SESSION['identity'] = $usuario;
 
-            // Comprobamos si hay productos en el carrito esperando
-            if (isset($_SESSION['carrito']) && count($_SESSION['carrito']) >= 1) {
-
-                // Si hay carrito, lo mandamos directo a finalizar la compra.
-                header("Location: index.php?controller=Carrito&action=checkout");
-
+                // Comprobamos si hay productos en el carrito esperando
+                if (isset($_SESSION['carrito']) && count($_SESSION['carrito']) >= 1) {
+                    header("Location: index.php?controller=Carrito&action=checkout");
+                } else {
+                    header("Location: index.php?controller=Home&action=index");
+                }
             } else {
-                // Si NO hay carrito, lo mandamos al home como siempre
-                header("Location: index.php?controller=Home&action=index");
+                // Si falla, guardamos el error y volvemos a mostrar la vista
+                $error = "Credenciales incorrectas";
+                $view = 'views/auth/login.php';
+                require_once 'views/main.php';
             }
-
         } else {
-            // Si falla, guardamos el error y volvemos a mostrar la vista
-            $error = "Credenciales incorrectas";
-            $view = 'views/auth/login.php';
-            require_once 'views/main.php';
+            // Si entra por GET a esta URL, mostramos el login normal
+            $this->showLogin();
         }
     }
 

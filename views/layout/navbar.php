@@ -31,16 +31,15 @@
                     PIDE AHORA
                 </a>
 
-                <div class="dropdown">
-                    <a class="nav-link text-dark p-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                    </a>
-                    
-                    <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3 p-3">
-                        <?php if(isset($_SESSION['identity'])): ?>
+                <?php if(isset($_SESSION['identity'])): ?>
+                    <div class="dropdown">
+                        <a class="nav-link text-dark p-0" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3 p-3">
                             <li class="mb-2">
                                 <span class="text-secondary fw-bold small">Hola, <?php echo $_SESSION['identity']->getNombre(); ?></span>
                             </li>
@@ -51,20 +50,16 @@
                                     Cerrar Sesión
                                 </a>
                             </li>
-                        <?php else: ?>
-                            <li class="mb-2">
-                                <span class="text-secondary fw-bold small">Hola, Gourmet</span>
-                            </li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <a class="dropdown-item text-primary d-flex align-items-center p-0 pt-2" href="index.php?controller=Auth&action=login">
-                                    <svg class="me-2" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
-                                    Iniciar Sesión
-                                </a>
-                            </li>
-                        <?php endif; ?>
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
+                <?php else: ?>
+                    <a class="nav-link text-dark p-0" href="index.php?controller=Auth&action=showLogin">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </a>
+                <?php endif; ?>
             </div> </div>
     </div>
 </nav>
