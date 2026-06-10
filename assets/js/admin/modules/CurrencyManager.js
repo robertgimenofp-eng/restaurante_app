@@ -82,17 +82,17 @@ export default class CurrencyManager {
                     
                     const spanUSD = document.createElement('span');
                     spanUSD.className = 'badge bg-soft-primary text-primary border';
-                    spanUSD.textContent = `🇺🇸 USD: ${data.rates.USD}`;
+                    spanUSD.textContent = `USD: ${data.rates.USD}`;
                     display.appendChild(spanUSD);
 
                     const spanGBP = document.createElement('span');
                     spanGBP.className = 'badge bg-soft-success text-success border ms-2';
-                    spanGBP.textContent = `🇬🇧 GBP: ${data.rates.GBP}`;
+                    spanGBP.textContent = `GBP: ${data.rates.GBP}`;
                     display.appendChild(spanGBP);
 
                     const spanMXN = document.createElement('span');
                     spanMXN.className = 'badge bg-soft-warning text-warning border ms-2';
-                    spanMXN.textContent = `🇲🇽 MXN: ${data.rates.MXN}`;
+                    spanMXN.textContent = `MXN: ${data.rates.MXN}`;
                     display.appendChild(spanMXN);
                 }
             })

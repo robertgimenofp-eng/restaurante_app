@@ -97,7 +97,7 @@ export default class OrderManager {
         
         const title = document.createElement('h2');
         title.className = 'mb-0';
-        title.textContent = '📦 Gestión de Pedidos';
+        title.textContent = 'Gestión de Pedidos';
         headerDiv.appendChild(title);
 
         const currencyDiv = document.createElement('div');
@@ -114,9 +114,9 @@ export default class OrderManager {
         currencySelect.style.width = 'auto';
         
         const optionsMoneda = [
-            {val: 'USD', text: '🇺🇸 USD - Dólar'},
-            {val: 'GBP', text: '🇬🇧 GBP - Libra'},
-            {val: 'MXN', text: '🇲🇽 MXN - Peso'}
+            {val: 'USD', text: 'USD - Dólar'},
+            {val: 'GBP', text: 'GBP - Libra'},
+            {val: 'MXN', text: 'MXN - Peso'}
         ];
         
         optionsMoneda.forEach(opt => {
@@ -187,10 +187,10 @@ export default class OrderManager {
         optTodos.textContent = 'Todos los estados';
         selectStatus.appendChild(optTodos);
         const optEstados = [
-            {val: '1', text: '📝 Confirmado'},
-            {val: '2', text: '👨‍🍳 En Cocina'},
-            {val: '3', text: '🛵 En Reparto'},
-            {val: '4', text: '✅ Entregado'}
+            {val: '1', text: 'Confirmado'},
+            {val: '2', text: 'En Cocina'},
+            {val: '3', text: 'En Reparto'},
+            {val: '4', text: 'Entregado'}
         ];
         optEstados.forEach(opt => {
             const o = document.createElement('option');
@@ -339,10 +339,10 @@ export default class OrderManager {
             selEstado.style.borderLeft = `5px solid ${this.getColorEstado(p.id_estado)}`;
             
             const optEstados = [
-                {val: '1', text: '📝 Confirmado'},
-                {val: '2', text: '👨‍🍳 En Cocina'},
-                {val: '3', text: '🛵 En Reparto'},
-                {val: '4', text: '✅ Entregado'}
+                {val: '1', text: 'Confirmado'},
+                {val: '2', text: 'En Cocina'},
+                {val: '3', text: 'En Reparto'},
+                {val: '4', text: 'Entregado'}
             ];
             optEstados.forEach(opt => {
                 const o = document.createElement('option');
@@ -363,12 +363,12 @@ export default class OrderManager {
 
             const btnVer = document.createElement('button');
             btnVer.className = 'btn btn-sm btn-info text-white';
-            btnVer.textContent = '👁️ Ver';
+            btnVer.textContent = 'Ver';
             btnVer.addEventListener('click', () => this.showDetails(p.id_pedido));
 
             const btnEliminar = document.createElement('button');
             btnEliminar.className = 'btn btn-sm btn-danger';
-            btnEliminar.textContent = '🗑️ Borrar';
+            btnEliminar.textContent = 'Borrar';
             btnEliminar.addEventListener('click', () => this.deleteOrder(p.id_pedido));
 
             tdAcciones.appendChild(btnVer);
