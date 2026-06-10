@@ -1,7 +1,12 @@
 <div class="offcanvas offcanvas-end" tabindex="-1" id="carritoSidebar" aria-labelledby="carritoLabel">
-    <div class="offcanvas-header bg-dark text-white">
-        <h5 class="offcanvas-title fw-bold" id="carritoLabel">TU PEDIDO 🍔</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    <div class="offcanvas-header bg-dark text-white d-flex align-items-center position-relative">
+        <button type="button" class="btn text-white p-0 border-0 fw-bold d-flex align-items-center gap-2" data-bs-dismiss="offcanvas">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+            Volver
+        </button>
+        <h5 class="offcanvas-title fw-bold m-0 position-absolute start-50 translate-middle-x" id="carritoLabel">TU PEDIDO 🍔</h5>
     </div>
     
     <div class="offcanvas-body bg-light" id="carrito-body-content">
