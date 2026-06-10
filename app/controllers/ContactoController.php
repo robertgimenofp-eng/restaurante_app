@@ -13,8 +13,9 @@ class ContactoController {
 
     // Acción para procesar el formulario (simulada)
     public function enviar() {
-        // Aquí iría la lógica de enviar email
-        echo "<script>alert('¡Mensaje enviado! Te responderemos pronto.'); window.location.href='index.php';</script>";
+        $_SESSION['mensaje'] = "¡Mensaje enviado! Te responderemos pronto.";
+        header("Location: index.php");
+        exit();
     }
 }
 ?>

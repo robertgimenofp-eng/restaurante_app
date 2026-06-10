@@ -32,7 +32,19 @@
 }; ?>
 
     <div class="contenido">
-        <?php include $view; ?>
+        <?php 
+        // Mostrar mensajes de sesión globales
+        if (isset($_SESSION['mensaje'])) {
+            echo "<script>document.addEventListener('DOMContentLoaded', function() { alert('" . addslashes($_SESSION['mensaje']) . "'); });</script>";
+            unset($_SESSION['mensaje']);
+        }
+        if (isset($_SESSION['error'])) {
+            echo "<script>document.addEventListener('DOMContentLoaded', function() { alert('Error: " . addslashes($_SESSION['error']) . "'); });</script>";
+            unset($_SESSION['error']);
+        }
+        
+        include $view; 
+        ?>
     </div>
 
     <?php if (!isset($_GET['action']) || strpos($_GET['action'], 'gestion') === false) {
@@ -56,12 +68,17 @@
             <?php 
             if (session_status() == PHP_SESSION_NONE) session_start();
             $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : [];
-            if(empty($carrito)) {
-                echo '<div class="text-center py-5 text-muted"><h1 class="display-1">🛒</h1><p>Carrito vacío</p></div>';
-            } else {
-                echo '<div class="text-center py-5"><button class="btn btn-sm btn-outline-dark" onclick="actualizarVisualizacionCarrito()">Cargar mis productos...</button></div>';
-            }
+            if(empty($carrito)): 
             ?>
+                <div class="text-center py-5 text-muted">
+                    <h1 class="display-1">🛒</h1>
+                    <p>Carrito vacío</p>
+                </div>
+            <?php else: ?>
+                <div class="text-center py-5">
+                    <button class="btn btn-sm btn-outline-dark" onclick="actualizarVisualizacionCarrito()">Cargar mis productos...</button>
+                </div>
+            <?php endif; ?>
         </div>
 
         <div class="offcanvas-footer p-3 bg-white border-top">
@@ -90,9 +107,5 @@
         <script src="public/js/menu.js"></script>
         
 
-</body>
-</html>
-</body>
-</html>
 </body>
 </html>

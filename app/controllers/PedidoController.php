@@ -72,15 +72,15 @@ class PedidoController {
             unset($_SESSION['carrito']);
             if(isset($_SESSION['descuento_activo'])) unset($_SESSION['descuento_activo']);
 
-            // 6. MENSAJE DE ÉXITO
-            echo "<script>
-                    alert('✅ Pedido confirmado.\\n\\nSubtotal: " . number_format($subtotal_productos, 2) . "€\\n+ Envío: 3.00€\\n- Descuento: " . number_format($descuento_total, 2) . "€\\n------------------\\nTOTAL: " . number_format($total_pedido, 2) . "€');
-                    window.location.href = 'index.php';
-                  </script>";
+            // 6. MENSAJE DE ÉXITO Y REDIRECCIÓN
+            $_SESSION['mensaje'] = "✅ Pedido confirmado.\n\nSubtotal: " . number_format($subtotal_productos, 2) . "€\n+ Envío: 3.00€\n- Descuento: " . number_format($descuento_total, 2) . "€\n------------------\nTOTAL: " . number_format($total_pedido, 2) . "€";
+            header("Location: index.php");
+            exit();
 
         } catch (PDOException $e) {
-            echo "<h1>Error al procesar pedido:</h1><p>" . $e->getMessage() . "</p>";
-            die();
+            $_SESSION['error'] = "Error al procesar pedido: " . $e->getMessage();
+            header("Location: index.php?controller=Carrito&action=checkout");
+            exit();
         }
     }
     // API: Listar todos los pedidos (para el Admin)
@@ -130,6 +130,30 @@ class PedidoController {
                 echo json_encode(['status' => 'success']);
             } else {
                 echo json_encode(['status' => 'error']);
+            }
+        }
+        exit();
+    }
+
+    // API: Eliminar Pedido
+    public function apiEliminar() {
+        if (!isset($_SESSION['identity']) || $_SESSION['identity']->getRol() != 'admin') {
+            echo json_encode(['status' => 'error', 'message' => 'No autorizado']);
+            exit();
+        }
+
+        $data = json_decode(file_get_contents('php://input'), true);
+
+        if (isset($data['id_pedido'])) {
+            require_once 'app/models/PedidoDAO.php';
+            require_once 'app/models/LogDAO.php';
+            $pedidoDAO = new PedidoDAO();
+            
+            if($pedidoDAO->delete($data['id_pedido'])){
+                LogDAO::save($data['id_pedido'], 'pedido', 'DELETE', "Se eliminó el pedido #" . $data['id_pedido']);
+                echo json_encode(['status' => 'success']);
+            } else {
+                echo json_encode(['status' => 'error', 'message' => 'Error al eliminar el pedido']);
             }
         }
         exit();

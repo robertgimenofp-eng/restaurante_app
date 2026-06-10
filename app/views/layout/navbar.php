@@ -41,7 +41,7 @@
                     
                     <ul class="dropdown-menu dropdown-menu-end shadow border-0 mt-3 p-3">
                         <li class="mb-2">
-                            <span class="text-secondary fw-bold small">Hola, <?php echo $_SESSION['identity']->getNombre() ?? 'Gourmet'; ?></span>
+                            <span class="text-secondary fw-bold small">Hola, <?php echo isset($_SESSION['identity']) ? $_SESSION['identity']->getNombre() : 'Gourmet'; ?></span>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>

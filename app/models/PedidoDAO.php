@@ -119,5 +119,20 @@ class PedidoDAO
         $stmt->bindParam(':id', $id_pedido);
         return $stmt->execute();
     }
+
+    public function delete($id_pedido)
+    {
+        // Como tenemos integridad referencial (o deberíamos), si no hay ON DELETE CASCADE,
+        // primero borramos las lineas de pedido.
+        $sqlLineas = "DELETE FROM linea_pedido WHERE id_pedido = :id";
+        $stmtLineas = $this->db->prepare($sqlLineas);
+        $stmtLineas->bindParam(':id', $id_pedido);
+        $stmtLineas->execute();
+
+        $sql = "DELETE FROM pedido WHERE id_pedido = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $id_pedido);
+        return $stmt->execute();
+    }
 }
 ?>

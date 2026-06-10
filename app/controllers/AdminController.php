@@ -1,5 +1,5 @@
 <?php
-require_once 'models/Log.php';
+require_once 'app/models/LogDAO.php';
 class AdminController {
 
     // Método para verificar si es admin
@@ -34,11 +34,11 @@ class AdminController {
     }
 
     require_once 'config/db.php';
-    require_once 'models/Log.php';
+    require_once 'app/models/LogDAO.php';
     $db = Database::connect();
-    $logModel = new Log($db);
+    $logDAO = new LogDAO($db);
     
-    $logs = $logModel->getAll();
+    $logs = $logDAO->getAll();
 
     header('Content-Type: application/json');
     echo json_encode($logs);

@@ -145,7 +145,7 @@
                 require_once 'app/models/ProductoDAO.php';
                 $productoDAO = new ProductoDAO();
 
-                $producto = $productoDAO->getByIdAssoc($id);
+                $producto = $productoDAO->getById($id);
                 
                 header('Content-Type: application/json');
                 echo json_encode($producto);

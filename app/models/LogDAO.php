@@ -12,7 +12,7 @@ class LogDAO {
         require_once 'config/db.php';
         $db = Database::connect();
         
-        $id_usuario = $_SESSION['identity']->id_usuario ?? null;
+        $id_usuario = isset($_SESSION['identity']) ? $_SESSION['identity']->getId_usuario() : null;
         $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
 
         $sql = "INSERT INTO log (id_usuario, id_entidad, entidad_afectada, accion, descripcion, ip, fecha_hora) 
