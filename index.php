@@ -1,5 +1,6 @@
 <?php
 // index.php
+require_once 'models/Usuario.php';
 session_start();
 // Cargar controladores
 $controllerName = isset($_GET['controller']) ? $_GET['controller'] . 'Controller' : 'HomeController';
@@ -15,7 +16,7 @@ if (file_exists($controllerPath)) {
     if (method_exists($controller, $actionName)) {
         $controller->$actionName();
     } else {
-        echo "Error: La acciÃ³n no existe.";
+        echo "Error: La acción no existe.";
     }
 } else {
     echo "Error: El controlador no existe.";

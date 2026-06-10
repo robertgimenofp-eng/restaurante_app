@@ -1,5 +1,6 @@
 <?php
 // API REST para carrito
+require_once '../models/Usuario.php';
 session_start();
 
 require_once '../controllers/CarritoController.php';

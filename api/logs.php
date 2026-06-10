@@ -1,5 +1,6 @@
 <?php
 // API REST para logs
+require_once '../models/Usuario.php';
 session_start();
 
 require_once '../controllers/AdminController.php';

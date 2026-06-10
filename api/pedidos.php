@@ -1,5 +1,6 @@
 <?php
 // API REST para gestiÃ³n de pedidos
+require_once '../models/Usuario.php';
 session_start();
 
 // Simular el controlador frontal para cargar la lÃ³gica MVC de forma limpia

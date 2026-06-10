@@ -1,5 +1,6 @@
 <?php
 // API REST para gestiÃ³n de productos
+require_once '../models/Usuario.php';
 session_start();
 
 require_once '../controllers/ProductoController.php';

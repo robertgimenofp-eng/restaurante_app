@@ -1,5 +1,6 @@
 <?php
 // API REST para ofertas/promociones
+require_once '../models/Usuario.php';
 session_start();
 
 require_once '../controllers/PromocionesController.php';
