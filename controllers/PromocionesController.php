@@ -1,12 +1,12 @@
 <?php
 // OJO: Ahora cargamos el modelo Oferta
-require_once 'models/Oferta.php';
+require_once __DIR__ . '/../models/Oferta.php';
 
 class PromocionesController {
     
     public function index() {
         $view = 'views/promociones/index.php';
-        require_once 'views/main.php';
+        require_once __DIR__ . '/../views/main.php';
     }
 
     public function validar() {

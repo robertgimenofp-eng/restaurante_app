@@ -140,13 +140,13 @@
             <label class="form-label">Bebida 1</label>
             <select name="bebida1" class="form-select mb-3">
                 <option value="">-- Elige --</option>
-                <?php foreach($bebidas as $b) echo "<option value='$b->getId_producto()'>$b->getNombre()</option>"; ?>
+                <?php foreach($bebidas as $b) echo "<option value='" . $b->getId_producto() . "'>" . $b->getNombre() . "</option>"; ?>
             </select>
 
             <label class="form-label">Bebida 2</label>
             <select name="bebida2" class="form-select mb-3">
                 <option value="">-- Elige --</option>
-                <?php foreach($bebidas as $b) echo "<option value='$b->getId_producto()'>$b->getNombre()</option>"; ?>
+                <?php foreach($bebidas as $b) echo "<option value='" . $b->getId_producto() . "'>" . $b->getNombre() . "</option>"; ?>
             </select>
             
             <div id="msg-amigos" class="text-center fw-bold small mb-2" style="display:none;"></div>
@@ -178,7 +178,7 @@
                 <label class="form-label">Bebida <?=$i?></label>
                 <select name="bebida<?=$i?>" class="form-select mb-2">
                     <option value="">-- Elige --</option>
-                    <?php foreach($bebidas as $b) echo "<option value='$b->getId_producto()'>$b->getNombre()</option>"; ?>
+                    <?php foreach($bebidas as $b) echo "<option value='" . $b->getId_producto() . "'>" . $b->getNombre() . "</option>"; ?>
                 </select>
             <?php endfor; ?>
             

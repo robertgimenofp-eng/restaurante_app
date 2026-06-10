@@ -54,7 +54,7 @@
     <button class="btn btn-dark position-fixed bottom-0 end-0 m-4 p-3 shadow rounded-circle" 
             style="z-index: 1050; width: 60px; height: 60px;"
             data-bs-toggle="offcanvas" data-bs-target="#carritoSidebar">
-        ðŸ›’
+        🛒
     </button>
 
 
@@ -72,7 +72,7 @@
             if(empty($carrito)): 
             ?>
                 <div class="text-center py-5 text-muted">
-                    <h1 class="display-1">ðŸ›’</h1>
+                    <h1 class="display-1">🛒</h1>
                     <p>Carrito vacÃ­o</p>
                 </div>
             <?php else: ?>

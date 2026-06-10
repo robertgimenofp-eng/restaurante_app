@@ -1,5 +1,5 @@
 <?php
-require_once 'models/LogDAO.php';
+require_once __DIR__ . '/../models/LogDAO.php';
 class AdminController {
 
     // MÃ©todo para verificar si es admin
@@ -24,7 +24,7 @@ class AdminController {
         $this->verificarAdmin();
 
         // Si pasa, mostramos la vista del panel
-        require_once 'views/admin/dashboard.php';
+        require_once __DIR__ . '/../views/admin/dashboard.php';
     }
     public function apiListarLogs() {
     // Seguridad
@@ -33,8 +33,8 @@ class AdminController {
         exit();
     }
 
-    require_once 'database/db.php';
-    require_once 'models/LogDAO.php';
+    require_once __DIR__ . '/../database/db.php';
+    require_once __DIR__ . '/../models/LogDAO.php';
     $db = Database::connect();
     $logDAO = new LogDAO($db);
     

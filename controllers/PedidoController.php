@@ -15,7 +15,7 @@ class PedidoController {
         }
 
             // --- CONEXIÃ“N BD ---
-        require_once 'models/PedidoDAO.php';
+        require_once __DIR__ . '/../models/PedidoDAO.php';
         $pedidoDAO = new PedidoDAO();
    
             // 2. CÃLCULO DE COSTES
@@ -91,7 +91,7 @@ class PedidoController {
             exit();
         }
 
-        require_once 'models/PedidoDAO.php';
+        require_once __DIR__ . '/../models/PedidoDAO.php';
         $pedidoDAO = new PedidoDAO();
 
         try {
@@ -109,7 +109,7 @@ class PedidoController {
         if (!isset($_GET['id'])) exit();
         $id_pedido = $_GET['id'];
 
-        require_once 'models/PedidoDAO.php';
+        require_once __DIR__ . '/../models/PedidoDAO.php';
         $pedidoDAO = new PedidoDAO();
 
         $detalles = $pedidoDAO->apiDetalles($id_pedido);
@@ -123,7 +123,7 @@ class PedidoController {
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (isset($data['id_pedido']) && isset($data['id_estado'])) {
-            require_once 'models/PedidoDAO.php';
+            require_once __DIR__ . '/../models/PedidoDAO.php';
             $pedidoDAO = new PedidoDAO();
             
             if($pedidoDAO->cambiarEstado($data['id_pedido'], $data['id_estado'])){
@@ -145,8 +145,8 @@ class PedidoController {
         $data = json_decode(file_get_contents('php://input'), true);
 
         if (isset($data['id_pedido'])) {
-            require_once 'models/PedidoDAO.php';
-            require_once 'models/LogDAO.php';
+            require_once __DIR__ . '/../models/PedidoDAO.php';
+            require_once __DIR__ . '/../models/LogDAO.php';
             $pedidoDAO = new PedidoDAO();
             
             if($pedidoDAO->delete($data['id_pedido'])){

@@ -4,7 +4,7 @@
 class MenuController {
 
     public function index() {
-        require_once 'models/ProductoDAO.php';
+        require_once __DIR__ . '/../models/ProductoDAO.php';
         $productoModel = new ProductoDAO();
         $todos = $productoModel->getAll();
 
@@ -62,6 +62,6 @@ class MenuController {
         $principales = array_merge($burgers, $wraps, $bowls);
 
         $view = 'views/menus/index.php';
-        require_once 'views/main.php';
+        require_once __DIR__ . '/../views/main.php';
     }
 }

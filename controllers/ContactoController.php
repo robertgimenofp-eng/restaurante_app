@@ -3,12 +3,12 @@ class ContactoController {
     
     public function index() {
         $view = "views/contacto/index.php";
-        require_once 'views/main.php';
+        require_once __DIR__ . '/../views/main.php';
     }
 
     public function faq() {
         $view = "views/contacto/faq.php";
-        require_once 'views/main.php';
+        require_once __DIR__ . '/../views/main.php';
     }
 
     // AcciÃ³n para procesar el formulario (simulada)

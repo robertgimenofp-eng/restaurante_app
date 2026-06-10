@@ -11,7 +11,7 @@ class AuthController
         $view = 'views/auth/login.php';
         // 2. Cargamos el LAYOUT (que contiene html, head, navbar y footer)
         // Al hacer require aquÃ­, main.php tendrÃ¡ acceso a la variable $view de arriba
-        require_once 'views/main.php';
+        require_once __DIR__ . '/../views/main.php';
     }
 
     // ACCIÃ“N 2: Solo sirve para PROCESAR los datos (POST)
@@ -25,7 +25,7 @@ class AuthController
             $password = $_POST['contrasena'] ?? '';
 
             // 2. Llamar al modelo
-            require_once 'models/UsuarioDAO.php';
+            require_once __DIR__ . '/../models/UsuarioDAO.php';
             $userModel = new UsuarioDAO();
 
             $usuario = $userModel->getByEmail($email);
@@ -46,7 +46,7 @@ class AuthController
                 // Si falla, guardamos el error y volvemos a mostrar la vista
                 $error = "Credenciales incorrectas";
                 $view = 'views/auth/login.php';
-                require_once 'views/main.php';
+                require_once __DIR__ . '/../views/main.php';
             }
         } else {
             // Si entra por GET a esta URL, mostramos el login normal
@@ -60,7 +60,7 @@ class AuthController
         // 1. Definimos el contenido
         $view = 'views/auth/register.php';
         // 2. Cargamos el Layout
-        require_once 'views/main.php';
+        require_once __DIR__ . '/../views/main.php';
     }
 
     // 2. Procesa los datos (POST)
@@ -69,7 +69,7 @@ class AuthController
         // Verificar si vienen datos por POST
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            require_once 'models/UsuarioDAO.php';
+            require_once __DIR__ . '/../models/UsuarioDAO.php';
             $userModel = new UsuarioDAO();
 
             // 2.1 Recoger datos del formulario
@@ -83,7 +83,7 @@ class AuthController
             if ($userModel->getByEmail($email)) {
                 $error = "Ese email ya està registrado";
                 $view = 'views/auth/register.php';
-                require_once 'views/main.php';
+                require_once __DIR__ . '/../views/main.php';
                 return;
             }
 
@@ -107,7 +107,7 @@ class AuthController
                 // ERROR: Algo fallÃ³ en SQL
                 $error = "Error al guardar el usuario.";
                 $view = 'views/auth/register.php';
-                require_once 'views/main.php';
+                require_once __DIR__ . '/../views/main.php';
             }
         }
     }

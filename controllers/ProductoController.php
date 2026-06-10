@@ -1,7 +1,7 @@
 <?php
     // controllers/ProductoController.php
-    require_once 'models/ProductoDAO.php';
-    require_once 'models/LogDAO.php';
+    require_once __DIR__ . '/../models/ProductoDAO.php';
+    require_once __DIR__ . '/../models/LogDAO.php';
 
     class ProductoController {
 
@@ -19,7 +19,7 @@
 
             // Cargamos la vista
             $view = 'views/producto/index.php';
-            require_once 'views/main.php';
+            require_once __DIR__ . '/../views/main.php';
         }
 
         public function apiListar() {
@@ -30,7 +30,7 @@
                 }
 
                 // 2. Conectar y pedir datos
-                require_once 'models/ProductoDAO.php';
+                require_once __DIR__ . '/../models/ProductoDAO.php';
                 $producto = new ProductoDAO();
                 
                 // 3. Obtener el array de productos
@@ -49,8 +49,8 @@
         exit();
     }
 
-    require_once 'models/ProductoDAO.php';
-    require_once 'models/LogDAO.php';
+    require_once __DIR__ . '/../models/ProductoDAO.php';
+    require_once __DIR__ . '/../models/LogDAO.php';
     $productoDAO = new ProductoDAO();
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -121,8 +121,8 @@
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];
                 
-                require_once 'models/ProductoDAO.php';
-                require_once 'models/LogDAO.php';
+                require_once __DIR__ . '/../models/ProductoDAO.php';
+                require_once __DIR__ . '/../models/LogDAO.php';
                 $productoDAO = new ProductoDAO();
                 
                 if ($productoDAO->delete($id)) {
@@ -142,7 +142,7 @@
         public function apiObtener() {
             if (isset($_GET['id'])) {
                 $id = $_GET['id'];
-                require_once 'models/ProductoDAO.php';
+                require_once __DIR__ . '/../models/ProductoDAO.php';
                 $productoDAO = new ProductoDAO();
 
                 $producto = $productoDAO->getById($id);

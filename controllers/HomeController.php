@@ -2,7 +2,7 @@
 
 class HomeController {
     public function index() {
-        require_once 'models/OfertaDAO.php';
+        require_once __DIR__ . '/../models/OfertaDAO.php';
         $ofertaDAO = new OfertaDAO();
         $oferta_activa = $ofertaDAO->getOfertaActivaAssoc();
 

@@ -103,7 +103,7 @@ class CarritoController {
         if(isset($_GET['id'])) {
             $id = $_GET['id'];
 
-            require_once 'models/ProductoDAO.php';
+            require_once __DIR__ . '/../models/ProductoDAO.php';
             $productoModel = new ProductoDAO(); 
 
             $todos = $productoModel->getAll();
@@ -145,7 +145,7 @@ class CarritoController {
 
         if(empty($carrito)): ?>
             <div class="text-center py-5 text-muted">
-                <h1 class="display-1">ðŸ›’</h1>
+                <h1 class="display-1">🛒</h1>
                 <p>Tu carrito estÃ¡ vacÃ­o.</p>
             </div>
         <?php else: ?>
@@ -206,7 +206,7 @@ class CarritoController {
     $carrito = $_SESSION['carrito'];
 
     // 2. RESCATAR IMÃGENES DE LA BBDD
-    require_once 'models/ProductoDAO.php';
+    require_once __DIR__ . '/../models/ProductoDAO.php';
     $productoDAO = new ProductoDAO();
 
     $ids_productos = [];
@@ -244,7 +244,7 @@ class CarritoController {
 
     // 4. RENDERIZAR VISTA
     $view = 'views/carrito/checkout.php';
-    require_once 'views/main.php';
+    require_once __DIR__ . '/../views/main.php';
 }
 
     // PROCESA EL PEDIDO
@@ -254,7 +254,7 @@ class CarritoController {
         $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : [];
         
         if(!empty($carrito)) {
-            require_once 'models/PedidoDAO.php';
+            require_once __DIR__ . '/../models/PedidoDAO.php';
             $pedidoDAO = new PedidoDAO();
 
             // 1. Calcular total
