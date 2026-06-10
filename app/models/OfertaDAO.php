@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../config/db.php';
+require_once __DIR__ . '/Oferta.php';
 
 class OfertaDAO {
     private $db;
@@ -17,7 +18,7 @@ class OfertaDAO {
         
         $stmt = $this->db->prepare($sql);
         $stmt->execute([$codigo]);
-        return $stmt->fetch(PDO::FETCH_OBJ); 
+        return $stmt->fetchObject('Oferta'); 
     }
 
     public function getOfertaActivaAssoc() {
@@ -30,7 +31,8 @@ class OfertaDAO {
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':hoy', $hoy);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Oferta');
+        return $stmt->fetch();
     }
 }
 ?>

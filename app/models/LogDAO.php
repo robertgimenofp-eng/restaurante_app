@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/Log.php';
+
 class LogDAO {
     private $db;
 
@@ -34,6 +36,6 @@ class LogDAO {
                 LEFT JOIN usuario u ON l.id_usuario = u.id_usuario 
                 ORDER BY l.fecha_hora DESC";
         $stmt = $this->db->query($sql);
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(PDO::FETCH_CLASS, 'Log');
     }
 }
