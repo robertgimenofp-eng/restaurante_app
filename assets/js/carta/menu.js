@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
             btn.innerText = "Añadiendo... ⏳";
             btn.disabled = true;
 
-            api.post('carrito.php?action=add', datos)
+            api.post(urlDestino, datos)
             .then(data => {
                 if(data.status === 'success') {
                     // Feedback visual

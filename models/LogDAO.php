@@ -9,8 +9,9 @@ class LogDAO {
     }
 
     public static function save($id_entidad, $entidad, $accion, $descripcion) {
-        require_once 'database/db.php';
-        $db = Database::connect();
+        require_once __DIR__ . '/../database/db.php';
+        $database = new Database();
+        $db = $database->connect();
         
         $id_usuario = isset($_SESSION['identity']) ? $_SESSION['identity']->getId_usuario() : null;
         $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';

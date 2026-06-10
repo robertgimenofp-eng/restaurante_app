@@ -25,7 +25,7 @@ class CarritoController {
             
             $item = [
                 "tipo" => "menu_personalizado",
-                "nombre" => "MenÃº Personalizado", 
+                "nombre" => "Menú Personalizado", 
                 "precio" => 13.50,
                 "unidades" => 1,
                 "ingredientes" => [

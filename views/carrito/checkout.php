@@ -13,8 +13,8 @@
                     <div class="flex-shrink-0 me-4">
                         <?php 
                             // Aquí la vista CONSULTA el mapa que preparó el controlador
-                            $id = $item['id_producto'];
-                            $nombre_fichero = isset($imagenes_map[$id]) ? $imagenes_map[$id] : 'default.jpg';
+                            $id = isset($item['id_producto']) ? $item['id_producto'] : null;
+                            $nombre_fichero = ($id && isset($imagenes_map[$id])) ? $imagenes_map[$id] : 'default.jpg';
                             $imgSrc = "assets/img/productos/" . $nombre_fichero;
                         ?>
                             <img src="<?= $imgSrc ?>" 
