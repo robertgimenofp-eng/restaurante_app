@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="assets/css/admin.css">
+<link rel="stylesheet" href="assets/css/admin.css?v=2">
 <div class="container-fluid mt-4">
     <div class="row">
         <div class="col-md-2">
