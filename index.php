@@ -6,7 +6,7 @@ $controllerName = isset($_GET['controller']) ? $_GET['controller'] . 'Controller
 $actionName = isset($_GET['action']) ? $_GET['action'] : 'index';
 
 // Rutas a los archivos
-$controllerPath = 'app/controllers/' . $controllerName . '.php';
+$controllerPath = 'controllers/' . $controllerName . '.php';
 
 if (file_exists($controllerPath)) {
     require_once $controllerPath;
@@ -15,7 +15,7 @@ if (file_exists($controllerPath)) {
     if (method_exists($controller, $actionName)) {
         $controller->$actionName();
     } else {
-        echo "Error: La acción no existe.";
+        echo "Error: La acciÃ³n no existe.";
     }
 } else {
     echo "Error: El controlador no existe.";
