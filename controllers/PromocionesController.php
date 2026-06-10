@@ -23,14 +23,17 @@ class PromocionesController {
             // Guardamos en sesión usando tus nombres de columna
             $_SESSION['descuento_activo'] = [
                 'codigo' => $oferta->getCodigo_opcional(),
-                'valor' => $oferta->getDescuento_porcentaje(),
-                'tipo'  => 'porcentaje'
+                'valor' => $oferta->getValor(),
+                'tipo'  => $oferta->getTipo()
             ];
+            
             // Formateamos el mensaje según el valor
-            // Nota: asumo que 'valor' es un porcentaje, ej: 20
+            $mensajeExtra = $oferta->getTipo() == 'porcentaje' ? "% de descuento" : "€ de descuento";
+            if($oferta->getTipo() == 'envio') $mensajeExtra = "€ en gastos de envío gratis";
+            
             echo json_encode([
                 'success' => true, 
-                'mensaje' => "¡Código {$oferta->getCodigo_opcional()} aplicado! Tienes un {$oferta->getDescuento_porcentaje()}% de descuento."
+                'mensaje' => "¡Código {$oferta->getCodigo_opcional()} aplicado! Tienes un {$oferta->getValor()}{$mensajeExtra}."
             ]);
         } else {
             // NO EXISTE O CADUCÓ
