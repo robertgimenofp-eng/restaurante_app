@@ -16,6 +16,7 @@ export default class UserManager {
                 <h3>Gestión de Usuarios</h3>
                 <div class="d-flex gap-2">
                     <input type="text" id="filter-usuarios" class="form-control" placeholder="Filtrar por nombre o email...">
+                    <button class="btn btn-success text-nowrap" id="btn-create-user">Crear Usuario</button>
                 </div>
             </div>
             
@@ -56,6 +57,10 @@ export default class UserManager {
                                     <label class="form-label">Email</label>
                                     <input type="email" id="edit-email" class="form-control" required>
                                 </div>
+                                <div class="mb-3" id="edit-password-container">
+                                    <label class="form-label">Contraseña (Solo al crear)</label>
+                                    <input type="password" id="edit-password" class="form-control">
+                                </div>
                                 <div class="mb-3">
                                     <label class="form-label">Teléfono</label>
                                     <input type="text" id="edit-telefono" class="form-control">
@@ -84,6 +89,10 @@ export default class UserManager {
 
         document.getElementById('filter-usuarios').addEventListener('input', (e) => {
             this.filterTable(e.target.value);
+        });
+
+        document.getElementById('btn-create-user').addEventListener('click', () => {
+            this.openCreateModal();
         });
 
         document.getElementById('btn-save-user').addEventListener('click', () => {
@@ -153,9 +162,22 @@ export default class UserManager {
         });
     }
 
+    openCreateModal() {
+        document.getElementById('form-edit-user').reset();
+        document.getElementById('edit-id').value = '';
+        document.querySelector('#modalEditUser .modal-title').textContent = 'Crear Usuario';
+        document.getElementById('edit-password-container').style.display = 'block';
+        
+        const modal = new bootstrap.Modal(document.getElementById('modalEditUser'));
+        modal.show();
+    }
+
     openEditModal(id) {
         const user = this.usuarios.find(u => u.id_usuario == id);
         if (!user) return;
+
+        document.querySelector('#modalEditUser .modal-title').textContent = 'Editar Usuario';
+        document.getElementById('edit-password-container').style.display = 'none';
 
         document.getElementById('edit-id').value = user.id_usuario;
         document.getElementById('edit-nombre').value = user.nombre;
@@ -169,9 +191,10 @@ export default class UserManager {
     }
 
     saveUser() {
+        const id = document.getElementById('edit-id').value;
         const payload = {
-            action: 'update',
-            id_usuario: document.getElementById('edit-id').value,
+            action: id ? 'update' : 'create',
+            id_usuario: id,
             nombre: document.getElementById('edit-nombre').value,
             email: document.getElementById('edit-email').value,
             telefono: document.getElementById('edit-telefono').value,
@@ -179,14 +202,18 @@ export default class UserManager {
             rol: document.getElementById('edit-rol').value
         };
 
+        if (!id) {
+            payload.password = document.getElementById('edit-password').value;
+        }
+
         api.post('usuarios.php', payload)
             .then(data => {
                 if (data.success) {
-                    Swal.fire('Guardado', 'Usuario actualizado', 'success');
+                    Swal.fire('Guardado', 'Usuario guardado', 'success');
                     bootstrap.Modal.getInstance(document.getElementById('modalEditUser')).hide();
                     this.fetchUsuarios();
                 } else {
-                    Swal.fire('Error', 'No se pudo actualizar', 'error');
+                    Swal.fire('Error', 'No se pudo guardar', 'error');
                 }
             })
             .catch(error => console.error("Error guardando:", error));

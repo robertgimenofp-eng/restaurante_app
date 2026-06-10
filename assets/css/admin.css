@@ -24,7 +24,7 @@ body {
 
 .list-group-item {
     background-color: transparent;
-    color: rgba(255,255,255,0.8);
+    color: #000;
     border: none;
     padding: 15px 20px;
     font-weight: 500;
@@ -32,9 +32,9 @@ body {
 }
 
 .list-group-item:hover, .list-group-item.active {
-    background-color: rgba(255,255,255,0.2);
-    color: #fff;
-    border-left: 4px solid #fff;
+    background-color: #f8f9fa;
+    color: #000;
+    border-left: 4px solid var(--primary-color);
     padding-left: 25px; /* Efecto movimiento */
 }
 

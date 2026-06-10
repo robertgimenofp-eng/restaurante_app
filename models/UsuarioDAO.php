@@ -41,7 +41,7 @@ class UsuarioDAO
     {
         try {
             $sql = "INSERT INTO usuario (nombre, email, contraseña, telefono, direccion, rol, fecha_registro)
-                    VALUES (:nombre, :email, :password, :telefono, :direccion, 'cliente', NOW())";
+                    VALUES (:nombre, :email, :password, :telefono, :direccion, :rol, NOW())";
 
             $stmt = $this->db->prepare($sql);
 
@@ -50,6 +50,7 @@ class UsuarioDAO
             $stmt->bindParam(':password', $datos['password']);
             $stmt->bindParam(':telefono', $datos['telefono']);
             $stmt->bindParam(':direccion', $datos['direccion']);
+            $stmt->bindParam(':rol', $datos['rol']);
 
             return $stmt->execute();
 

@@ -31,4 +31,4 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="assets/js/api/ApiService.js"></script>
-<script type="module" src="assets/js/admin/app.js?v=2"></script>
+<script type="module" src="assets/js/admin/app.js"></script>

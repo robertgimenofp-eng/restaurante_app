@@ -84,7 +84,7 @@ document.getElementById('btn-logs')?.addEventListener('click', () => {
 
             const title = document.createElement('h3');
             title.className = 'mb-4';
-            title.textContent = 'Auditoría de Sistema';
+            title.textContent = 'Auditoria de Sistema';
             container.appendChild(title);
 
             const table = document.createElement('table');
@@ -93,7 +93,7 @@ document.getElementById('btn-logs')?.addEventListener('click', () => {
             const thead = document.createElement('thead');
             thead.className = 'table-dark';
             const trHead = document.createElement('tr');
-            ['Fecha', 'Usuario', 'Acción', 'Entidad', 'Descripción'].forEach(text => {
+            ['Fecha', 'Usuario', 'Accion', 'Entidad', 'Descripcion'].forEach(text => {
                 const th = document.createElement('th');
                 th.textContent = text;
                 trHead.appendChild(th);

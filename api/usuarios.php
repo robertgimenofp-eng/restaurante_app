@@ -34,6 +34,17 @@ if ($metodo === 'GET') {
             $id = $input['id_usuario'];
             $success = $usuarioDAO->delete($id);
             echo json_encode(['success' => $success]);
+        } elseif ($input['action'] === 'create') {
+            $datos = [
+                'nombre' => $input['nombre'],
+                'email' => $input['email'],
+                'password' => password_hash($input['password'], PASSWORD_DEFAULT),
+                'telefono' => $input['telefono'],
+                'direccion' => $input['direccion'],
+                'rol' => $input['rol']
+            ];
+            $success = $usuarioDAO->create($datos);
+            echo json_encode(['success' => $success]);
         }
     }
 }
